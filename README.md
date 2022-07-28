@@ -4,6 +4,8 @@ Keep track of your car remotely through Home Assistant
 # Features
 - Detailed user config file (rename `config.h.example` to `config.h`)
 - Cellular connectivity
+- Automatically update the ESP's clock
+- Report battery status (percentage & voltage)
 
 # Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
