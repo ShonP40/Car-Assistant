@@ -154,18 +154,21 @@ void getNetworkTime() {
 }
 
 void batteryInfo() {
-    //read battery voltage per %
-    float voltage = 0.0;            // calculated voltage
-    float output = 0.0;             //output value
-    const float battery_max = 4.20; //maximum voltage of battery
-    const float battery_min = 3.0;  //minimum voltage of battery before shutdown
+    float voltage = 0.0;            // Calculated voltage
+    float output = 0.0;             // Output value
+    const float battery_max = 4.20; // Maximum battery voltage
+    const float battery_min = 3.0;  // Minimum battery voltage
 
-    // calculate the voltage
+    // Calculate the voltage
     voltage = modem.getBattVoltage() / 1000.0;
-    //round value by two precision
-    voltage = roundf(voltage * 100) / 100;
+
+    // Print the voltage
     Serial.println((String)"Battery voltage: " + voltage);
+
+    // Calculate percentage
     output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
+
+    // Print the percentage
     if (output < 100) {
         Serial.println((String)"Battery percantage: " + output);
     } else {
