@@ -141,7 +141,7 @@ void getNetworkTime() {
                 Serial.println((String)"Year: " + netyear + "\tMonth: " + netmonth + "\tDay: " + netday);
                 Serial.println((String)"Hour: " + nethour + "\tMinute: " + netmin + "\tSecond: " + netsec);
                 Serial.println((String)"Timezone: " + timezone);
-                configTime(timezone, 0, "time.apple.com", "time.google.com");
+                configTime(timezone, 0, "pool.ntp.org", "time.apple.com", "time.google.com");
                 break;
             } else {
                 Serial.println("Couldn't get network time, retrying in 15s.");
@@ -150,5 +150,25 @@ void getNetworkTime() {
         }
 
         timeSet = true;
+    }
+}
+
+void batteryInfo() {
+    //read battery voltage per %
+    float voltage = 0.0;            // calculated voltage
+    float output = 0.0;             //output value
+    const float battery_max = 4.20; //maximum voltage of battery
+    const float battery_min = 3.0;  //minimum voltage of battery before shutdown
+
+    // calculate the voltage
+    voltage = modem.getBattVoltage() / 1000.0;
+    //round value by two precision
+    voltage = roundf(voltage * 100) / 100;
+    Serial.println((String)"Battery voltage: " + voltage);
+    output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
+    if (output < 100) {
+        Serial.println((String)"Battery percantage: " + output);
+    } else {
+        Serial.println((String)"Battery percantage: 100");
     }
 }

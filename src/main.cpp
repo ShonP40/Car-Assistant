@@ -42,4 +42,7 @@ void loop() {
 
   // Get network time
   getNetworkTime();
+
+  // Get battery info
+  batteryInfo();
 }

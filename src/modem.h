@@ -7,3 +7,4 @@ void initModem();
 void modemInfo();
 void initNetwork();
 void getNetworkTime();
+void batteryInfo();
