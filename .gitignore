@@ -2,4 +2,4 @@
 .pio
 .vscode
 build
-include/config.h
+src/config.h

@@ -2,6 +2,10 @@
     Start of user config
 */
 
+// Enable debug
+#define DEBUG               false
+
+
 // Cellular settings
 #define APN                 ""
 #define CELL_USER           ""
@@ -29,3 +33,6 @@
 
 // Status LED
 #define LED_PIN             12
+
+// Modem model
+#define TINY_GSM_MODEM_SIM7600
