@@ -4,6 +4,8 @@ bool initialized = false;
 
 bool timeSet = false;
 
+String publicIP;
+
 void light_sleep(uint32_t sec) {
   esp_sleep_enable_timer_wakeup(sec * 1000000ULL);
   esp_light_sleep_start();
@@ -16,6 +18,8 @@ TinyGsm modem(debugger);
 #else
 TinyGsm modem(SerialAT);
 #endif
+
+TinyGsmClient client(modem, 0);
 
 // Initialize the modem
 void initModem() {
@@ -59,29 +63,20 @@ void initModem() {
     }
 }
 
-// Get modem info
-void modemInfo() {
-    if (!modem.isGprsConnected() && initialized) {
-        Serial.println((String)"\nModem Info: " + modem.getModemInfo());
-    }
-}
-
-String getPublicIP() {
-    TinyGsmClient client(modem, 0);
+void getPublicIP() {
     if (client.connect("api.ipify.org", 80)) {
         client.println("GET / HTTP/1.0");
         client.println("Host: api.ipify.org");
         client.println();
     } else {
         Serial.println("Failed to get public IP");
-        return String();
     }
     delay(5000);
     String line;
     while(client.available()) {
         line = client.readStringUntil('\n');
     }
-    return line;
+    publicIP = line;
 }
 
 // Connect to the cellular network
@@ -111,15 +106,7 @@ void initNetwork() {
             Serial.println("Failed to connect to the cellular network");
         }
 
-        Serial.println((String)"\nCCID: " + modem.getSimCCID());
-
-        Serial.println((String)"IMSI: " + modem.getIMSI());
-
-        Serial.println((String)"Operator: " + modem.getOperator());
-
-        Serial.println((String)"Signal quality: " + modem.getSignalQuality());
-
-        Serial.println((String)"\nPublic IP: " + getPublicIP() + "\n");
+        getPublicIP();
     }
 }
 
@@ -153,25 +140,76 @@ void getNetworkTime() {
     }
 }
 
+// MQTT
+char mqtt_send_package[150];
+char mqtt_send_topic[150];
+char mqtt_commands_topic[150];
+
+// Prepare MQTT
+PubSubClient mqtt(MQTT_ADDRESS, MQTT_PORT, client);
+void initMQTT() {
+    if (initialized) {
+        if (mqtt.connected()) {
+            #if DEBUG
+            Serial.println((String)"MQTT connected");
+            #endif
+        } else {
+            mqtt.connect(MQTT_CLIENT_NAME, MQTT_USER, MQTT_PASS);
+            #if DEBUG
+            Serial.println((String)"MQTT no connected");
+            #endif
+        }
+    }
+}
+
+// Package up the provided data and send it to the MQTT broker
+void packageAndSendMQTT(String value, String topic) {
+    value.toCharArray(mqtt_send_package, value.length() + 1);
+    
+    String fullTopic = MQTT_CLIENT_NAME + (String)"/" + topic;
+    fullTopic.toCharArray(mqtt_send_topic, fullTopic.length() + 1);
+
+    mqtt.publish(mqtt_send_topic, mqtt_send_package);
+}
+
+// Get and report the battery percentage
 void batteryInfo() {
-    float voltage = 0.0;            // Calculated voltage
-    float output = 0.0;             // Output value
-    const float battery_max = 4.20; // Maximum battery voltage
-    const float battery_min = 3.0;  // Minimum battery voltage
+    if (initialized && mqtt.connected()) {
+        float voltage = 0.0;            // Calculated voltage
+        float output = 0.0;             // Output value
+        const float battery_max = 4.20; // Maximum battery voltage
+        const float battery_min = 3.0;  // Minimum battery voltage
 
-    // Calculate the voltage
-    voltage = modem.getBattVoltage() / 1000.0;
+        // Calculate the voltage
+        voltage = modem.getBattVoltage() / 1000.0;
 
-    // Print the voltage
-    Serial.println((String)"Battery voltage: " + voltage);
+        // Print the voltage
+        packageAndSendMQTT(String(voltage), MQTT_BATTERY_VOLTAGE);
 
-    // Calculate percentage
-    output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
+        // Calculate percentage
+        output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
 
-    // Print the percentage
-    if (output < 100) {
-        Serial.println((String)"Battery percantage: " + output);
-    } else {
-        Serial.println((String)"Battery percantage: 100");
+        // Print the percentage
+        if (output < 100) {
+            packageAndSendMQTT(String(output), MQTT_BATTERY_PERCENTAGE);
+        } else {
+            packageAndSendMQTT("100", MQTT_BATTERY_PERCENTAGE);
+        }
+    }
+}
+
+void getNetInfo() {
+    if (initialized && mqtt.connected()) {
+        packageAndSendMQTT(String(modem.getModemInfo()), MQTT_MODEM_INFO);
+
+        packageAndSendMQTT(String(modem.getSimCCID()), MQTT_CCID);
+
+        packageAndSendMQTT(String(modem.getIMSI()), MQTT_IMSI);
+
+        packageAndSendMQTT(String(modem.getOperator()), MQTT_OPERATOR);
+
+        packageAndSendMQTT(String(modem.getSignalQuality()), MQTT_SIGNAL_QUALITY);
+
+        packageAndSendMQTT(publicIP, MQTT_PUBLIC_IP);
     }
 }

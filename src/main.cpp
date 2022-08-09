@@ -34,15 +34,18 @@ void loop() {
   // Initialize the modem
   initModem();
 
-  // Get modem info
-  modemInfo();
-
   // Connect to the cellular network
   initNetwork();
 
   // Get network time
   getNetworkTime();
 
+  // Connect to an MQTT broker
+  initMQTT();
+
   // Get battery info
   batteryInfo();
+
+  // Get network info
+  getNetInfo();
 }

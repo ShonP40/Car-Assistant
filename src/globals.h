@@ -3,6 +3,7 @@
 #include "config.h"
 
 #include <TinyGsmClient.h>
+#include <PubSubClient.h>
 
 #if DEBUG
 #include <StreamDebugger.h>

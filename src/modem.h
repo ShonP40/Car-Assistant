@@ -4,7 +4,8 @@
 
 // Export functions
 void initModem();
-void modemInfo();
 void initNetwork();
 void getNetworkTime();
+void initMQTT();
 void batteryInfo();
+void getNetInfo();
