@@ -149,16 +149,18 @@ char mqtt_commands_topic[150];
 PubSubClient mqtt(MQTT_ADDRESS, MQTT_PORT, client);
 void initMQTT() {
     if (initialized) {
-        if (mqtt.connected()) {
-            #if DEBUG
-            Serial.println((String)"MQTT connected");
-            #endif
-        } else {
-            mqtt.connect(MQTT_CLIENT_NAME, MQTT_USER, MQTT_PASS);
+        if (!mqtt.connected()) {
             #if DEBUG
             Serial.println((String)"MQTT no connected");
             #endif
+
+            mqtt.connect(MQTT_CLIENT_NAME, MQTT_USER, MQTT_PASS);
         }
+        #if DEBUG
+        else {
+            Serial.println((String)"MQTT connected");
+        }
+        #endif
     }
 }
 
