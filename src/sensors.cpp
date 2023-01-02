@@ -39,7 +39,11 @@ void initSensors() {
   } else {
     SerialMon.println("Invalid TSL2561_GAIN value, please use \"auto\", \"1x\" or \"16x\"");
   }
+  #endif
 
+  #if PIR_ENABLED
+  // Initialize the PIR sensor
+  pinMode(PIR_PIN, INPUT);
   #endif
 }
 
@@ -82,5 +86,17 @@ void readSensors() {
   #endif
 
   packageAndSendMQTT(String(light_event.light), MQTT_TSL2561_LUX);
+  #endif
+
+  #if PIR_ENABLED
+  // PIR
+  int pirState = digitalRead(PIR_PIN);
+
+  #if DEBUG
+  SerialMon.print("PIR = ");
+  SerialMon.println(pirState);
+  #endif
+
+  packageAndSendMQTT(String(pirState), MQTT_PIR);
   #endif
 }

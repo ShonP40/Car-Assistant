@@ -10,6 +10,7 @@ Keep track of your car remotely through Home Assistant
 - Report network details
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
+- Detect motion inside your car's cabin using a PIR sensor
 
 # Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
@@ -24,6 +25,7 @@ Keep track of your car remotely through Home Assistant
 - 18650B battery
 - BME280 sensor (optional)
 - TSL2561 sensor (optional)
+- PIR sensor thats pulled low by default (optional)
 
 # Credits
 [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation

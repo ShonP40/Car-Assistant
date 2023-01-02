@@ -19,6 +19,7 @@
 #define MQTT_USER               ""
 #define MQTT_PASS               ""
 
+// Modem config
 #define MQTT_BATTERY_PERCENTAGE "battery-percentage"
 #define MQTT_BATTERY_VOLTAGE    "battery-voltage"
 #define MQTT_MODEM_INFO         "modem-info"
@@ -39,6 +40,10 @@
 #define TSL2561_I2C_ADDRESS     0x39
 #define MQTT_TSL2561_LUX        "lux"
 #define TSL2561_GAIN            "auto" // "auto", "1x" or "16x"
+
+#define PIR_ENABLED             true
+#define PIR_PIN                 19
+#define MQTT_PIR                "pir"
 
 /*
     End of user config
