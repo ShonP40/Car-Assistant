@@ -35,6 +35,11 @@
 #define MQTT_BME280_PRESSURE    "pressure"
 #define MQTT_BME280_HUMIDITY    "humidity"
 
+#define TSL2561_ENABLED         true
+#define TSL2561_I2C_ADDRESS     0x39
+#define MQTT_TSL2561_LUX        "lux"
+#define TSL2561_GAIN            "auto" // "auto", "1x" or "16x"
+
 /*
     End of user config
 */
