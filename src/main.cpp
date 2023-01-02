@@ -1,5 +1,6 @@
 #include "globals.h"
 #include "modem.h"
+#include "sensors.h"
 
 void setup() {
   // Set the console baud rate
@@ -92,6 +93,8 @@ void loop() {
 
   // Get network info
   getNetInfo();
+
+  // Sensors
   initSensors();
   readSensors();
 }

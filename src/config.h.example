@@ -28,6 +28,13 @@
 #define MQTT_SIGNAL_QUALITY     "signal-quality"
 #define MQTT_PUBLIC_IP          "public-ip"
 
+// Sensors config
+#define BME280_ENABLED          true
+#define BME280_I2C_ADDRESS      0x76
+#define MQTT_BME280_TEMPERATURE "temperature"
+#define MQTT_BME280_PRESSURE    "pressure"
+#define MQTT_BME280_HUMIDITY    "humidity"
+
 /*
     End of user config
 */
