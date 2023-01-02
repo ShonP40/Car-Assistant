@@ -1,5 +1,7 @@
 #include "sensors.h"
 
+#if SENSORS_ENABLED
+
 #if BME280_ENABLED
 // BME280
 Adafruit_BME280 bme; // I2C
@@ -100,3 +102,5 @@ void readSensors() {
   packageAndSendMQTT(String(pirState), MQTT_PIR);
   #endif
 }
+
+#endif

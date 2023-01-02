@@ -30,6 +30,10 @@
 #define MQTT_PUBLIC_IP          "public-ip"
 
 // Sensors config
+#define SENSORS_ENABLED         true
+
+#if SENSORS_ENABLED
+
 #define BME280_ENABLED          true
 #define BME280_I2C_ADDRESS      0x76
 #define MQTT_BME280_TEMPERATURE "temperature"
@@ -44,6 +48,8 @@
 #define PIR_ENABLED             true
 #define PIR_PIN                 19
 #define MQTT_PIR                "pir"
+
+#endif
 
 /*
     End of user config

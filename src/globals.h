@@ -15,10 +15,10 @@
 // Set serial for AT commands (to the module)
 #define SerialAT Serial1
 
-// Extern modem and mqtt
+// Extern TinyGsm and PubSubClient
 extern TinyGsm modem;
 extern TinyGsmClient client;
 extern PubSubClient mqtt;
 
-// Export packageAndSendMQTT
+// Export functions
 void packageAndSendMQTT(String value, String topic);

@@ -9,5 +9,5 @@ void getNetworkTime();
 void batteryInfo();
 void getNetInfo();
 
-// Extern the initialized variable
+// Extern variables
 extern bool initialized;

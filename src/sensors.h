@@ -2,8 +2,12 @@
 
 #include "globals.h"
 
+#if SENSORS_ENABLED
+
+#if BME280_ENABLED || TSL2561_ENABLED
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
+#endif
 
 #if BME280_ENABLED
 #include <Adafruit_BME280.h>
@@ -16,3 +20,5 @@
 // Export functions
 void initSensors();
 void readSensors();
+
+#endif

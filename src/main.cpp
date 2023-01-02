@@ -67,12 +67,14 @@ char mqtt_commands_topic[150];
 
 // Package up the provided data and send it to the MQTT broker
 void packageAndSendMQTT(String value, String topic) {
-    value.toCharArray(mqtt_send_package, value.length() + 1);
-    
-    String fullTopic = MQTT_CLIENT_NAME + (String)"/" + topic;
-    fullTopic.toCharArray(mqtt_send_topic, fullTopic.length() + 1);
+    if (initialized) {
+      value.toCharArray(mqtt_send_package, value.length() + 1);
+      
+      String fullTopic = MQTT_CLIENT_NAME + (String)"/" + topic;
+      fullTopic.toCharArray(mqtt_send_topic, fullTopic.length() + 1);
 
-    mqtt.publish(mqtt_send_topic, mqtt_send_package);
+      mqtt.publish(mqtt_send_topic, mqtt_send_package);
+    }
 }
 
 void loop() {
@@ -95,6 +97,8 @@ void loop() {
   getNetInfo();
 
   // Sensors
+  #if SENSORS_ENABLED
   initSensors();
   readSensors();
+  #endif
 }
