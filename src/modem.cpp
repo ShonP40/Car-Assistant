@@ -12,16 +12,6 @@ void light_sleep(uint32_t sec) {
 }
 
 // Initialize the modem
-#if DEBUG
-StreamDebugger debugger(SerialAT, SerialMon);
-TinyGsm modem(debugger);
-#else
-TinyGsm modem(SerialAT);
-#endif
-
-TinyGsmClient client(modem, 0);
-
-// Initialize the modem
 void initModem() {
     if (!initialized) {
         Serial.println("\nInitializing modem...");
@@ -138,40 +128,6 @@ void getNetworkTime() {
 
         timeSet = true;
     }
-}
-
-// MQTT
-char mqtt_send_package[150];
-char mqtt_send_topic[150];
-char mqtt_commands_topic[150];
-
-// Prepare MQTT
-PubSubClient mqtt(MQTT_ADDRESS, MQTT_PORT, client);
-void initMQTT() {
-    if (initialized) {
-        if (!mqtt.connected()) {
-            #if DEBUG
-            Serial.println((String)"MQTT no connected");
-            #endif
-
-            mqtt.connect(MQTT_CLIENT_NAME, MQTT_USER, MQTT_PASS);
-        }
-        #if DEBUG
-        else {
-            Serial.println((String)"MQTT connected");
-        }
-        #endif
-    }
-}
-
-// Package up the provided data and send it to the MQTT broker
-void packageAndSendMQTT(String value, String topic) {
-    value.toCharArray(mqtt_send_package, value.length() + 1);
-    
-    String fullTopic = MQTT_CLIENT_NAME + (String)"/" + topic;
-    fullTopic.toCharArray(mqtt_send_topic, fullTopic.length() + 1);
-
-    mqtt.publish(mqtt_send_topic, mqtt_send_package);
 }
 
 // Get and report the battery percentage
