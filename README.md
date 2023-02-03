@@ -1,4 +1,9 @@
-# Car Assistant
+<p align="center">
+    <a href="https://shon.codes"><img src="assets/logo/Car%20Assistant.svg" width="86" height="86"></a>
+</p>
+
+<h1 align="center">Car Assistant</h1>
+
 Keep track of your car remotely through Home Assistant
 
 # Features
@@ -25,7 +30,7 @@ Keep track of your car remotely through Home Assistant
 - 18650B battery
 - BME280 sensor (optional)
 - TSL2561 sensor (optional)
-- PIR sensor thats pulled low by default (optional)
+- PIR sensor (like the AM312) thats pulled low by default (optional)
 
 # Credits
 [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
