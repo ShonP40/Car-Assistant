@@ -96,6 +96,9 @@ void loop() {
   // Get network info
   getNetInfo();
 
+  // Get location info
+  getLocationInfo();
+
   // Sensors
   #if SENSORS_ENABLED
   initSensors();

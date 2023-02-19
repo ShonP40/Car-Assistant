@@ -14,9 +14,13 @@ void light_sleep(uint32_t sec) {
 // Initialize the modem
 void initModem() {
     if (!initialized) {
+        #if DEBUG
         Serial.println("\nInitializing modem...");
+        #endif
         if (!modem.init()) {
+            #if DEBUG
             Serial.println("Failed to initiate the modem, retrying...");
+            #endif
             initialized = false;
             return;
         } else {
@@ -59,7 +63,9 @@ void getPublicIP() {
         client.println("Host: api.ipify.org");
         client.println();
     } else {
+        #if DEBUG
         Serial.println("Failed to get public IP");
+        #endif
     }
     delay(5000);
     String line;
@@ -72,29 +78,33 @@ void getPublicIP() {
 // Connect to the cellular network
 void initNetwork() {
     if (!modem.isGprsConnected() && initialized) {
-        bool res;
-
+        #if DEBUG
         Serial.println("\nWaiting for network...");
+        #endif
         if (!modem.waitForNetwork(600000L)) {
             light_sleep(10);
             return;
         }
 
+        #if DEBUG
         if (modem.isNetworkConnected()) {
             Serial.println("Network connected");
         }
 
         Serial.println((String)"\nConnecting to: " + APN);
+        #endif
         if (!modem.gprsConnect(APN, CELL_USER, CELL_PASS)) {
             light_sleep(10);
             return;
         }
 
+        #if DEBUG
         if (modem.isGprsConnected()) {
             Serial.println("Connected to the cellular network");
         } else {
             Serial.println("Failed to connect to the cellular network");
         }
+        #endif
 
         getPublicIP();
     }
@@ -112,16 +122,21 @@ void getNetworkTime() {
         float timezone = 0;
 
         for (int8_t i = 5; i; i--) {
+            #if DEBUG
             Serial.println("Requesting current network time");
+            #endif
 
             if (modem.getNetworkTime(&netyear, &netmonth, &netday, &nethour, &netmin, &netsec, &timezone)) {
+                #if DEBUG
                 Serial.println((String)"Year: " + netyear + "\tMonth: " + netmonth + "\tDay: " + netday);
                 Serial.println((String)"Hour: " + nethour + "\tMinute: " + netmin + "\tSecond: " + netsec);
                 Serial.println((String)"Timezone: " + timezone);
+                #endif
                 configTime(timezone, 0, "pool.ntp.org", "time.apple.com", "time.google.com");
-                break;
             } else {
+                #if DEBUG
                 Serial.println("Couldn't get network time, retrying in 15s.");
+                #endif
                 light_sleep(15);
             }
         }
@@ -178,5 +193,70 @@ void getNetInfo() {
         packageAndSendMQTT(String(modem.getSignalQuality()), MQTT_SIGNAL_QUALITY);
 
         packageAndSendMQTT(publicIP, MQTT_PUBLIC_IP);
+    }
+}
+
+void getLocationInfo() {
+    if (initialized && mqtt.connected()) {
+        modem.setGNSSMode(GNSS_MODE, DPO);
+        light_sleep(1);
+
+        modem.enableGPS();
+        light_sleep(2);
+
+        float lat2      = 0;
+        float lon2      = 0;
+        float speed2    = 0;
+        float alt2      = 0;
+        int   vsat2     = 0;
+        int   usat2     = 0;
+        float accuracy2 = 0;
+        int   year2     = 0;
+        int   month2    = 0;
+        int   day2      = 0;
+        int   hour2     = 0;
+        int   min2      = 0;
+        int   sec2      = 0;
+
+        #if DEBUG
+        Serial.println("Requesting your current GNSS location");
+        #endif
+
+        if (modem.getGPS(&lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
+            #if DEBUG
+            Serial.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
+            Serial.println("Speed: " + String(speed2) + "\tAltitude: " + String(alt2));
+            Serial.println("Visible Satellites: " + String(vsat2) + "\tUsed Satellites: " + String(usat2));
+            Serial.println("Accuracy: " + String(accuracy2));
+            Serial.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
+            Serial.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
+            #endif
+
+            packageAndSendMQTT("GNSS", MQTT_LOCATION_TYPE);
+            packageAndSendMQTT(String(lat2, 8), MQTT_LATITUDE);
+            packageAndSendMQTT(String(lon2, 8), MQTT_LONGITUDE);
+            packageAndSendMQTT(String(speed2), MQTT_SPEED);
+            packageAndSendMQTT(String(alt2), MQTT_ALTITUDE);
+            packageAndSendMQTT(String(accuracy2), MQTT_ACCURACY);
+        } else if (modem.getGsmLocation(&lat2, &lon2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
+            #if DEBUG
+            Serial.println("Falling back to a cellular location");
+            Serial.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
+            Serial.println("Accuracy: " + String(accuracy2));
+            Serial.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
+            Serial.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
+            #endif
+
+            packageAndSendMQTT("Cellular", MQTT_LOCATION_TYPE);
+            packageAndSendMQTT(String(lat2, 8), MQTT_LATITUDE);
+            packageAndSendMQTT(String(lon2, 8), MQTT_LONGITUDE);
+            packageAndSendMQTT(String(accuracy2), MQTT_ACCURACY);
+        } else {
+            #if DEBUG
+            Serial.println("Couldn't get your location");
+            #endif
+
+            packageAndSendMQTT("None", MQTT_LOCATION_TYPE);
+        }
     }
 }

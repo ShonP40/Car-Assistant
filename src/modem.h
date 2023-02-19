@@ -8,6 +8,7 @@ void initNetwork();
 void getNetworkTime();
 void batteryInfo();
 void getNetInfo();
+void getLocationInfo();
 
 // Extern variables
 extern bool initialized;

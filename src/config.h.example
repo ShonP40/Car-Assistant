@@ -6,7 +6,7 @@
 #define DEBUG                   false
 
 
-// Cellular settings
+// Cellular config
 #define APN                     ""
 #define CELL_USER               ""
 #define CELL_PASS               ""
@@ -20,15 +20,27 @@
 #define MQTT_PASS               ""
 
 // Modem config
-#define MQTT_BATTERY_PERCENTAGE "battery-percentage"
-#define MQTT_BATTERY_VOLTAGE    "battery-voltage"
-#define MQTT_BATTERY_STATUS     "battery-status"
 #define MQTT_MODEM_INFO         "modem-info"
 #define MQTT_CCID               "ccid"
 #define MQTT_IMSI               "imsi"
 #define MQTT_OPERATOR           "operator"
 #define MQTT_SIGNAL_QUALITY     "signal-quality"
 #define MQTT_PUBLIC_IP          "public-ip"
+
+// Battery config
+#define MQTT_BATTERY_PERCENTAGE "battery-percentage"
+#define MQTT_BATTERY_VOLTAGE    "battery-voltage"
+#define MQTT_BATTERY_STATUS     "battery-status"
+
+// Location config
+#define GNSS_MODE               0 // 0 = GPS + GLONASS, 1 = GPS + BEIDOU, 2 = GPS + GALILEO, 3 = GPS + QZSS
+#define DPO                     1 // 0 = Disabled, 1 = Enabled
+#define MQTT_LOCATION_TYPE      "location-type"
+#define MQTT_LATITUDE           "latitude"
+#define MQTT_LONGITUDE          "longitude"
+#define MQTT_SPEED              "speed"
+#define MQTT_ALTITUDE           "altitude"
+#define MQTT_ACCURACY           "location-accuracy"
 
 // Sensors config
 #define SENSORS_ENABLED         true
