@@ -74,5 +74,9 @@
 // Status LED
 #define LED_PIN                 12
 
+// Indicator pins
+#define USB_INDICATOR           35
+#define SOLAR_INDICATOR         36
+
 // Modem model
 #define TINY_GSM_MODEM_SIM7600
