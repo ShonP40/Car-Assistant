@@ -22,6 +22,7 @@
 // Modem config
 #define MQTT_BATTERY_PERCENTAGE "battery-percentage"
 #define MQTT_BATTERY_VOLTAGE    "battery-voltage"
+#define MQTT_BATTERY_STATUS     "battery-status"
 #define MQTT_MODEM_INFO         "modem-info"
 #define MQTT_CCID               "ccid"
 #define MQTT_IMSI               "imsi"

@@ -153,6 +153,15 @@ void batteryInfo() {
         } else {
             packageAndSendMQTT("100", MQTT_BATTERY_PERCENTAGE);
         }
+
+        // Check if the battery is charging
+        if (analogRead(36) != 0) { // Solar panel connector
+            packageAndSendMQTT("Charging", MQTT_BATTERY_STATUS);
+        } else if (analogRead(35) == 0) { // USB connectors
+            packageAndSendMQTT("USB Charging", MQTT_BATTERY_STATUS);
+        } else {
+            packageAndSendMQTT("Discharging", MQTT_BATTERY_STATUS);
+        }
     }
 }
 

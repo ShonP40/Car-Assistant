@@ -17,7 +17,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Cellular connectivity
 - Automatically update the ESP's clock
 - MQTT connection
-- Report battery status (percentage & voltage)
+- Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
