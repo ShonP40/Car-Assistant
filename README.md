@@ -20,6 +20,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details
 - Report location status (latitude, longitude, speed, altitude, visible satellites, accuracy) with cellular fallback
+- Report the uptime of the ESP in seconds
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor

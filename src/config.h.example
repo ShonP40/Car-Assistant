@@ -64,6 +64,9 @@
 
 #endif
 
+// Misc config
+#define MQTT_ESP_UPTIME         "uptime"
+
 /*
     End of user config
 */

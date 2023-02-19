@@ -77,6 +77,11 @@ void packageAndSendMQTT(String value, String topic) {
     }
 }
 
+// Uptime
+void getUptime() {
+    packageAndSendMQTT(String(esp_timer_get_time() / 1000000), MQTT_ESP_UPTIME);
+}
+
 void loop() {
   // Initialize the modem
   initModem();
@@ -89,6 +94,9 @@ void loop() {
 
   // Connect to an MQTT broker
   initMQTT();
+
+  // Uptime
+  getUptime();
 
   // Get battery info
   batteryInfo();
