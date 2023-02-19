@@ -172,10 +172,13 @@ void batteryInfo() {
         // Check if the battery is charging
         if (analogRead(SOLAR_INDICATOR) != 0) { // Solar panel connector
             packageAndSendMQTT("Charging", MQTT_BATTERY_STATUS);
+            digitalWrite(LED_PIN, HIGH);
         } else if (analogRead(USB_INDICATOR) == 0) { // USB connectors
             packageAndSendMQTT("USB Charging", MQTT_BATTERY_STATUS);
+            digitalWrite(LED_PIN, HIGH);
         } else {
             packageAndSendMQTT("Discharging", MQTT_BATTERY_STATUS);
+            digitalWrite(LED_PIN, LOW);
         }
     }
 }
