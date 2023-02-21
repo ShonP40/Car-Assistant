@@ -16,10 +16,12 @@ Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_I2C_ADDRESS, 123
 #endif
 
 void initSensors() {
-  #if BME280_ENABLED && DEBUG
+  #if BME280_ENABLED
   // Initialize the BME280 sensor
   if (!bme.begin(BME280_I2C_ADDRESS)) {
+    #if DEBUG
     SerialMon.println("Could not find a valid BME280 sensor, check wiring!");
+    #endif
   }
   #endif
 
