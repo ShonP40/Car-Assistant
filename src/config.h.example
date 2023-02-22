@@ -12,6 +12,10 @@
 #define CELL_PASS               ""
 #define GSM_PIN                 ""  /* Enter your SIM card PIN if any */
 
+// WiFi AP config
+#define WIFI_AP_SSID            "Car Assistant"
+#define WIFI_AP_PASSWORD        ""
+
 // MQTT config
 #define MQTT_ADDRESS            "yourbroker.com"
 #define MQTT_PORT               1883

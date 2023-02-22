@@ -24,6 +24,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor
+- OTA updates through a secure hotspot
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)

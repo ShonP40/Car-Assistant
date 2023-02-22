@@ -2,6 +2,13 @@
 #include "modem.h"
 #include "sensors.h"
 
+// WiFi
+#include <WiFi.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include <AsyncElegantOTA.h>
+AsyncWebServer server(80);
+
 void setup() {
   // Set the console baud rate
   SerialMon.begin(115200);
@@ -29,6 +36,17 @@ void setup() {
   */
   pinMode(MODEM_FLIGHT, OUTPUT);
   digitalWrite(MODEM_FLIGHT, HIGH);
+
+  // WiFi
+  WiFi.softAP(WIFI_AP_SSID, WIFI_AP_PASSWORD);
+
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(200, "text/plain", "Welcome to Car Assistant!");
+  });
+
+  AsyncElegantOTA.begin(&server);
+  
+  server.begin();
 }
 
 // Initialize the modem
