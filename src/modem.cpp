@@ -6,11 +6,6 @@ bool timeSet = false;
 
 String publicIP;
 
-void light_sleep(uint32_t sec) {
-  esp_sleep_enable_timer_wakeup(sec * 1000000ULL);
-  esp_light_sleep_start();
-}
-
 // Initialize the modem
 void initModem() {
     if (!initialized) {
@@ -53,7 +48,7 @@ void initModem() {
             modem.simUnlock(GSM_PIN);
         }
 
-        light_sleep(1);
+        delay(1000);
     }
 }
 
@@ -82,7 +77,7 @@ void initNetwork() {
         Serial.println("\nWaiting for network...");
         #endif
         if (!modem.waitForNetwork(600000L)) {
-            light_sleep(10);
+            delay(10000);
             return;
         }
 
@@ -94,7 +89,7 @@ void initNetwork() {
         Serial.println((String)"\nConnecting to: " + APN);
         #endif
         if (!modem.gprsConnect(APN, CELL_USER, CELL_PASS)) {
-            light_sleep(10);
+            delay(10000);
             return;
         }
 
@@ -137,7 +132,7 @@ void getNetworkTime() {
                 #if DEBUG
                 Serial.println("Couldn't get network time, retrying in 15s.");
                 #endif
-                light_sleep(15);
+                delay(15000);
             }
         }
 
@@ -202,10 +197,10 @@ void getNetInfo() {
 void getLocationInfo() {
     if (initialized && mqtt.connected()) {
         modem.setGNSSMode(GNSS_MODE, DPO);
-        light_sleep(1);
+        delay(1000);
 
         modem.enableGPS();
-        light_sleep(2);
+        delay(2000);
 
         float lat2      = 0;
         float lon2      = 0;
