@@ -5,6 +5,9 @@
 #include <TinyGsmClient.h>
 #include <PubSubClient.h>
 
+#include <ArduinoJson.h>
+#include <SPIFFS.h>
+
 #if DEBUG
 #include <StreamDebugger.h>
 #endif
