@@ -13,7 +13,7 @@ This project has been sponsored by [PCBWay](https://www.pcbway.com/)!
 You can order this project from PCBWay at a $5 discount by using my [referal link](https://www.pcbway.com/setinvite.aspx?inviteid=590728)
 
 ## Features
-- Detailed user config file (rename `config.h.example` to `config.h`)
+- Detailed user configuration (accessible by connecting to the ESP's hotspot and going to http://192.168.4.1)
 - Cellular connectivity
 - Automatically update the ESP's clock
 - MQTT connection
@@ -25,6 +25,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor
 - OTA updates through a secure hotspot
+- Advanced config file (`config.h`)
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)

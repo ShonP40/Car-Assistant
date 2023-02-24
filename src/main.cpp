@@ -67,6 +67,14 @@ void writeFile(fs::FS &fs, const char * path, const char * message) {
   file.close();
 }
 
+const char* stringToChar(String value) {
+  return value.c_str();
+}
+
+int stringToInt(String value) {
+  return value.toInt();
+}
+
 void loadConfig() {
   // Open file for reading
   String configFile = readFile(SPIFFS, "/config.json");
@@ -122,9 +130,22 @@ void loadConfig() {
   #endif
 }
 
+// Initialize the modem
+#if DEBUG
+StreamDebugger debugger(SerialAT, SerialMon);
+TinyGsm modem(debugger);
+#else
+TinyGsm modem(SerialAT);
+#endif
+
+TinyGsmClient client(modem, 0);
+
+// Prepare MQTT
+PubSubClient mqtt(client);
+
 void setup() {
   // Set the console baud rate
-  SerialMon.begin(115200);
+  SerialMon.begin(UART_BAUD);
   delay(10);
 
   // Set the modem baud rate
@@ -159,8 +180,15 @@ void setup() {
     #endif
   }
 
+  // Load the configuration
+  loadConfig();
+  delay(1000);
+
   // WiFi AP
-  WiFi.softAP(WIFI_AP_SSID, WIFI_AP_PASSWORD);
+  WiFi.softAP(stringToChar(apssid), stringToChar(appassword));
+
+  // Configure MQTT
+  mqtt.setServer(mqttaddress.c_str(), stringToInt(mqttport));
 
   // OTA
   AsyncElegantOTA.begin(&server);
@@ -556,60 +584,37 @@ void setup() {
   });
   
   server.begin();
-
-  // Load the configuration
-  loadConfig();
 }
 
-// Initialize the modem
-#if DEBUG
-StreamDebugger debugger(SerialAT, SerialMon);
-TinyGsm modem(debugger);
-#else
-TinyGsm modem(SerialAT);
-#endif
-
-TinyGsmClient client(modem, 0);
-
-// Prepare MQTT
-PubSubClient mqtt(MQTT_ADDRESS, MQTT_PORT, client);
 void initMQTT() {
       if (initialized) {
         if (!mqtt.connected()) {
             #if DEBUG
-            Serial.println((String)"MQTT no connected");
+            Serial.println("MQTT no connected");
             #endif
 
-            mqtt.connect(MQTT_CLIENT_NAME, MQTT_USER, MQTT_PASS);
+            mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
         }
         #if DEBUG
         else {
-            Serial.println((String)"MQTT connected");
+            Serial.println("MQTT connected");
         }
         #endif
       }
 }
 
-// MQTT
-char mqtt_send_package[150];
-char mqtt_send_topic[150];
-char mqtt_commands_topic[150];
-
 // Package up the provided data and send it to the MQTT broker
 void packageAndSendMQTT(String value, String topic) {
-    if (initialized) {
-      value.toCharArray(mqtt_send_package, value.length() + 1);
-      
-      String fullTopic = MQTT_CLIENT_NAME + (String)"/" + topic;
-      fullTopic.toCharArray(mqtt_send_topic, fullTopic.length() + 1);
+    if (initialized) {    
+      String fullTopic = mqttclientname + (String)"/" + topic;
 
-      mqtt.publish(mqtt_send_topic, mqtt_send_package);
+      mqtt.publish(stringToChar(fullTopic), stringToChar(value));
     }
 }
 
 // Uptime
 void getUptime() {
-    packageAndSendMQTT(String(esp_timer_get_time() / 1000000), MQTT_ESP_UPTIME);
+    packageAndSendMQTT(String(esp_timer_get_time() / 1000000), mqttuptime);
 }
 
 void loop() {
@@ -638,8 +643,8 @@ void loop() {
   getLocationInfo();
 
   // Sensors
-  #if SENSORS_ENABLED
-  initSensors();
-  readSensors();
-  #endif
+  if (sensorsenable == "true") {
+    initSensors();
+    readSensors();
+  }
 }

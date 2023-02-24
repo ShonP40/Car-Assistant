@@ -44,8 +44,8 @@ void initModem() {
         modem.setNetworkMode(2);
 
         // Unlock the SIM card with a PIN if needed
-        if (GSM_PIN && modem.getSimStatus() != 3) {
-            modem.simUnlock(GSM_PIN);
+        if (simpin != "" && modem.getSimStatus() != 3) {
+            modem.simUnlock(stringToChar(simpin));
         }
 
         delay(1000);
@@ -88,7 +88,7 @@ void initNetwork() {
 
         Serial.println((String)"\nConnecting to: " + APN);
         #endif
-        if (!modem.gprsConnect(APN, CELL_USER, CELL_PASS)) {
+        if (!modem.gprsConnect(stringToChar(apn), stringToChar(apnusername), stringToChar(apnpassword))) {
             delay(10000);
             return;
         }
@@ -151,28 +151,28 @@ void batteryInfo() {
         // Calculate the voltage
         voltage = modem.getBattVoltage() / 1000.0;
 
-        // Print the voltage
-        packageAndSendMQTT(String(voltage), MQTT_BATTERY_VOLTAGE);
+        // Send the voltage to the MQTT broker
+        packageAndSendMQTT(String(voltage), mqttbatteryvoltage);
 
         // Calculate percentage
         output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
 
-        // Print the percentage
+        // Send the percentage to the MQTT broker
         if (output < 100) {
-            packageAndSendMQTT(String(output), MQTT_BATTERY_PERCENTAGE);
+            packageAndSendMQTT(String(output), mqttbatterypercentage);
         } else {
-            packageAndSendMQTT("100", MQTT_BATTERY_PERCENTAGE);
+            packageAndSendMQTT("100", mqttbatterypercentage);
         }
 
         // Check if the battery is charging
         if (analogRead(SOLAR_INDICATOR) != 0) { // Solar panel connector
-            packageAndSendMQTT("Charging", MQTT_BATTERY_STATUS);
+            packageAndSendMQTT("Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
         } else if (analogRead(USB_INDICATOR) == 0) { // USB connectors
-            packageAndSendMQTT("USB Charging", MQTT_BATTERY_STATUS);
+            packageAndSendMQTT("USB Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
         } else {
-            packageAndSendMQTT("Discharging", MQTT_BATTERY_STATUS);
+            packageAndSendMQTT("Discharging", mqttbatterystatus);
             digitalWrite(LED_PIN, LOW);
         }
     }
@@ -180,23 +180,23 @@ void batteryInfo() {
 
 void getNetInfo() {
     if (initialized && mqtt.connected()) {
-        packageAndSendMQTT(String(modem.getModemInfo()), MQTT_MODEM_INFO);
+        packageAndSendMQTT(String(modem.getModemInfo()), mqttmodeminfo);
 
-        packageAndSendMQTT(String(modem.getSimCCID()), MQTT_CCID);
+        packageAndSendMQTT(String(modem.getSimCCID()), mqttmodemccid);
 
-        packageAndSendMQTT(String(modem.getIMSI()), MQTT_IMSI);
+        packageAndSendMQTT(String(modem.getIMSI()), mqttmodemimsi);
 
-        packageAndSendMQTT(String(modem.getOperator()), MQTT_OPERATOR);
+        packageAndSendMQTT(String(modem.getOperator()), mqttmodemoperator);
 
-        packageAndSendMQTT(String(modem.getSignalQuality()), MQTT_SIGNAL_QUALITY);
+        packageAndSendMQTT(String(modem.getSignalQuality()), mqttmodemsignalquality);
 
-        packageAndSendMQTT(publicIP, MQTT_PUBLIC_IP);
+        packageAndSendMQTT(publicIP, mqttmodempublicip);
     }
 }
 
 void getLocationInfo() {
     if (initialized && mqtt.connected()) {
-        modem.setGNSSMode(GNSS_MODE, DPO);
+        modem.setGNSSMode(stringToInt(locationgnssmode), stringToInt(locationdpo));
         delay(1000);
 
         modem.enableGPS();
@@ -230,12 +230,12 @@ void getLocationInfo() {
             Serial.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
             #endif
 
-            packageAndSendMQTT("GNSS", MQTT_LOCATION_TYPE);
-            packageAndSendMQTT(String(lat2, 8), MQTT_LATITUDE);
-            packageAndSendMQTT(String(lon2, 8), MQTT_LONGITUDE);
-            packageAndSendMQTT(String(speed2), MQTT_SPEED);
-            packageAndSendMQTT(String(alt2), MQTT_ALTITUDE);
-            packageAndSendMQTT(String(accuracy2), MQTT_ACCURACY);
+            packageAndSendMQTT("GNSS", mqttlocationtype);
+            packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
+            packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
+            packageAndSendMQTT(String(speed2), mqttlocationspeed);
+            packageAndSendMQTT(String(alt2), mqttlocationaltitude);
+            packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
         } else if (modem.getGsmLocation(&lat2, &lon2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
             #if DEBUG
             Serial.println("Falling back to a cellular location");
@@ -245,16 +245,16 @@ void getLocationInfo() {
             Serial.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
             #endif
 
-            packageAndSendMQTT("Cellular", MQTT_LOCATION_TYPE);
-            packageAndSendMQTT(String(lat2, 8), MQTT_LATITUDE);
-            packageAndSendMQTT(String(lon2, 8), MQTT_LONGITUDE);
-            packageAndSendMQTT(String(accuracy2), MQTT_ACCURACY);
+            packageAndSendMQTT("Cellular", mqttlocationtype);
+            packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
+            packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
+            packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
         } else {
             #if DEBUG
             Serial.println("Couldn't get your location");
             #endif
 
-            packageAndSendMQTT("None", MQTT_LOCATION_TYPE);
+            packageAndSendMQTT("None", mqttlocationtype);
         }
     }
 }
