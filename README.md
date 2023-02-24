@@ -42,7 +42,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - TSL2561 sensor (optional)
 - PIR sensor (like the AM312) thats pulled low by default (optional)
 
-## Configuration
+## Configuration (Web UI)
 ### Cellular
 - `APN` - The APN URL of your cellular provider
 - `Username` - The APN username of your cellular provider
@@ -97,7 +97,27 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `Accuracy` - The MQTT topic to publish the location accuracy to
 ### Misc MQTT topics
 - `Uptime` - The MQTT topic to publish the uptime to
-- `Version` - The MQTT topic to publish the version to
+- `Version` - The MQTT topic to publish the version number to
+
+## Advanced Configuration (config.h)
+### Debug
+- `DEBUG` - Enable or disable debug messages
+### Modem config
+- `UART_BAUD` - The baud rate of the serial port & modem
+- `MODEM_TX` - The TX pin of the modem
+- `MODEM_RX` - The RX pin of the modem
+- `MODEM_PWRKEY` - The PWRKEY pin of the modem
+- `MODEM_DTR` - The DTR pin of the modem
+- `MODEM_RI` - The RI pin of the modem
+- `MODEM_FLIGHT` - The flight mode pin of the modem
+- `MODEM_STATUS` - The status pin of the modem
+### Status LED
+- `LED_PIN` - The pin of the status LED
+### Indicator pins
+- `USB_INDICATOR` - Detect if the board is being powered by USB
+- `SOLAR_INDICATOR` - Detect if the board is being powered by solar
+### Modem model
+- `TINY_GSM_MODEM_<MODEL>` - The model of the modem (only SIM7600 has been tested)
 
 ## Credits
 [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
