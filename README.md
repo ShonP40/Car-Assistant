@@ -120,4 +120,5 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `TINY_GSM_MODEM_<MODEL>` - The model of the modem (only SIM7600 has been tested)
 
 ## Credits
-[Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
+- [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
+- [Random Nerd Tutorials](https://randomnerdtutorials.com/esp32-wi-fi-manager-asyncwebserver/) - Base webserver code
