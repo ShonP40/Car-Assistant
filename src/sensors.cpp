@@ -32,7 +32,7 @@ Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
 
 void initSensors() {
   if (sensorsenable == "true") {
-    if (sensorsenablebme280 = "true") {
+    if (sensorsenablebme280 == "true") {
       // Initialize the BME280 sensor
       if (!bme.begin(i2cAddress("BME280", sensorbme280i2caddress))) {
         #if DEBUG
@@ -41,7 +41,7 @@ void initSensors() {
       }
     }
 
-    if (sensorsenablepir = "true") {
+    if (sensorsenablepir == "true") {
       // Initialize the PIR sensor
       pinMode(stringToInt(sensorpirpin), INPUT);
     }
@@ -51,7 +51,7 @@ void initSensors() {
 void readSensors() {
   if (sensorsenable == "true") {
     // BME 280
-    if (sensorsenablebme280 = "true") {
+    if (sensorsenablebme280 == "true") {
       sensors_event_t temp_event, pressure_event, humidity_event;
       bme_temp->getEvent(&temp_event);
       bme_pressure->getEvent(&pressure_event);
@@ -79,7 +79,7 @@ void readSensors() {
     // TSL2561
     Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(i2cAddress("TSL2561", sensortsl2561i2caddress), 12345);
 
-    if (sensorsenabletsl2561 = "true") {
+    if (sensorsenabletsl2561 == "true") {
       // Initialize the TSL2561 sensor
       if (!tsl.begin()) {
         #if DEBUG
@@ -113,7 +113,7 @@ void readSensors() {
     }
 
     // PIR
-    if (sensorsenablepir = "true") {
+    if (sensorsenablepir == "true") {
       int pirState = digitalRead(stringToInt(sensorpirpin));
 
       #if DEBUG
