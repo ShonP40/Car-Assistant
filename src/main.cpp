@@ -9,6 +9,9 @@
 #include <AsyncElegantOTA.h>
 AsyncWebServer server(80);
 
+// Configuration variables
+String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttuptime, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy;
+
 // Search for parameter in HTTP POST request
 const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttuptime", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy"};
 
@@ -31,6 +34,9 @@ String readFile(fs::FS &fs, const char * path){
     fileContent = file.readStringUntil('\n');
     break;
   }
+
+  file.close();
+
   return fileContent;
 }
 
@@ -59,6 +65,61 @@ void writeFile(fs::FS &fs, const char * path, const char * message) {
   }
 
   file.close();
+}
+
+void loadConfig() {
+  // Open file for reading
+  String configFile = readFile(SPIFFS, "/config.json");
+  // Allocate a temporary JsonDocument
+  DynamicJsonDocument doc(1024);
+  // Deserialize the JSON document
+  deserializeJson(doc, configFile);
+  apn = doc["apn"] | "yourapn.com";
+  apnusername = doc["apnusername"] | "user";
+  apnpassword = doc["apnpassword"] | "pass";
+  simpin = doc["simpin"] | "";
+  apssid = doc["apssid"] | "Car Assistant";
+  appassword = doc["appassword"] | "12345678";
+  mqttaddress = doc["mqttaddress"] | "yourbroker.com";
+  mqttport = doc["mqttport"] | "1883";
+  mqttclientname = doc["mqttclientname"] | "car-assistant";
+  mqttusername = doc["mqttusername"] | "user";
+  mqttpassword = doc["mqttpassword"] | "pass";
+  locationgnssmode = doc["locationgnssmode"] | "0";
+  locationdpo = doc["locationdpo"] | "1";
+  sensorsenable = doc["sensorsenable"] | "true";
+  sensorsenablebme280 = doc["sensorsenablebme280"] | "true";
+  sensorbme280i2caddress = doc["sensorbme280i2caddress"] | "0x76";
+  mqttsensorsbme280temperature = doc["mqttsensorsbme280temperature"] | "temperature";
+  mqttsensorsbme280pressure = doc["mqttsensorsbme280pressure"] | "pressure";
+  mqttsensorsbme280humidity = doc["mqttsensorsbme280humidity"] | "humidity";
+  sensorsenabletsl2561 = doc["sensorsenabletsl2561"] | "true";
+  sensortsl2561i2caddress = doc["sensortsl2561i2caddress"] | "0x39";
+  sensortsl2561gain = doc["sensortsl2561gain"] | "auto";
+  mqttsensorstsl2561lux = doc["mqttsensorstsl2561lux"] | "lux";
+  sensorsenablepir = doc["sensorsenablepir"] | "true";
+  sensorpirpin = doc["sensorpirpin"] | "19";
+  mqttsensorspir = doc["mqttsensorspir"] | "pir";
+  mqttmodeminfo = doc["mqttmodeminfo"] | "modem-info";
+  mqttmodemccid = doc["mqttmodemccid"] | "ccid";
+  mqttmodemimsi = doc["mqttmodemimsi"] | "imsi";
+  mqttmodemoperator = doc["mqttmodemoperator"] | "operator";
+  mqttmodemsignalquality = doc["mqttmodemsignalquality"] | "signal-quality";
+  mqttmodempublicip = doc["mqttmodempublicip"] | "public-ip";
+  mqttbatterypercentage = doc["mqttbatterypercentage"] | "battery-percentage";
+  mqttbatteryvoltage = doc["mqttbatteryvoltage"] | "battery-voltage";
+  mqttbatterystatus = doc["mqttbatterystatus"] | "battery-status";
+  mqttuptime = doc["mqttuptime"] | "uptime";
+  mqttlocationtype = doc["mqttlocationtype"] | "location-type";
+  mqttlocationlatitude = doc["mqttlocationlatitude"] | "latitude";
+  mqttlocationlongitude = doc["mqttlocationlongitude"] | "longitude";
+  mqttlocationspeed = doc["mqttlocationspeed"] | "speed";
+  mqttlocationaltitude = doc["mqttlocationaltitude"] | "altitude";
+  mqttlocationaccuracy = doc["mqttlocationaccuracy"] | "location-accuracy";
+
+  #if DEBUG
+  Serial.println("Loaded configuration from config.json");
+  #endif
 }
 
 void setup() {
@@ -276,13 +337,13 @@ void setup() {
                 <form id="config" action="/" method="POST">
                   <p> Cellular </br>
                     <label for="apn">APN</label>
-                    <input type="text" id="apn" name="apn">
+                    <input type="text" id="apn" name="apn" value="yourapn.com">
                     <br>
                     <label for="apnusername">Username</label>
-                    <input type="text" id="apnusername" name="apnusername">
+                    <input type="text" id="apnusername" name="apnusername" value="user">
                     <br>
                     <label for="apnpassword">Password</label>
-                    <input type="text" id="apnpassword" name="apnpassword">
+                    <input type="text" id="apnpassword" name="apnpassword" value="pass">
                     <br>
                     <label for="simpin">SIM PIN</label>
                     <input type="text" id="simpin" name="simpin">
@@ -292,7 +353,7 @@ void setup() {
                     <input type="text" id="apssid" name="apssid" value="Car Assistant">
                     <br>
                     <label for="appassword">Password</label>
-                    <input type="text" id="appassword" name="appassword">
+                    <input type="text" id="appassword" name="appassword" value="12345678">
                   </p>
                   <p> MQTT Broker </br>
                     <label for="mqttaddress">Address</label>
@@ -305,10 +366,10 @@ void setup() {
                     <input type="text" id="mqttclientname" name="mqttclientname" value="car-assistant">
                     <br>
                     <label for="mqttusername">Username</label>
-                    <input type="text" id="mqttusername" name="mqttusername">
+                    <input type="text" id="mqttusername" name="mqttusername" value="user">
                     <br>
                     <label for="mqttpassword">Password</label>
-                    <input type="text" id="mqttpassword" name="mqttpassword">
+                    <input type="text" id="mqttpassword" name="mqttpassword" value="pass">
                   </p>
                   <p> Location </br>
                     <label for="locationgnssmode">GNSS MODE</label>
@@ -418,11 +479,16 @@ void setup() {
               </div>
               <div class="card">
                 <div class="card-title">
-                  <h2>More</h2>
+                  <h2>Utilities</h2>
                 </div>
-                <form id="more" action="update">
+                <form id="update" action="update">
                   <p>
                     <input type="submit" value="Update">
+                  </p>
+                </form>
+                <form id="restart" action="/restart" method="POST">
+                  <p>
+                    <input type="submit" value="Restart">
                   </p>
                 </form>
               </div>
@@ -456,7 +522,7 @@ void setup() {
     )rawliteral";
     request->send(200, "text/html", index_html);
   });
-    
+
   server.serveStatic("/", SPIFFS, "/");
 
   // Respond to config changes
@@ -481,8 +547,18 @@ void setup() {
     delay(3000);
     ESP.restart();
   });
+
+  // Respond to restart button press
+  server.on("/restart", HTTP_POST, [](AsyncWebServerRequest *request) {
+    request->send(200, "text/plain", "Restarting...");
+    delay(3000);
+    ESP.restart();
+  });
   
   server.begin();
+
+  // Load the configuration
+  loadConfig();
 }
 
 // Initialize the modem
