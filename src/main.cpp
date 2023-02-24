@@ -320,11 +320,11 @@ void getVersion() {
     packageAndSendMQTT(version, mqttversion);
 
     // Save the version to a json file
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument doc(64);
     deserializeJson(doc, readFile(SPIFFS, "/version.json"));
     // if the version is the same, don't send it
     if (doc["version"] != version) {
-      DynamicJsonDocument doc(1024);
+      DynamicJsonDocument doc(64);
       doc["version"] = version;
       writeFile(SPIFFS, "/version.json", doc.as<String>().c_str());
     }
