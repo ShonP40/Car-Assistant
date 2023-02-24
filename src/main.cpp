@@ -80,7 +80,7 @@ void loadConfig() {
   // Open file for reading
   String configFile = readFile(SPIFFS, "/config.json");
   // Allocate a temporary JsonDocument
-  DynamicJsonDocument doc(1024);
+  DynamicJsonDocument doc(2048);
   // Deserialize the JSON document
   deserializeJson(doc, configFile);
   apn = doc["apn"] | "yourapn.com";
@@ -128,6 +128,51 @@ void loadConfig() {
 
   #if DEBUG
   Serial.println("Loaded configuration from config.json");
+
+  // Print all the config values
+  Serial.println("Configuration:");
+  Serial.println("  apn: " + apn);
+  Serial.println("  apnusername: " + apnusername);
+  Serial.println("  apnpassword: " + apnpassword);
+  Serial.println("  simpin: " + simpin);
+  Serial.println("  apssid: " + apssid);
+  Serial.println("  appassword: " + appassword);
+  Serial.println("  mqttaddress: " + mqttaddress);
+  Serial.println("  mqttport: " + mqttport);
+  Serial.println("  mqttclientname: " + mqttclientname);
+  Serial.println("  mqttusername: " + mqttusername);
+  Serial.println("  mqttpassword: " + mqttpassword);
+  Serial.println("  locationgnssmode: " + locationgnssmode);
+  Serial.println("  locationdpo: " + locationdpo);
+  Serial.println("  sensorsenable: " + sensorsenable);
+  Serial.println("  sensorsenablebme280: " + sensorsenablebme280);
+  Serial.println("  sensorbme280i2caddress: " + sensorbme280i2caddress);
+  Serial.println("  mqttsensorsbme280temperature: " + mqttsensorsbme280temperature);
+  Serial.println("  mqttsensorsbme280pressure: " + mqttsensorsbme280pressure);
+  Serial.println("  mqttsensorsbme280humidity: " + mqttsensorsbme280humidity);
+  Serial.println("  sensorsenabletsl2561: " + sensorsenabletsl2561);
+  Serial.println("  sensortsl2561i2caddress: " + sensortsl2561i2caddress);
+  Serial.println("  sensortsl2561gain: " + sensortsl2561gain);
+  Serial.println("  mqttsensorstsl2561lux: " + mqttsensorstsl2561lux);
+  Serial.println("  sensorsenablepir: " + sensorsenablepir);
+  Serial.println("  sensorpirpin: " + sensorpirpin);
+  Serial.println("  mqttsensorspir: " + mqttsensorspir);
+  Serial.println("  mqttmodeminfo: " + mqttmodeminfo);
+  Serial.println("  mqttmodemccid: " + mqttmodemccid);
+  Serial.println("  mqttmodemimsi: " + mqttmodemimsi);
+  Serial.println("  mqttmodemoperator: " + mqttmodemoperator);
+  Serial.println("  mqttmodemsignalquality: " + mqttmodemsignalquality);
+  Serial.println("  mqttmodempublicip: " + mqttmodempublicip);
+  Serial.println("  mqttbatterypercentage: " + mqttbatterypercentage);
+  Serial.println("  mqttbatteryvoltage: " + mqttbatteryvoltage);
+  Serial.println("  mqttbatterystatus: " + mqttbatterystatus);
+  Serial.println("  mqttuptime: " + mqttuptime);
+  Serial.println("  mqttlocationtype: " + mqttlocationtype);
+  Serial.println("  mqttlocationlatitude: " + mqttlocationlatitude);
+  Serial.println("  mqttlocationlongitude: " + mqttlocationlongitude);
+  Serial.println("  mqttlocationspeed: " + mqttlocationspeed);
+  Serial.println("  mqttlocationaltitude: " + mqttlocationaltitude);
+  Serial.println("  mqttlocationaccuracy: " + mqttlocationaccuracy);
   #endif
 }
 
@@ -205,7 +250,7 @@ void setup() {
   server.on("/", HTTP_POST, [](AsyncWebServerRequest *request) {
     int params = request->params();
 
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument doc(2048);
     for (int i = 0; i < params; i++) {
       AsyncWebParameter* p = request->getParam(i);
       if (p->isPost()) {
