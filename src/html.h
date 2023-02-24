@@ -279,10 +279,6 @@ const char index_html[] PROGMEM = R"rawliteral(
                             <label for="mqttbatterystatus">Status</label>
                             <input type="text" id="mqttbatterystatus" name="mqttbatterystatus" value="battery-status">
                         </p>
-                        <p> Misc MQTT topics </br>
-                            <label for="mqttuptime">Uptime</label>
-                            <input type="text" id="mqttuptime" name="mqttuptime" value="uptime">
-                        </p>
                         <p> Location MQTT topics </br>
                             <label for="mqttlocationtype">Type</label>
                             <input type="text" id="mqttlocationtype" name="mqttlocationtype" value="location-type">
@@ -301,6 +297,13 @@ const char index_html[] PROGMEM = R"rawliteral(
                             <br>
                             <label for="mqttlocationaccuracy">Accuracy</label>
                             <input type="text" id="mqttlocationaccuracy" name="mqttlocationaccuracy" value="location-accuracy">
+                        </p>
+                        <p> Misc MQTT topics </br>
+                            <label for="mqttuptime">Uptime</label>
+                            <input type="text" id="mqttuptime" name="mqttuptime" value="uptime">
+                            <br>
+                            <label for="mqttversion">Version</label>
+                            <input type="text" id="mqttversion" name="mqttversion" value="version">
                             <br>
                             <input type="submit" value="Submit">
                         </p>
@@ -325,7 +328,7 @@ const char index_html[] PROGMEM = R"rawliteral(
         </div>
         <footer>
             <div class="container">
-                <a href="https://shon.codes">Website</a> | Car Assistant by ShonP40 | <a href="https://github.com/ShonP40/Car-Assistant">Repository</a>
+                Car Assistant by ShonP40 | <a href="https://shon.codes">Website</a> | <a href="https://github.com/ShonP40/Car-Assistant">Repository</a> | Version: <span id="version"></span>
             </div>
         </footer>
     </body>
@@ -345,6 +348,15 @@ const char index_html[] PROGMEM = R"rawliteral(
                     element.value = value;
                 }
             }
+        }
+    </script>
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "version.json", false);
+        xhr.send();
+        if (xhr.status == 200) {
+            var version = JSON.parse(xhr.responseText);
+            document.getElementById("version").innerHTML = version.version;
         }
     </script>
     </html>

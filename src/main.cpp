@@ -11,10 +11,10 @@
 AsyncWebServer server(80);
 
 // Configuration variables
-String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttuptime, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy;
+String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, mqttuptime, mqttversion;
 
 // Search for parameter in HTTP POST request
-const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttuptime", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy"};
+const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "mqttuptime", "mqttversion"};
 
 // Read File from SPIFFS
 String readFile(fs::FS &fs, const char * path) {
@@ -118,13 +118,14 @@ void loadConfig() {
   mqttbatterypercentage = doc["mqttbatterypercentage"] | "battery-percentage";
   mqttbatteryvoltage = doc["mqttbatteryvoltage"] | "battery-voltage";
   mqttbatterystatus = doc["mqttbatterystatus"] | "battery-status";
-  mqttuptime = doc["mqttuptime"] | "uptime";
   mqttlocationtype = doc["mqttlocationtype"] | "location-type";
   mqttlocationlatitude = doc["mqttlocationlatitude"] | "latitude";
   mqttlocationlongitude = doc["mqttlocationlongitude"] | "longitude";
   mqttlocationspeed = doc["mqttlocationspeed"] | "speed";
   mqttlocationaltitude = doc["mqttlocationaltitude"] | "altitude";
   mqttlocationaccuracy = doc["mqttlocationaccuracy"] | "location-accuracy";
+  mqttuptime = doc["mqttuptime"] | "uptime";
+  mqttversion = doc["mqttversion"] | "version";
 
   #if DEBUG
   Serial.println("Loaded configuration from config.json");
@@ -166,13 +167,14 @@ void loadConfig() {
   Serial.println("  mqttbatterypercentage: " + mqttbatterypercentage);
   Serial.println("  mqttbatteryvoltage: " + mqttbatteryvoltage);
   Serial.println("  mqttbatterystatus: " + mqttbatterystatus);
-  Serial.println("  mqttuptime: " + mqttuptime);
   Serial.println("  mqttlocationtype: " + mqttlocationtype);
   Serial.println("  mqttlocationlatitude: " + mqttlocationlatitude);
   Serial.println("  mqttlocationlongitude: " + mqttlocationlongitude);
   Serial.println("  mqttlocationspeed: " + mqttlocationspeed);
   Serial.println("  mqttlocationaltitude: " + mqttlocationaltitude);
   Serial.println("  mqttlocationaccuracy: " + mqttlocationaccuracy);
+  Serial.println("  mqttuptime: " + mqttuptime);
+  Serial.println("  mqttversion: " + mqttversion);
   #endif
 }
 
@@ -310,6 +312,24 @@ void getUptime() {
     packageAndSendMQTT(String(esp_timer_get_time() / 1000000), mqttuptime);
 }
 
+// Version
+void getVersion() {
+    String version = ESP.getSketchMD5();
+
+    // Send the version to the MQTT broker
+    packageAndSendMQTT(version, mqttversion);
+
+    // Save the version to a json file
+    DynamicJsonDocument doc(1024);
+    deserializeJson(doc, readFile(SPIFFS, "/version.json"));
+    // if the version is the same, don't send it
+    if (doc["version"] != version) {
+      DynamicJsonDocument doc(1024);
+      doc["version"] = version;
+      writeFile(SPIFFS, "/version.json", doc.as<String>().c_str());
+    }
+}
+
 void loop() {
   // Initialize the modem
   initModem();
@@ -325,6 +345,9 @@ void loop() {
 
   // Uptime
   getUptime();
+
+  // Version
+  getVersion();
 
   // Get battery info
   batteryInfo();
