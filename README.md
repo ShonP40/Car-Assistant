@@ -70,7 +70,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `MQTT Humidity` - The MQTT topic to publish the humidity to
 ### TSL2561
 - `Enable` - Enable or disable the TSL2561 sensor
-- `I2C Address` - The I2C address of the TSL2561 sensor (0x29 or 0x39)
+- `I2C Address` - The I2C address of the TSL2561 sensor (0x29, 0x39 or 0x49)
 - `Gain` - The gain of the TSL2561 sensor (auto, 1x or 16x)
 - `MQTT` - The MQTT topic to publish the light level to
 ### PIR
