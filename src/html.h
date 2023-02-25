@@ -201,7 +201,7 @@ const char index_html[] PROGMEM = R"rawliteral(
                             <input type="text" id="mqttpassword" name="mqttpassword" value="pass">
                         </p>
                         <p> Location </br>
-                            <label for="locationgnssmode">GNSS MODE</label>
+                            <label for="locationgnssmode">GNSS Mode</label>
                             <input type="text" id="locationgnssmode" name="locationgnssmode" value="0">
                             <br>
                             <label for="locationdpo">DPO</label>
