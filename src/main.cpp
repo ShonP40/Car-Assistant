@@ -196,6 +196,9 @@ TinyGsmClient client(modem, 0);
 PubSubClient mqtt(client);
 
 void setup() {
+  // Increase the CPU frequency to 240MHz
+  setCpuFrequencyMhz(240);
+
   // Set the console baud rate
   SerialMon.begin(UART_BAUD);
   delay(10);
