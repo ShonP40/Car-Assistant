@@ -250,6 +250,13 @@ const char index_html[] PROGMEM = R"rawliteral(
                             <label for="mqttsensorspir">MQTT</label>
                             <input type="text" id="mqttsensorspir" name="mqttsensorspir" value="pir">
                         </p>
+                        <p> CPU Temperature </br>
+                            <label for="sensorsenablecputemp">Enable?</label>
+                            <input type="text" id="sensorsenablecputemp" name="sensorsenablecputemp" value="true">
+                            <br>
+                            <label for="mqttsensorscputemp">MQTT</label>
+                            <input type="text" id="mqttsensorscputemp" name="mqttsensorscputemp" value="cpu-temperature">
+                        </p>
                         <p> Modem MQTT topics </br>
                             <label for="mqttmodeminfo">Info</label>
                             <input type="text" id="mqttmodeminfo" name="mqttmodeminfo" value="modem-info">

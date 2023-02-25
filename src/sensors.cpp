@@ -30,6 +30,9 @@ Adafruit_Sensor *bme_temp = bme.getTemperatureSensor();
 Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
 Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
 
+// CPU temperature
+uint8_t temprature_sens_read();
+
 void initSensors() {
   if (sensorsenablebme280 == "true") {
     // Initialize the BME280 sensor
@@ -119,5 +122,17 @@ void readSensors() {
     #endif
 
     packageAndSendMQTT(String(pirState), mqttsensorspir);
+  }
+
+  // CPU temperature
+  if (sensorsenablecputemp == "true") {
+    int cpuTemp = ((temprature_sens_read() - 32) / 1.8);
+    
+    #if DEBUG
+    SerialMon.print("CPU Temperature = ");
+    SerialMon.println(cpuTemp);
+    #endif
+
+    packageAndSendMQTT(String(cpuTemp), mqttsensorscputemp);
   }
 }

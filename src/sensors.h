@@ -10,3 +10,6 @@
 // Export functions
 void initSensors();
 void readSensors();
+
+// CPU temperature
+extern "C" uint8_t temprature_sens_read();
