@@ -164,16 +164,32 @@ void batteryInfo() {
             packageAndSendMQTT("100", mqttbatterypercentage);
         }
 
+        uint32_t cpuFrequency = getCpuFrequencyMhz();
         // Check if the battery is charging
         if (analogRead(SOLAR_INDICATOR) != 0) { // Solar panel connector
             packageAndSendMQTT("Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
+
+            // Increase the CPU frequency to 240MHz
+            if (cpuFrequency != 240) {
+                setCpuFrequencyMhz(240);
+            }
         } else if (analogRead(USB_INDICATOR) == 0) { // USB connectors
             packageAndSendMQTT("USB Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
+
+            // Increase the CPU frequency to 240MHz
+            if (cpuFrequency != 240) {
+                setCpuFrequencyMhz(240);
+            }
         } else {
             packageAndSendMQTT("Discharging", mqttbatterystatus);
             digitalWrite(LED_PIN, LOW);
+
+            // Decrease the CPU frequency to 80MHz to save power
+            if (cpuFrequency != 80) {
+                setCpuFrequencyMhz(80);
+            }
         }
     }
 }

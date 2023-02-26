@@ -135,4 +135,16 @@ void readSensors() {
 
     packageAndSendMQTT(String(cpuTemp), mqttsensorscputemp);
   }
+
+  // CPU frequency
+  if (sensorsenablecpufreq == "true") {
+    uint32_t cpuFrequency = getCpuFrequencyMhz();
+    
+    #if DEBUG
+    SerialMon.print("CPU Frequency = ");
+    SerialMon.println(cpuFrequency);
+    #endif
+
+    packageAndSendMQTT(String(cpuFrequency), mqttsensorscpufreq);
+  }
 }
