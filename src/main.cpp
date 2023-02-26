@@ -19,13 +19,13 @@ const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apss
 // Read File from SPIFFS
 String readFile(fs::FS &fs, const char * path) {
   #if DEBUG
-  Serial.printf("Reading file: %s\r\n", path);
+  SerialMon.printf("Reading file: %s\r\n", path);
   #endif
 
   File file = fs.open(path);
   if (!file || file.isDirectory()) {
     #if DEBUG
-    Serial.println("Failed to open file for reading");
+    SerialMon.println("Failed to open file for reading");
     #endif
     return String();
   }
@@ -45,23 +45,23 @@ String readFile(fs::FS &fs, const char * path) {
 void writeFile(fs::FS &fs, const char * path, const char * message) {
   fs.remove(path);
   #if DEBUG
-  Serial.printf("Deleting existing file: %s\r\n", path);
+  SerialMon.printf("Deleting existing file: %s\r\n", path);
 
-  Serial.printf("Writing file: %s\r\n", path);
+  SerialMon.printf("Writing file: %s\r\n", path);
   #endif
 
   File file = fs.open(path, FILE_WRITE);
   if (!file) {
     #if DEBUG
-    Serial.println("Failed to open file for writing");
+    SerialMon.println("Failed to open file for writing");
     #endif
     return;
   }
   if (file.print(message)) {
     #if DEBUG
-    Serial.println("File written");
+    SerialMon.println("File written");
   } else {
-    Serial.println("Write failed");
+    SerialMon.println("Write failed");
     #endif
   }
 
@@ -132,57 +132,57 @@ void loadConfig() {
   mqttversion = doc["mqttversion"] | "version";
 
   #if DEBUG
-  Serial.println("Loaded configuration from config.json");
+  SerialMon.println("Loaded configuration from config.json");
 
   // Print all the config values
-  Serial.println("Configuration:");
-  Serial.println("  apn: " + apn);
-  Serial.println("  apnusername: " + apnusername);
-  Serial.println("  apnpassword: " + apnpassword);
-  Serial.println("  simpin: " + simpin);
-  Serial.println("  apssid: " + apssid);
-  Serial.println("  appassword: " + appassword);
-  Serial.println("  mqttaddress: " + mqttaddress);
-  Serial.println("  mqttport: " + mqttport);
-  Serial.println("  mqttclientname: " + mqttclientname);
-  Serial.println("  mqttusername: " + mqttusername);
-  Serial.println("  mqttpassword: " + mqttpassword);
-  Serial.println("  locationgnssmode: " + locationgnssmode);
-  Serial.println("  locationdpo: " + locationdpo);
-  Serial.println("  sensorsenable: " + sensorsenable);
-  Serial.println("  sensorsenablebme280: " + sensorsenablebme280);
-  Serial.println("  sensorbme280i2caddress: " + sensorbme280i2caddress);
-  Serial.println("  mqttsensorsbme280temperature: " + mqttsensorsbme280temperature);
-  Serial.println("  mqttsensorsbme280pressure: " + mqttsensorsbme280pressure);
-  Serial.println("  mqttsensorsbme280humidity: " + mqttsensorsbme280humidity);
-  Serial.println("  sensorsenabletsl2561: " + sensorsenabletsl2561);
-  Serial.println("  sensortsl2561i2caddress: " + sensortsl2561i2caddress);
-  Serial.println("  sensortsl2561gain: " + sensortsl2561gain);
-  Serial.println("  mqttsensorstsl2561lux: " + mqttsensorstsl2561lux);
-  Serial.println("  sensorsenablepir: " + sensorsenablepir);
-  Serial.println("  sensorpirpin: " + sensorpirpin);
-  Serial.println("  mqttsensorspir: " + mqttsensorspir);
-  Serial.println("  sensorsenablecputemp: " + sensorsenablecputemp);
-  Serial.println("  mqttsensorscputemp: " + mqttsensorscputemp);
-  Serial.println("  sensorsenablecpufreq: " + sensorsenablecpufreq);
-  Serial.println("  mqttsensorscpufreq: " + mqttsensorscpufreq);
-  Serial.println("  mqttmodeminfo: " + mqttmodeminfo);
-  Serial.println("  mqttmodemccid: " + mqttmodemccid);
-  Serial.println("  mqttmodemimsi: " + mqttmodemimsi);
-  Serial.println("  mqttmodemoperator: " + mqttmodemoperator);
-  Serial.println("  mqttmodemsignalquality: " + mqttmodemsignalquality);
-  Serial.println("  mqttmodempublicip: " + mqttmodempublicip);
-  Serial.println("  mqttbatterypercentage: " + mqttbatterypercentage);
-  Serial.println("  mqttbatteryvoltage: " + mqttbatteryvoltage);
-  Serial.println("  mqttbatterystatus: " + mqttbatterystatus);
-  Serial.println("  mqttlocationtype: " + mqttlocationtype);
-  Serial.println("  mqttlocationlatitude: " + mqttlocationlatitude);
-  Serial.println("  mqttlocationlongitude: " + mqttlocationlongitude);
-  Serial.println("  mqttlocationspeed: " + mqttlocationspeed);
-  Serial.println("  mqttlocationaltitude: " + mqttlocationaltitude);
-  Serial.println("  mqttlocationaccuracy: " + mqttlocationaccuracy);
-  Serial.println("  mqttuptime: " + mqttuptime);
-  Serial.println("  mqttversion: " + mqttversion);
+  SerialMon.println("Configuration:");
+  SerialMon.println("  apn: " + apn);
+  SerialMon.println("  apnusername: " + apnusername);
+  SerialMon.println("  apnpassword: " + apnpassword);
+  SerialMon.println("  simpin: " + simpin);
+  SerialMon.println("  apssid: " + apssid);
+  SerialMon.println("  appassword: " + appassword);
+  SerialMon.println("  mqttaddress: " + mqttaddress);
+  SerialMon.println("  mqttport: " + mqttport);
+  SerialMon.println("  mqttclientname: " + mqttclientname);
+  SerialMon.println("  mqttusername: " + mqttusername);
+  SerialMon.println("  mqttpassword: " + mqttpassword);
+  SerialMon.println("  locationgnssmode: " + locationgnssmode);
+  SerialMon.println("  locationdpo: " + locationdpo);
+  SerialMon.println("  sensorsenable: " + sensorsenable);
+  SerialMon.println("  sensorsenablebme280: " + sensorsenablebme280);
+  SerialMon.println("  sensorbme280i2caddress: " + sensorbme280i2caddress);
+  SerialMon.println("  mqttsensorsbme280temperature: " + mqttsensorsbme280temperature);
+  SerialMon.println("  mqttsensorsbme280pressure: " + mqttsensorsbme280pressure);
+  SerialMon.println("  mqttsensorsbme280humidity: " + mqttsensorsbme280humidity);
+  SerialMon.println("  sensorsenabletsl2561: " + sensorsenabletsl2561);
+  SerialMon.println("  sensortsl2561i2caddress: " + sensortsl2561i2caddress);
+  SerialMon.println("  sensortsl2561gain: " + sensortsl2561gain);
+  SerialMon.println("  mqttsensorstsl2561lux: " + mqttsensorstsl2561lux);
+  SerialMon.println("  sensorsenablepir: " + sensorsenablepir);
+  SerialMon.println("  sensorpirpin: " + sensorpirpin);
+  SerialMon.println("  mqttsensorspir: " + mqttsensorspir);
+  SerialMon.println("  sensorsenablecputemp: " + sensorsenablecputemp);
+  SerialMon.println("  mqttsensorscputemp: " + mqttsensorscputemp);
+  SerialMon.println("  sensorsenablecpufreq: " + sensorsenablecpufreq);
+  SerialMon.println("  mqttsensorscpufreq: " + mqttsensorscpufreq);
+  SerialMon.println("  mqttmodeminfo: " + mqttmodeminfo);
+  SerialMon.println("  mqttmodemccid: " + mqttmodemccid);
+  SerialMon.println("  mqttmodemimsi: " + mqttmodemimsi);
+  SerialMon.println("  mqttmodemoperator: " + mqttmodemoperator);
+  SerialMon.println("  mqttmodemsignalquality: " + mqttmodemsignalquality);
+  SerialMon.println("  mqttmodempublicip: " + mqttmodempublicip);
+  SerialMon.println("  mqttbatterypercentage: " + mqttbatterypercentage);
+  SerialMon.println("  mqttbatteryvoltage: " + mqttbatteryvoltage);
+  SerialMon.println("  mqttbatterystatus: " + mqttbatterystatus);
+  SerialMon.println("  mqttlocationtype: " + mqttlocationtype);
+  SerialMon.println("  mqttlocationlatitude: " + mqttlocationlatitude);
+  SerialMon.println("  mqttlocationlongitude: " + mqttlocationlongitude);
+  SerialMon.println("  mqttlocationspeed: " + mqttlocationspeed);
+  SerialMon.println("  mqttlocationaltitude: " + mqttlocationaltitude);
+  SerialMon.println("  mqttlocationaccuracy: " + mqttlocationaccuracy);
+  SerialMon.println("  mqttuptime: " + mqttuptime);
+  SerialMon.println("  mqttversion: " + mqttversion);
   #endif
 }
 
@@ -233,9 +233,9 @@ void setup() {
   // Initialize SPIFFS
   if (!SPIFFS.begin(true)) {
     #if DEBUG
-    Serial.println("An error has occurred while mounting SPIFFS");
+    SerialMon.println("An error has occurred while mounting SPIFFS");
   } else {
-    Serial.println("SPIFFS mounted successfully");
+    SerialMon.println("SPIFFS mounted successfully");
     #endif
   }
 
@@ -296,14 +296,14 @@ void initMQTT() {
       if (initialized) {
         if (!mqtt.connected()) {
             #if DEBUG
-            Serial.println("MQTT no connected");
+            SerialMon.println("MQTT no connected");
             #endif
 
             mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
         }
         #if DEBUG
         else {
-            Serial.println("MQTT connected");
+            SerialMon.println("MQTT connected");
         }
         #endif
       }

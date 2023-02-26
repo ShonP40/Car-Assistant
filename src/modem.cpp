@@ -10,11 +10,11 @@ String publicIP;
 void initModem() {
     if (!initialized) {
         #if DEBUG
-        Serial.println("\nInitializing modem...");
+        SerialMon.println("\nInitializing modem...");
         #endif
         if (!modem.init()) {
             #if DEBUG
-            Serial.println("Failed to initiate the modem, retrying...");
+            SerialMon.println("Failed to initiate the modem, retrying...");
             #endif
             initialized = false;
             return;
@@ -59,7 +59,7 @@ void getPublicIP() {
         client.println();
     } else {
         #if DEBUG
-        Serial.println("Failed to get public IP");
+        SerialMon.println("Failed to get public IP");
         #endif
     }
     delay(5000);
@@ -74,7 +74,7 @@ void getPublicIP() {
 void initNetwork() {
     if (!modem.isGprsConnected() && initialized) {
         #if DEBUG
-        Serial.println("\nWaiting for network...");
+        SerialMon.println("\nWaiting for network...");
         #endif
         if (!modem.waitForNetwork(600000L)) {
             delay(10000);
@@ -83,10 +83,10 @@ void initNetwork() {
 
         #if DEBUG
         if (modem.isNetworkConnected()) {
-            Serial.println("Network connected");
+            SerialMon.println("Network connected");
         }
 
-        Serial.println((String)"\nConnecting to: " + apn);
+        SerialMon.println((String)"\nConnecting to: " + apn);
         #endif
         if (!modem.gprsConnect(stringToChar(apn), stringToChar(apnusername), stringToChar(apnpassword))) {
             delay(10000);
@@ -95,9 +95,9 @@ void initNetwork() {
 
         #if DEBUG
         if (modem.isGprsConnected()) {
-            Serial.println("Connected to the cellular network");
+            SerialMon.println("Connected to the cellular network");
         } else {
-            Serial.println("Failed to connect to the cellular network");
+            SerialMon.println("Failed to connect to the cellular network");
         }
         #endif
 
@@ -118,19 +118,19 @@ void getNetworkTime() {
 
         for (int8_t i = 5; i; i--) {
             #if DEBUG
-            Serial.println("Requesting current network time");
+            SerialMon.println("Requesting current network time");
             #endif
 
             if (modem.getNetworkTime(&netyear, &netmonth, &netday, &nethour, &netmin, &netsec, &timezone)) {
                 #if DEBUG
-                Serial.println((String)"Year: " + netyear + "\tMonth: " + netmonth + "\tDay: " + netday);
-                Serial.println((String)"Hour: " + nethour + "\tMinute: " + netmin + "\tSecond: " + netsec);
-                Serial.println((String)"Timezone: " + timezone);
+                SerialMon.println((String)"Year: " + netyear + "\tMonth: " + netmonth + "\tDay: " + netday);
+                SerialMon.println((String)"Hour: " + nethour + "\tMinute: " + netmin + "\tSecond: " + netsec);
+                SerialMon.println((String)"Timezone: " + timezone);
                 #endif
                 configTime(timezone, 0, "pool.ntp.org", "time.apple.com", "time.google.com");
             } else {
                 #if DEBUG
-                Serial.println("Couldn't get network time, retrying in 15s.");
+                SerialMon.println("Couldn't get network time, retrying in 15s.");
                 #endif
                 delay(15000);
             }
@@ -233,17 +233,17 @@ void getLocationInfo() {
         int   sec2      = 0;
 
         #if DEBUG
-        Serial.println("Requesting your current GNSS location");
+        SerialMon.println("Requesting your current GNSS location");
         #endif
 
         if (modem.getGPS(&lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
             #if DEBUG
-            Serial.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
-            Serial.println("Speed: " + String(speed2) + "\tAltitude: " + String(alt2));
-            Serial.println("Visible Satellites: " + String(vsat2) + "\tUsed Satellites: " + String(usat2));
-            Serial.println("Accuracy: " + String(accuracy2));
-            Serial.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
-            Serial.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
+            SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
+            SerialMon.println("Speed: " + String(speed2) + "\tAltitude: " + String(alt2));
+            SerialMon.println("Visible Satellites: " + String(vsat2) + "\tUsed Satellites: " + String(usat2));
+            SerialMon.println("Accuracy: " + String(accuracy2));
+            SerialMon.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
+            SerialMon.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
             #endif
 
             packageAndSendMQTT("GNSS", mqttlocationtype);
@@ -254,11 +254,11 @@ void getLocationInfo() {
             packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
         } else if (modem.getGsmLocation(&lat2, &lon2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
             #if DEBUG
-            Serial.println("Falling back to a cellular location");
-            Serial.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
-            Serial.println("Accuracy: " + String(accuracy2));
-            Serial.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
-            Serial.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
+            SerialMon.println("Falling back to a cellular location");
+            SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
+            SerialMon.println("Accuracy: " + String(accuracy2));
+            SerialMon.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
+            SerialMon.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
             #endif
 
             packageAndSendMQTT("Cellular", mqttlocationtype);
@@ -267,7 +267,7 @@ void getLocationInfo() {
             packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
         } else {
             #if DEBUG
-            Serial.println("Couldn't get your location");
+            SerialMon.println("Couldn't get your location");
             #endif
 
             packageAndSendMQTT("None", mqttlocationtype);
