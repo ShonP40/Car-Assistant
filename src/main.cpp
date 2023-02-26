@@ -80,7 +80,7 @@ void loadConfig() {
   // Open file for reading
   String configFile = readFile(SPIFFS, "/config.json");
   // Allocate a temporary JsonDocument
-  DynamicJsonDocument doc(2048);
+  DynamicJsonDocument doc(8192);
   // Deserialize the JSON document
   deserializeJson(doc, configFile);
   apn = doc["apn"] | "yourapn.com";
@@ -259,7 +259,7 @@ void setup() {
   server.on("/", HTTP_POST, [](AsyncWebServerRequest *request) {
     int params = request->params();
 
-    DynamicJsonDocument doc(2048);
+    DynamicJsonDocument doc(8192);
     for (int i = 0; i < params; i++) {
       AsyncWebParameter* p = request->getParam(i);
       if (p->isPost()) {
