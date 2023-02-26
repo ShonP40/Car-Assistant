@@ -25,7 +25,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor
 - OTA updates through a secure hotspot
-- Advanced config file (`config.h`)
+- Advanced build configuration with verbose support (`platformio.ini`)
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
