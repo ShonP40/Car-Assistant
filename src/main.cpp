@@ -283,7 +283,7 @@ void setup() {
   });
 
   // Respond to restart button press
-  server.on("/restart", HTTP_POST, [](AsyncWebServerRequest *request) {
+  server.on("/restart", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(200, "text/plain", "Restarting...");
     delay(3000);
     ESP.restart();

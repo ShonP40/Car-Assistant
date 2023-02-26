@@ -130,13 +130,13 @@ const char index_html[] PROGMEM = R"rawliteral(
         }
 
         a:link {
-            color: green;
+            color: rgb(0, 255, 251);
             background-color: transparent;
             text-decoration: none;
         }
 
         a:visited {
-            color: rgb(199, 192, 255);
+            color: rgb(0, 255, 251);
             background-color: transparent;
             text-decoration: none;
         }
@@ -155,7 +155,7 @@ const char index_html[] PROGMEM = R"rawliteral(
     </style>
     <body>
         <div class="topnav">
-            <h1>Car Assistant</h1>
+            <h1>Car Assistant &bull; <a href="update">Update</a> | <a href="/restart">Restart</a></h1>
         </div>
         <div class="content">
             <div class="card-grid">
@@ -320,21 +320,6 @@ const char index_html[] PROGMEM = R"rawliteral(
                             <input type="text" id="mqttversion" name="mqttversion" value="version">
                             <br>
                             <input type="submit" value="Submit">
-                        </p>
-                    </form>
-                </div>
-                <div class="card">
-                    <div class="card-title">
-                        <h2>Utilities</h2>
-                    </div>
-                    <form id="update" action="update">
-                        <p>
-                            <input type="submit" value="Update">
-                        </p>
-                    </form>
-                    <form id="restart" action="/restart" method="POST">
-                        <p>
-                            <input type="submit" value="Restart">
                         </p>
                     </form>
                 </div>
