@@ -86,7 +86,7 @@ void initNetwork() {
             Serial.println("Network connected");
         }
 
-        Serial.println((String)"\nConnecting to: " + APN);
+        Serial.println((String)"\nConnecting to: " + apn);
         #endif
         if (!modem.gprsConnect(stringToChar(apn), stringToChar(apnusername), stringToChar(apnpassword))) {
             delay(10000);
