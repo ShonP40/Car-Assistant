@@ -105,6 +105,10 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `Speed` - The MQTT topic to publish the location speed to
 - `Altitude` - The MQTT topic to publish the location altitude to
 - `Accuracy` - The MQTT topic to publish the location accuracy to
+### FTP
+- `Enable` - Enable or disable the FTP server
+- `Username` - The username of the FTP server
+- `Password` - The password of the FTP server
 ### Misc MQTT topics
 - `Uptime` - The MQTT topic to publish the uptime to
 - `Version` - The MQTT topic to publish the version number to
