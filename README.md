@@ -28,6 +28,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Advanced build configuration with verbose support (`platformio.ini`)
 - Report the CPU temperature and frequency
 - Dynamic CPU frequency scaling
+- Report the free RAM amount
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)

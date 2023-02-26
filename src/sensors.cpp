@@ -147,4 +147,16 @@ void readSensors() {
 
     packageAndSendMQTT(String(cpuFrequency), mqttsensorscpufreq);
   }
+
+  // Free RAM
+  if (sensorsenablefreeram == "true") {
+    uint32_t freeRam = ESP.getFreeHeap();
+    
+    #if DEBUG
+    SerialMon.print("Free RAM = ");
+    SerialMon.println(freeRam);
+    #endif
+
+    packageAndSendMQTT(String(freeRam), mqttsensorsfreeram);
+  }
 }
