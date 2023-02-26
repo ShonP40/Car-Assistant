@@ -26,6 +26,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Detect motion inside your car's cabin using a PIR sensor
 - OTA updates through a secure hotspot
 - Advanced build configuration with verbose support (`platformio.ini`)
+- Report the CPU temperature and frequency
+- Dynamic CPU frequency scaling
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
@@ -77,6 +79,12 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `Enable` - Enable or disable the PIR sensor
 - `GPIO` - The GPIO pin the PIR sensor is connected to
 - `MQTT` - The MQTT topic to publish the motion status to
+### CPU Temperature
+- `Enable` - Enable or disable reporting the CPU temperature sensor value
+- `MQTT` - The MQTT topic to publish the CPU temperature to
+### CPU Frequency
+- `Enable` - Enable or disable reporting the CPU frequency value
+- `MQTT` - The MQTT topic to publish the CPU frequency to
 ### Modem MQTT topics
 - `Info` - The MQTT topic to publish the modem info to
 - `CCID` - The MQTT topic to publish the modem CCID to
