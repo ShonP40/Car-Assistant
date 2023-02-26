@@ -319,6 +319,16 @@ const char index_html[] PROGMEM = R"rawliteral(
                             <label for="mqttlocationaccuracy">Accuracy</label>
                             <input type="text" id="mqttlocationaccuracy" name="mqttlocationaccuracy" value="location-accuracy">
                         </p>
+                        <p> FTP </br>
+                            <label for="ftpenable">Enable?</label>
+                            <input type="text" id="ftpenable" name="ftpenable" value="true">
+                            <br>
+                            <label for="ftpuser">Username</label>
+                            <input type="text" id="ftpuser" name="ftpuser" value="carassistant">
+                            <br>
+                            <label for="ftppass">Password</label>
+                            <input type="text" id="ftppass" name="ftppass" value="12345678">
+                        </p>
                         <p> Misc MQTT topics </br>
                             <label for="mqttuptime">Uptime</label>
                             <input type="text" id="mqttuptime" name="mqttuptime" value="uptime">

@@ -2,6 +2,7 @@
 #include "modem.h"
 #include "sensors.h"
 #include "html.h"
+#include "ftp.h"
 
 // WiFi
 #include <WiFi.h>
@@ -11,10 +12,10 @@
 AsyncWebServer server(80);
 
 // Configuration variables
-String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, mqttuptime, mqttversion;
+String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, ftpenable, ftpuser, ftppass, mqttuptime, mqttversion;
 
 // Search for parameter in HTTP POST request
-const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "mqttuptime", "mqttversion"};
+const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "ftpenable", "ftpuser", "ftppass", "mqttuptime", "mqttversion"};
 
 // Read File from SPIFFS
 String readFile(fs::FS &fs, const char * path) {
@@ -130,6 +131,9 @@ void loadConfig() {
   mqttlocationspeed = doc["mqttlocationspeed"] | "speed";
   mqttlocationaltitude = doc["mqttlocationaltitude"] | "altitude";
   mqttlocationaccuracy = doc["mqttlocationaccuracy"] | "location-accuracy";
+  ftpenable = doc["ftpenable"] | "true";
+  ftpuser = doc["ftpuser"] | "carassistant";
+  ftppass = doc["ftppass"] | "12345678";
   mqttuptime = doc["mqttuptime"] | "uptime";
   mqttversion = doc["mqttversion"] | "version";
 
@@ -185,6 +189,9 @@ void loadConfig() {
   SerialMon.println("  mqttlocationspeed: " + mqttlocationspeed);
   SerialMon.println("  mqttlocationaltitude: " + mqttlocationaltitude);
   SerialMon.println("  mqttlocationaccuracy: " + mqttlocationaccuracy);
+  SerialMon.println("  ftpenable: " + ftpenable);
+  SerialMon.println("  ftpuser: " + ftpuser);
+  SerialMon.println("  ftppass: " + ftppass);
   SerialMon.println("  mqttuptime: " + mqttuptime);
   SerialMon.println("  mqttversion: " + mqttversion);
   #endif
@@ -250,6 +257,10 @@ void setup() {
   // WiFi AP
   WiFi.softAP(stringToChar(apssid), stringToChar(appassword));
 
+  // FTP
+  if (ftpenable == "true") {
+    initFTP();
+  }
   // Configure MQTT
   mqtt.setServer(mqttaddress.c_str(), stringToInt(mqttport));
 
@@ -346,36 +357,42 @@ void getVersion() {
 }
 
 void loop() {
-  // Initialize the modem
-  initModem();
+  if ((ftpenable == "false") || (ftp.countConnections() == 0)) {
+    // Initialize the modem
+    initModem();
 
-  // Connect to the cellular network
-  initNetwork();
+    // Connect to the cellular network
+    initNetwork();
 
-  // Get network time
-  getNetworkTime();
+    // Get network time
+    getNetworkTime();
 
-  // Connect to an MQTT broker
-  initMQTT();
+    // Connect to an MQTT broker
+    initMQTT();
 
-  // Uptime
-  getUptime();
+    // Uptime
+    getUptime();
 
-  // Version
-  getVersion();
+    // Version
+    getVersion();
 
-  // Get battery info
-  batteryInfo();
+    // Get battery info
+    batteryInfo();
 
-  // Get network info
-  getNetInfo();
+    // Get network info
+    getNetInfo();
 
-  // Get location info
-  getLocationInfo();
+    // Get location info
+    getLocationInfo();
 
-  // Sensors
-  if (sensorsenable == "true") {
-    initSensors();
-    readSensors();
+    // Sensors
+    if (sensorsenable == "true") {
+      initSensors();
+      readSensors();
+    }
+
+  // FTP
+  if (ftpenable == "true") {
+    loopFTP();
   }
 }

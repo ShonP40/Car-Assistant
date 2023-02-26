@@ -29,6 +29,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the CPU temperature and frequency
 - Dynamic CPU frequency scaling
 - Report the free RAM amount
+- SD card support through an FTP server (set your connection mode to `Active (PORT)`)
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
