@@ -45,6 +45,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - BME280 sensor (optional)
 - TSL2561 sensor (optional)
 - PIR sensor (like the AM312) thats pulled low by default (optional)
+- Micro SD Card (optional)
 
 ## Configuration (Web UI)
 ### Cellular

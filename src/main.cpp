@@ -131,7 +131,7 @@ void loadConfig() {
   mqttlocationspeed = doc["mqttlocationspeed"] | "speed";
   mqttlocationaltitude = doc["mqttlocationaltitude"] | "altitude";
   mqttlocationaccuracy = doc["mqttlocationaccuracy"] | "location-accuracy";
-  ftpenable = doc["ftpenable"] | "true";
+  ftpenable = doc["ftpenable"] | "false";
   ftpuser = doc["ftpuser"] | "carassistant";
   ftppass = doc["ftppass"] | "12345678";
   mqttuptime = doc["mqttuptime"] | "uptime";

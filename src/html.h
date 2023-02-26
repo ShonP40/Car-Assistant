@@ -321,7 +321,7 @@ const char index_html[] PROGMEM = R"rawliteral(
                         </p>
                         <p> FTP </br>
                             <label for="ftpenable">Enable?</label>
-                            <input type="text" id="ftpenable" name="ftpenable" value="true">
+                            <input type="text" id="ftpenable" name="ftpenable" value="false">
                             <br>
                             <label for="ftpuser">Username</label>
                             <input type="text" id="ftpuser" name="ftpuser" value="carassistant">
