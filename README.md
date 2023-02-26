@@ -99,7 +99,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `Uptime` - The MQTT topic to publish the uptime to
 - `Version` - The MQTT topic to publish the version number to
 
-## Advanced Configuration (config.h)
+## Advanced Build Configuration (platformio.ini)
 ### Debug
 - `DEBUG` - Enable or disable debug messages
 ### Modem config
