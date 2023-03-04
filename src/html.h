@@ -1,4 +1,4 @@
-const char index_html[] PROGMEM = R"rawliteral(
+const char* index_html = R"literal(
     <!DOCTYPE html>
     <html>
     <head>
@@ -376,4 +376,4 @@ const char index_html[] PROGMEM = R"rawliteral(
         }
     </script>
     </html>
-)rawliteral";
+)literal";
