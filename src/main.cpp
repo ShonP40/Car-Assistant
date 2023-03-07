@@ -3,6 +3,7 @@
 #include "sensors.h"
 #include "html.h"
 #include "ftp.h"
+#include "obd.h"
 
 // WiFi
 #include <WiFi.h>
@@ -12,10 +13,10 @@
 AsyncWebServer server(80);
 
 // Configuration variables
-String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, ftpenable, ftpuser, ftppass, mqttuptime, mqttversion;
+String apn, apnusername, apnpassword, simpin, apssid, appassword, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, ftpenable, ftpuser, ftppass, bluetoothenable, bluetoothname, bluetoothobdidentifier, bluetoothobdmqttobdpayload, bluetoothobdmqttobddebug, bluetoothobdmqttengineload, bluetoothobdmqttenginecoolanttemp, bluetoothobdmqttshorttermfueltrimbank1, bluetoothobdmqttlongtermfueltrimbank1, bluetoothobdmqttshorttermfueltrimbank2, bluetoothobdmqttlongtermfueltrimbank2, bluetoothobdmqttfuelpressure, bluetoothobdmqttmanifoldpressure, bluetoothobdmqttrpm, bluetoothobdmqttkph, bluetoothobdmqttmph, bluetoothobdmqtttimingadvance, bluetoothobdmqttintakeairtemp, bluetoothobdmqttmafrate, bluetoothobdmqttthrottle, bluetoothobdmqttauxinputstatus, bluetoothobdmqttruntime, bluetoothobdmqttdisttravelwithmil, bluetoothobdmqttfuelrailpressure, bluetoothobdmqttfuelrailguagepressure, bluetoothobdmqttcommandedegr, bluetoothobdmqttegrerror, bluetoothobdmqttcommandedevappurge, bluetoothobdmqttfuellevel, bluetoothobdmqttwarmupssincecodescleared, bluetoothobdmqttdistsincecodescleared, bluetoothobdmqttevapsysvappressure, bluetoothobdmqttabsbaropressure, bluetoothobdmqttcattempb1s1, bluetoothobdmqttcattempb2s1, bluetoothobdmqttcattempb1s2, bluetoothobdmqttcattempb2s2, bluetoothobdmqttctrlmodvoltage, bluetoothobdmqttabsload, bluetoothobdmqttcommandedairfuelratio, bluetoothobdmqttrelativethrottle, bluetoothobdmqttambientairtemp, bluetoothobdmqttabsthrottleposb, bluetoothobdmqttabsthrottleposc, bluetoothobdmqttabsthrottleposd, bluetoothobdmqttabsthrottlepose, bluetoothobdmqttabsthrottleposf, bluetoothobdmqttcommandedthrottleactuator, bluetoothobdmqtttimerunwithmil, bluetoothobdmqtttimesincecodescleared, bluetoothobdmqttmaxmafrate, bluetoothobdmqttethonolpercent, bluetoothobdmqttabsevapsysvappressure, bluetoothobdmqttevapsysvappressure2, bluetoothobdmqttabsfuelrailpressure, bluetoothobdmqttrelativepedalpos, bluetoothobdmqtthybridbatlife, bluetoothobdmqttoiltemp, bluetoothobdmqttfuelinjecttiming, bluetoothobdmqttfuelrate, bluetoothobdmqttdemandedtorque, bluetoothobdmqtttorque, bluetoothobdmqttreferencetorque, bluetoothobdmqttbatteryvoltage, bluetoothobdmqttvin, mqttuptime, mqttversion;
 
 // Search for parameter in HTTP POST request
-const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "ftpenable", "ftpuser", "ftppass", "mqttuptime", "mqttversion"};
+const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "apssid", "appassword", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "ftpenable", "ftpuser", "ftppass", "bluetoothenable", "bluetoothname", "bluetoothobdidentifier", "bluetoothobdmqttobdpayload", "bluetoothobdmqttobddebug", "bluetoothobdmqttengineload", "bluetoothobdmqttenginecoolanttemp", "bluetoothobdmqttshorttermfueltrimbank1", "bluetoothobdmqttlongtermfueltrimbank1", "bluetoothobdmqttshorttermfueltrimbank2", "bluetoothobdmqttlongtermfueltrimbank2", "bluetoothobdmqttfuelpressure", "bluetoothobdmqttmanifoldpressure", "bluetoothobdmqttrpm", "bluetoothobdmqttkph", "bluetoothobdmqttmph", "bluetoothobdmqtttimingadvance", "bluetoothobdmqttintakeairtemp", "bluetoothobdmqttmafrate", "bluetoothobdmqttthrottle", "bluetoothobdmqttauxinputstatus", "bluetoothobdmqttruntime", "bluetoothobdmqttdisttravelwithmil", "bluetoothobdmqttfuelrailpressure", "bluetoothobdmqttfuelrailguagepressure", "bluetoothobdmqttcommandedegr", "bluetoothobdmqttegrerror", "bluetoothobdmqttcommandedevappurge", "bluetoothobdmqttfuellevel", "bluetoothobdmqttwarmupssincecodescleared", "bluetoothobdmqttdistsincecodescleared", "bluetoothobdmqttevapsysvappressure", "bluetoothobdmqttabsbaropressure", "bluetoothobdmqttcattempb1s1", "bluetoothobdmqttcattempb2s1", "bluetoothobdmqttcattempb1s2", "bluetoothobdmqttcattempb2s2", "bluetoothobdmqttctrlmodvoltage", "bluetoothobdmqttabsload", "bluetoothobdmqttcommandedairfuelratio", "bluetoothobdmqttrelativethrottle", "bluetoothobdmqttambientairtemp", "bluetoothobdmqttabsthrottleposb", "bluetoothobdmqttabsthrottleposc", "bluetoothobdmqttabsthrottleposd", "bluetoothobdmqttabsthrottlepose", "bluetoothobdmqttabsthrottleposf", "bluetoothobdmqttcommandedthrottleactuator", "bluetoothobdmqtttimerunwithmil", "bluetoothobdmqtttimesincecodescleared", "bluetoothobdmqttmaxmafrate", "bluetoothobdmqttethonolpercent", "bluetoothobdmqttabsevapsysvappressure", "bluetoothobdmqttevapsysvappressure2", "bluetoothobdmqttabsfuelrailpressure", "bluetoothobdmqttrelativepedalpos", "bluetoothobdmqtthybridbatlife", "bluetoothobdmqttoiltemp", "bluetoothobdmqttfuelinjecttiming", "bluetoothobdmqttfuelrate", "bluetoothobdmqttdemandedtorque", "bluetoothobdmqtttorque", "bluetoothobdmqttreferencetorque", "bluetoothobdmqttbatteryvoltage", "bluetoothobdmqttvin", "mqttuptime", "mqttversion"};
 
 // Read File from SPIFFS
 String readFile(fs::FS &fs, const char * path) {
@@ -134,6 +135,71 @@ void loadConfig() {
   ftpenable = doc["ftpenable"] | "false";
   ftpuser = doc["ftpuser"] | "carassistant";
   ftppass = doc["ftppass"] | "12345678";
+  bluetoothenable = doc["bluetoothenable"] | "true";
+  bluetoothname = doc["bluetoothname"] | "Car Assistant";
+  bluetoothobdidentifier = doc["bluetoothobdidentifier"] | "Android-Vlink";
+  bluetoothobdmqttobdpayload = doc["bluetoothobdmqttobdpayload"] | "obd-payload";
+  bluetoothobdmqttobddebug = doc["bluetoothobdmqttobddebug"] | "obd-debug";
+  bluetoothobdmqttengineload = doc["bluetoothobdmqttengineload"] | "obd-engine-load";
+  bluetoothobdmqttenginecoolanttemp = doc["bluetoothobdmqttenginecoolanttemp"] | "obd-engine-coolant-temp";
+  bluetoothobdmqttshorttermfueltrimbank1 = doc["bluetoothobdmqttshorttermfueltrimbank1"] | "obd-short-term-fuel-trim-bank-1";
+  bluetoothobdmqttlongtermfueltrimbank1 = doc["bluetoothobdmqttlongtermfueltrimbank1"] | "obd-long-term-fuel-trim-bank-1";
+  bluetoothobdmqttshorttermfueltrimbank2 = doc["bluetoothobdmqttshorttermfueltrimbank2"] | "obd-short-term-fuel-trim-bank-2";
+  bluetoothobdmqttlongtermfueltrimbank2 = doc["bluetoothobdmqttlongtermfueltrimbank2"] | "obd-long-term-fuel-trim-bank-2";
+  bluetoothobdmqttfuelpressure = doc["bluetoothobdmqttfuelpressure"] | "obd-fuel-pressure";
+  bluetoothobdmqttmanifoldpressure = doc["bluetoothobdmqttmanifoldpressure"] | "obd-manifold-pressure";
+  bluetoothobdmqttrpm = doc["bluetoothobdmqttrpm"] | "obd-rpm";
+  bluetoothobdmqttkph = doc["bluetoothobdmqttkph"] | "obd-kph";
+  bluetoothobdmqttmph = doc["bluetoothobdmqttmph"] | "obd-mph";
+  bluetoothobdmqtttimingadvance = doc["bluetoothobdmqtttimingadvance"] | "obd-timing-advance";
+  bluetoothobdmqttintakeairtemp = doc["bluetoothobdmqttintakeairtemp"] | "obd-intake-air-temp";
+  bluetoothobdmqttmafrate = doc["bluetoothobdmqttmafrate"] | "obd-maf-rate";
+  bluetoothobdmqttthrottle = doc["bluetoothobdmqttthrottle"] | "obd-throttle";
+  bluetoothobdmqttauxinputstatus = doc["bluetoothobdmqttauxinputstatus"] | "obd-aux-input-status";
+  bluetoothobdmqttruntime = doc["bluetoothobdmqttruntime"] | "obd-run-time";
+  bluetoothobdmqttdisttravelwithmil = doc["bluetoothobdmqttdisttravelwithmil"] | "obd-dist-travel-with-mil";
+  bluetoothobdmqttfuelrailpressure = doc["bluetoothobdmqttfuelrailpressure"] | "obd-fuel-rail-pressure";
+  bluetoothobdmqttfuelrailguagepressure = doc["bluetoothobdmqttfuelrailguagepressure"] | "obd-fuel-rail-guage-pressure";
+  bluetoothobdmqttcommandedegr = doc["bluetoothobdmqttcommandedegr"] | "obd-commanded-egr";
+  bluetoothobdmqttegrerror = doc["bluetoothobdmqttegrerror"] | "obd-egr-error";
+  bluetoothobdmqttcommandedevappurge = doc["bluetoothobdmqttcommandedevappurge"] | "obd-commanded-evap-purge";
+  bluetoothobdmqttfuellevel = doc["bluetoothobdmqttfuellevel"] | "obd-fuel-level";
+  bluetoothobdmqttwarmupssincecodescleared = doc["bluetoothobdmqttwarmupssincecodescleared"] | "obd-warm-ups-since-codes-cleared";
+  bluetoothobdmqttdistsincecodescleared = doc["bluetoothobdmqttdistsincecodescleared"] | "obd-dist-since-codes-cleared";
+  bluetoothobdmqttevapsysvappressure = doc["bluetoothobdmqttevapsysvappressure"] | "obd-evap-sys-vap-pressure";
+  bluetoothobdmqttabsbaropressure = doc["bluetoothobdmqttabsbaropressure"] | "obd-abs-baro-pressure";
+  bluetoothobdmqttcattempb1s1 = doc["bluetoothobdmqttcattempb1s1"] | "obd-cat-temp-b1-s1";
+  bluetoothobdmqttcattempb2s1 = doc["bluetoothobdmqttcattempb2s1"] | "obd-cat-temp-b2-s1";
+  bluetoothobdmqttcattempb1s2 = doc["bluetoothobdmqttcattempb1s2"] | "obd-cat-temp-b1-s2";
+  bluetoothobdmqttcattempb2s2 = doc["bluetoothobdmqttcattempb2s2"] | "obd-cat-temp-b2-s2";
+  bluetoothobdmqttctrlmodvoltage = doc["bluetoothobdmqttctrlmodvoltage"] | "obd-ctrl-mod-voltage";
+  bluetoothobdmqttabsload = doc["bluetoothobdmqttabsload"] | "obd-abs-load";
+  bluetoothobdmqttcommandedairfuelratio = doc["bluetoothobdmqttcommandedairfuelratio"] | "obd-commanded-air-fuel-ratio";
+  bluetoothobdmqttrelativethrottle = doc["bluetoothobdmqttrelativethrottle"] | "obd-relative-throttle";
+  bluetoothobdmqttambientairtemp = doc["bluetoothobdmqttambientairtemp"] | "obd-ambient-air-temp";
+  bluetoothobdmqttabsthrottleposb = doc["bluetoothobdmqttabsthrottleposb"] | "obd-abs-throttle-pos-b";
+  bluetoothobdmqttabsthrottleposc = doc["bluetoothobdmqttabsthrottleposc"] | "obd-abs-throttle-pos-c";
+  bluetoothobdmqttabsthrottleposd = doc["bluetoothobdmqttabsthrottleposd"] | "obd-abs-throttle-pos-d";
+  bluetoothobdmqttabsthrottlepose = doc["bluetoothobdmqttabsthrottlepose"] | "obd-abs-throttle-pos-e";
+  bluetoothobdmqttabsthrottleposf = doc["bluetoothobdmqttabsthrottleposf"] | "obd-abs-throttle-pos-f";
+  bluetoothobdmqttcommandedthrottleactuator = doc["bluetoothobdmqttcommandedthrottleactuator"] | "obd-commanded-throttle-actuator";
+  bluetoothobdmqtttimerunwithmil = doc["bluetoothobdmqtttimerunwithmil"] | "obd-time-run-with-mil";
+  bluetoothobdmqtttimesincecodescleared = doc["bluetoothobdmqtttimesincecodescleared"] | "obd-time-since-codes-cleared";
+  bluetoothobdmqttmaxmafrate = doc["bluetoothobdmqttmaxmafrate"] | "obd-max-maf-rate";
+  bluetoothobdmqttethonolpercent = doc["bluetoothobdmqttethonolpercent"] | "obd-ethonol-percent";
+  bluetoothobdmqttabsevapsysvappressure = doc["bluetoothobdmqttabsevapsysvappressure"] | "obd-abs-evap-sys-vap-pressure";
+  bluetoothobdmqttevapsysvappressure2 = doc["bluetoothobdmqttevapsysvappressure2"] | "obd-evap-sys-vap-pressure-2";
+  bluetoothobdmqttabsfuelrailpressure = doc["bluetoothobdmqttabsfuelrailpressure"] | "obd-abs-fuel-rail-pressure";
+  bluetoothobdmqttrelativepedalpos = doc["bluetoothobdmqttrelativepedalpos"] | "obd-relative-pedal-pos";
+  bluetoothobdmqtthybridbatlife = doc["bluetoothobdmqtthybridbatlife"] | "obd-hybrid-bat-life";
+  bluetoothobdmqttoiltemp = doc["bluetoothobdmqttoiltemp"] | "obd-oil-temp";
+  bluetoothobdmqttfuelinjecttiming = doc["bluetoothobdmqttfuelinjecttiming"] | "obd-fuel-inject-timing";
+  bluetoothobdmqttfuelrate = doc["bluetoothobdmqttfuelrate"] | "obd-fuel-rate";
+  bluetoothobdmqttdemandedtorque = doc["bluetoothobdmqttdemandedtorque"] | "obd-demanded-torque";
+  bluetoothobdmqtttorque = doc["bluetoothobdmqtttorque"] | "obd-torque";
+  bluetoothobdmqttreferencetorque = doc["bluetoothobdmqttreferencetorque"] | "obd-reference-torque";
+  bluetoothobdmqttbatteryvoltage = doc["bluetoothobdmqttbatteryvoltage"] | "obd-battery-voltage";
+  bluetoothobdmqttvin = doc["bluetoothobdmqttvin"] | "obd-vin";
   mqttuptime = doc["mqttuptime"] | "uptime";
   mqttversion = doc["mqttversion"] | "version";
 
@@ -192,6 +258,71 @@ void loadConfig() {
   SerialMon.println("  ftpenable: " + ftpenable);
   SerialMon.println("  ftpuser: " + ftpuser);
   SerialMon.println("  ftppass: " + ftppass);
+  SerialMon.println("  bluetoothenable: " + bluetoothenable);
+  SerialMon.println("  bluetoothname: " + bluetoothname);
+  SerialMon.println("  bluetoothobdidentifier: " + bluetoothobdidentifier);
+  SerialMon.println("  bluetoothobdmqttobdpayload: " + bluetoothobdmqttobdpayload);
+  SerialMon.println("  bluetoothobdmqttobddebug: " + bluetoothobdmqttobddebug);
+  SerialMon.println("  bluetoothobdmqttengineload: " + bluetoothobdmqttengineload);
+  SerialMon.println("  bluetoothobdmqttenginecoolanttemp: " + bluetoothobdmqttenginecoolanttemp);
+  SerialMon.println("  bluetoothobdmqttshorttermfueltrimbank1: " + bluetoothobdmqttshorttermfueltrimbank1);
+  SerialMon.println("  bluetoothobdmqttlongtermfueltrimbank1: " + bluetoothobdmqttlongtermfueltrimbank1);
+  SerialMon.println("  bluetoothobdmqttshorttermfueltrimbank2: " + bluetoothobdmqttshorttermfueltrimbank2);
+  SerialMon.println("  bluetoothobdmqttlongtermfueltrimbank2: " + bluetoothobdmqttlongtermfueltrimbank2);
+  SerialMon.println("  bluetoothobdmqttfuelpressure: " + bluetoothobdmqttfuelpressure);
+  SerialMon.println("  bluetoothobdmqttmanifoldpressure: " + bluetoothobdmqttmanifoldpressure);
+  SerialMon.println("  bluetoothobdmqttrpm: " + bluetoothobdmqttrpm);
+  SerialMon.println("  bluetoothobdmqttkph: " + bluetoothobdmqttkph);
+  SerialMon.println("  bluetoothobdmqttmph: " + bluetoothobdmqttmph);
+  SerialMon.println("  bluetoothobdmqtttimingadvance: " + bluetoothobdmqtttimingadvance);
+  SerialMon.println("  bluetoothobdmqttintakeairtemp: " + bluetoothobdmqttintakeairtemp);
+  SerialMon.println("  bluetoothobdmqttmafrate: " + bluetoothobdmqttmafrate);
+  SerialMon.println("  bluetoothobdmqttthrottle: " + bluetoothobdmqttthrottle);
+  SerialMon.println("  bluetoothobdmqttauxinputstatus: " + bluetoothobdmqttauxinputstatus);
+  SerialMon.println("  bluetoothobdmqttruntime: " + bluetoothobdmqttruntime);
+  SerialMon.println("  bluetoothobdmqttdisttravelwithmil: " + bluetoothobdmqttdisttravelwithmil);
+  SerialMon.println("  bluetoothobdmqttfuelrailpressure: " + bluetoothobdmqttfuelrailpressure);
+  SerialMon.println("  bluetoothobdmqttfuelrailguagepressure: " + bluetoothobdmqttfuelrailguagepressure);
+  SerialMon.println("  bluetoothobdmqttcommandedegr: " + bluetoothobdmqttcommandedegr);
+  SerialMon.println("  bluetoothobdmqttegrerror: " + bluetoothobdmqttegrerror);
+  SerialMon.println("  bluetoothobdmqttcommandedevappurge: " + bluetoothobdmqttcommandedevappurge);
+  SerialMon.println("  bluetoothobdmqttfuellevel: " + bluetoothobdmqttfuellevel);
+  SerialMon.println("  bluetoothobdmqttwarmupssincecodescleared: " + bluetoothobdmqttwarmupssincecodescleared);
+  SerialMon.println("  bluetoothobdmqttdistsincecodescleared: " + bluetoothobdmqttdistsincecodescleared);
+  SerialMon.println("  bluetoothobdmqttevapsysvappressure: " + bluetoothobdmqttevapsysvappressure);
+  SerialMon.println("  bluetoothobdmqttabsbaropressure: " + bluetoothobdmqttabsbaropressure);
+  SerialMon.println("  bluetoothobdmqttcattempb1s1: " + bluetoothobdmqttcattempb1s1);
+  SerialMon.println("  bluetoothobdmqttcattempb2s1: " + bluetoothobdmqttcattempb2s1);
+  SerialMon.println("  bluetoothobdmqttcattempb1s2: " + bluetoothobdmqttcattempb1s2);
+  SerialMon.println("  bluetoothobdmqttcattempb2s2: " + bluetoothobdmqttcattempb2s2);
+  SerialMon.println("  bluetoothobdmqttctrlmodvoltage: " + bluetoothobdmqttctrlmodvoltage);
+  SerialMon.println("  bluetoothobdmqttabsload: " + bluetoothobdmqttabsload);
+  SerialMon.println("  bluetoothobdmqttcommandedairfuelratio: " + bluetoothobdmqttcommandedairfuelratio);
+  SerialMon.println("  bluetoothobdmqttrelativethrottle: " + bluetoothobdmqttrelativethrottle);
+  SerialMon.println("  bluetoothobdmqttambientairtemp: " + bluetoothobdmqttambientairtemp);
+  SerialMon.println("  bluetoothobdmqttabsthrottleposb: " + bluetoothobdmqttabsthrottleposb);
+  SerialMon.println("  bluetoothobdmqttabsthrottleposc: " + bluetoothobdmqttabsthrottleposc);
+  SerialMon.println("  bluetoothobdmqttabsthrottleposd: " + bluetoothobdmqttabsthrottleposd);
+  SerialMon.println("  bluetoothobdmqttabsthrottlepose: " + bluetoothobdmqttabsthrottlepose);
+  SerialMon.println("  bluetoothobdmqttabsthrottleposf: " + bluetoothobdmqttabsthrottleposf);
+  SerialMon.println("  bluetoothobdmqttcommandedthrottleactuator: " + bluetoothobdmqttcommandedthrottleactuator);
+  SerialMon.println("  bluetoothobdmqtttimerunwithmil: " + bluetoothobdmqtttimerunwithmil);
+  SerialMon.println("  bluetoothobdmqtttimesincecodescleared: " + bluetoothobdmqtttimesincecodescleared);
+  SerialMon.println("  bluetoothobdmqttmaxmafrate: " + bluetoothobdmqttmaxmafrate);
+  SerialMon.println("  bluetoothobdmqttethonolpercent: " + bluetoothobdmqttethonolpercent);
+  SerialMon.println("  bluetoothobdmqttabsevapsysvappressure: " + bluetoothobdmqttabsevapsysvappressure);
+  SerialMon.println("  bluetoothobdmqttevapsysvappressure2: " + bluetoothobdmqttevapsysvappressure2);
+  SerialMon.println("  bluetoothobdmqttabsfuelrailpressure: " + bluetoothobdmqttabsfuelrailpressure);
+  SerialMon.println("  bluetoothobdmqttrelativepedalpos: " + bluetoothobdmqttrelativepedalpos);
+  SerialMon.println("  bluetoothobdmqtthybridbatlife: " + bluetoothobdmqtthybridbatlife);
+  SerialMon.println("  bluetoothobdmqttoiltemp: " + bluetoothobdmqttoiltemp);
+  SerialMon.println("  bluetoothobdmqttfuelinjecttiming: " + bluetoothobdmqttfuelinjecttiming);
+  SerialMon.println("  bluetoothobdmqttfuelrate: " + bluetoothobdmqttfuelrate);
+  SerialMon.println("  bluetoothobdmqttdemandedtorque: " + bluetoothobdmqttdemandedtorque);
+  SerialMon.println("  bluetoothobdmqtttorque: " + bluetoothobdmqtttorque);
+  SerialMon.println("  bluetoothobdmqttreferencetorque: " + bluetoothobdmqttreferencetorque);
+  SerialMon.println("  bluetoothobdmqttbatteryvoltage: " + bluetoothobdmqttbatteryvoltage);
+  SerialMon.println("  bluetoothobdmqttvin: " + bluetoothobdmqttvin);
   SerialMon.println("  mqttuptime: " + mqttuptime);
   SerialMon.println("  mqttversion: " + mqttversion);
   #endif
@@ -261,6 +392,7 @@ void setup() {
   if (ftpenable == "true") {
     initFTP();
   }
+
   // Configure MQTT
   mqtt.setServer(mqttaddress.c_str(), stringToInt(mqttport));
 
@@ -305,6 +437,11 @@ void setup() {
   });
   
   server.begin();
+
+  // OBD
+  if (bluetoothenable == "true") {
+    initOBD();
+  }
 }
 
 void initMQTT() {
@@ -390,6 +527,12 @@ void loop() {
       initSensors();
       readSensors();
     }
+
+    // OBD
+    if (bluetoothenable == "true") {
+      readOBD();
+    }
+  }
 
   // FTP
   if (ftpenable == "true") {

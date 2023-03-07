@@ -329,6 +329,202 @@ const char* index_html = R"literal(
                             <label for="ftppass">Password</label>
                             <input type="text" id="ftppass" name="ftppass" value="12345678">
                         </p>
+                        <p> Bluetooth </br>
+                            <label for="bluetoothenable">Enable?</label>
+                            <input type="text" id="bluetoothenable" name="bluetoothenable" value="true">
+                            <br>
+                            <label for="bluetoothname">Name</label>
+                            <input type="text" id="bluetoothname" name="bluetoothname" value="Car Assistant">
+                            <br>
+                            <label for="bluetoothobdidentifier">OBD Identifier</label>
+                            <input type="text" id="bluetoothobdidentifier" name="bluetoothobdidentifier" value="Android-Vlink">
+                            <br>
+                            <label for="bluetoothobdmqttobdpayload">OBD Payload MQTT</label>
+                            <input type="text" id="bluetoothobdmqttobdpayload" name="bluetoothobdmqttobdpayload" value="obd-payload">
+                            <br>
+                            <label for="bluetoothobdmqttobddebug">OBD Debug MQTT</label>
+                            <input type="text" id="bluetoothobdmqttobddebug" name="bluetoothobdmqttobddebug" value="obd-debug">
+                            <br>
+                            <label for="bluetoothobdmqttengineload">Engine Load MQTT</label>
+                            <input type="text" id="bluetoothobdmqttengineload" name="bluetoothobdmqttengineload" value="obd-engine-load">
+                            <br>
+                            <label for="bluetoothobdmqttenginecoolanttemp">Engine Coolant Temp MQTT</label>
+                            <input type="text" id="bluetoothobdmqttenginecoolanttemp" name="bluetoothobdmqttenginecoolanttemp" value="obd-engine-coolant-temp">
+                            <br>
+                            <label for="bluetoothobdmqttshorttermfueltrimbank1">Short Term Fuel Trim Bank 1 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttshorttermfueltrimbank1" name="bluetoothobdmqttshorttermfueltrimbank1" value="obd-short-term-fuel-trim-bank-1">
+                            <br>
+                            <label for="bluetoothobdmqttlongtermfueltrimbank1">Long Term Fuel Trim Bank 1 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttlongtermfueltrimbank1" name="bluetoothobdmqttlongtermfueltrimbank1" value="obd-long-term-fuel-trim-bank-1">
+                            <br>
+                            <label for="bluetoothobdmqttshorttermfueltrimbank2">Short Term Fuel Trim Bank 2 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttshorttermfueltrimbank2" name="bluetoothobdmqttshorttermfueltrimbank2" value="obd-short-term-fuel-trim-bank-2">
+                            <br>
+                            <label for="bluetoothobdmqttlongtermfueltrimbank2">Long Term Fuel Trim Bank 2 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttlongtermfueltrimbank2" name="bluetoothobdmqttlongtermfueltrimbank2" value="obd-long-term-fuel-trim-bank-2">
+                            <br>
+                            <label for="bluetoothobdmqttfuelpressure">Fuel Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttfuelpressure" name="bluetoothobdmqttfuelpressure" value="obd-fuel-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttmanifoldpressure">Manifold Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttmanifoldpressure" name="bluetoothobdmqttmanifoldpressure" value="obd-manifold-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttrpm">RPM MQTT</label>
+                            <input type="text" id="bluetoothobdmqttrpm" name="bluetoothobdmqttrpm" value="obd-rpm">
+                            <br>
+                            <label for="bluetoothobdmqttkph">KPH MQTT</label>
+                            <input type="text" id="bluetoothobdmqttkph" name="bluetoothobdmqttkph" value="obd-kph">
+                            <br>
+                            <label for="bluetoothobdmqttmph">MPH MQTT</label>
+                            <input type="text" id="bluetoothobdmqttmph" name="bluetoothobdmqttmph" value="obd-mph">
+                            <br>
+                            <label for="bluetoothobdmqtttimingadvance">Timing Advance MQTT</label>
+                            <input type="text" id="bluetoothobdmqtttimingadvance" name="bluetoothobdmqtttimingadvance" value="obd-timing-advance">
+                            <br>
+                            <label for="bluetoothobdmqttintakeairtemp">Intake Air Temp MQTT</label>
+                            <input type="text" id="bluetoothobdmqttintakeairtemp" name="bluetoothobdmqttintakeairtemp" value="obd-intake-air-temp">
+                            <br>
+                            <label for="bluetoothobdmqttmafrate">MAF Rate MQTT</label>
+                            <input type="text" id="bluetoothobdmqttmafrate" name="bluetoothobdmqttmafrate" value="obd-maf-rate">
+                            <br>
+                            <label for="bluetoothobdmqttthrottle">Throttle MQTT</label>
+                            <input type="text" id="bluetoothobdmqttthrottle" name="bluetoothobdmqttthrottle" value="obd-throttle">
+                            <br>
+                            <label for="bluetoothobdmqttauxinputstatus">Aux Input Status MQTT</label>
+                            <input type="text" id="bluetoothobdmqttauxinputstatus" name="bluetoothobdmqttauxinputstatus" value="obd-aux-input-status">
+                            <br>
+                            <label for="bluetoothobdmqttruntime">Run Time MQTT</label>
+                            <input type="text" id="bluetoothobdmqttruntime" name="bluetoothobdmqttruntime" value="obd-run-time">
+                            <br>
+                            <label for="bluetoothobdmqttdisttravelwithmil">Dist Travel With Mil MQTT</label>
+                            <input type="text" id="bluetoothobdmqttdisttravelwithmil" name="bluetoothobdmqttdisttravelwithmil" value="obd-dist-travel-with-mil">
+                            <br>
+                            <label for="bluetoothobdmqttfuelrailpressure">Fuel Rail Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttfuelrailpressure" name="bluetoothobdmqttfuelrailpressure" value="obd-fuel-rail-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttfuelrailguagepressure">Fuel Rail Guage Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttfuelrailguagepressure" name="bluetoothobdmqttfuelrailguagepressure" value="obd-fuel-rail-guage-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttcommandedegr">Commanded EGR MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcommandedegr" name="bluetoothobdmqttcommandedegr" value="obd-commanded-egr">
+                            <br>
+                            <label for="bluetoothobdmqttegrerror">EGR Error MQTT</label>
+                            <input type="text" id="bluetoothobdmqttegrerror" name="bluetoothobdmqttegrerror" value="obd-egr-error">
+                            <br>
+                            <label for="bluetoothobdmqttcommandedevappurge">Commanded Evap Purge MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcommandedevappurge" name="bluetoothobdmqttcommandedevappurge" value="obd-commanded-evap-purge">
+                            <br>
+                            <label for="bluetoothobdmqttfuellevel">Fuel Level MQTT</label>
+                            <input type="text" id="bluetoothobdmqttfuellevel" name="bluetoothobdmqttfuellevel" value="obd-fuel-level">
+                            <br>
+                            <label for="bluetoothobdmqttwarmupssincecodescleared">Warm Ups Since Codes Cleared MQTT</label>
+                            <input type="text" id="bluetoothobdmqttwarmupssincecodescleared" name="bluetoothobdmqttwarmupssincecodescleared" value="obd-warm-ups-since-codes-cleared">
+                            <br>
+                            <label for="bluetoothobdmqttdistsincecodescleared">Dist Since Codes Cleared MQTT</label>
+                            <input type="text" id="bluetoothobdmqttdistsincecodescleared" name="bluetoothobdmqttdistsincecodescleared" value="obd-dist-since-codes-cleared">
+                            <br>
+                            <label for="bluetoothobdmqttevapsysvappressure">Evap Sys Vap Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttevapsysvappressure" name="bluetoothobdmqttevapsysvappressure" value="obd-evap-sys-vap-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttabsbaropressure">ABS Baro Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsbaropressure" name="bluetoothobdmqttabsbaropressure" value="obd-abs-baro-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttcattempb1s1">Cat Temp B1 S1 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcattempb1s1" name="bluetoothobdmqttcattempb1s1" value="obd-cat-temp-b1-s1">
+                            <br>
+                            <label for="bluetoothobdmqttcattempb2s1">Cat Temp B2 S1 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcattempb2s1" name="bluetoothobdmqttcattempb2s1" value="obd-cat-temp-b2-s1">
+                            <br>
+                            <label for="bluetoothobdmqttcattempb1s2">Cat Temp B1 S2 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcattempb1s2" name="bluetoothobdmqttcattempb1s2" value="obd-cat-temp-b1-s2">
+                            <br>
+                            <label for="bluetoothobdmqttcattempb2s2">Cat Temp B2 S2 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcattempb2s2" name="bluetoothobdmqttcattempb2s2" value="obd-cat-temp-b2-s2">
+                            <br>
+                            <label for="bluetoothobdmqttctrlmodvoltage">Ctrl Mod Voltage MQTT</label>
+                            <input type="text" id="bluetoothobdmqttctrlmodvoltage" name="bluetoothobdmqttctrlmodvoltage" value="obd-ctrl-mod-voltage">
+                            <br>
+                            <label for="bluetoothobdmqttabsload">ABS Load MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsload" name="bluetoothobdmqttabsload" value="obd-abs-load">
+                            <br>
+                            <label for="bluetoothobdmqttcommandedairfuelratio">Commanded Air Fuel Ratio MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcommandedairfuelratio" name="bluetoothobdmqttcommandedairfuelratio" value="obd-commanded-air-fuel-ratio">
+                            <br>
+                            <label for="bluetoothobdmqttrelativethrottle">Relative Throttle MQTT</label>
+                            <input type="text" id="bluetoothobdmqttrelativethrottle" name="bluetoothobdmqttrelativethrottle" value="obd-relative-throttle">
+                            <br>
+                            <label for="bluetoothobdmqttambientairtemp">Ambient Air Temp MQTT</label>
+                            <input type="text" id="bluetoothobdmqttambientairtemp" name="bluetoothobdmqttambientairtemp" value="obd-ambient-air-temp">
+                            <br>
+                            <label for="bluetoothobdmqttabsthrottleposb">ABS Throttle Pos B MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsthrottleposb" name="bluetoothobdmqttabsthrottleposb" value="obd-abs-throttle-pos-b">
+                            <br>
+                            <label for="bluetoothobdmqttabsthrottleposc">ABS Throttle Pos C MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsthrottleposc" name="bluetoothobdmqttabsthrottleposc" value="obd-abs-throttle-pos-c">
+                            <br>
+                            <label for="bluetoothobdmqttabsthrottleposd">ABS Throttle Pos D MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsthrottleposd" name="bluetoothobdmqttabsthrottleposd" value="obd-abs-throttle-pos-d">
+                            <br>
+                            <label for="bluetoothobdmqttabsthrottlepose">ABS Throttle Pos E MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsthrottlepose" name="bluetoothobdmqttabsthrottlepose" value="obd-abs-throttle-pos-e">
+                            <br>
+                            <label for="bluetoothobdmqttabsthrottleposf">ABS Throttle Pos F MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsthrottleposf" name="bluetoothobdmqttabsthrottleposf" value="obd-abs-throttle-pos-f">
+                            <br>
+                            <label for="bluetoothobdmqttcommandedthrottleactuator">Commanded Throttle Actuator MQTT</label>
+                            <input type="text" id="bluetoothobdmqttcommandedthrottleactuator" name="bluetoothobdmqttcommandedthrottleactuator" value="obd-commanded-throttle-actuator">
+                            <br>
+                            <label for="bluetoothobdmqtttimerunwithmil">Time Run With MIL MQTT</label>
+                            <input type="text" id="bluetoothobdmqtttimerunwithmil" name="bluetoothobdmqtttimerunwithmil" value="obd-time-run-with-mil">
+                            <br>
+                            <label for="bluetoothobdmqtttimesincecodescleared">Time Since Codes Cleared MQTT</label>
+                            <input type="text" id="bluetoothobdmqtttimesincecodescleared" name="bluetoothobdmqtttimesincecodescleared" value="obd-time-since-codes-cleared">
+                            <br>
+                            <label for="bluetoothobdmqttmaxmafrate">Max MAF Rate MQTT</label>
+                            <input type="text" id="bluetoothobdmqttmaxmafrate" name="bluetoothobdmqttmaxmafrate" value="obd-max-maf-rate">
+                            <br>
+                            <label for="bluetoothobdmqttethonolpercent">Ethonol Percent MQTT</label>
+                            <input type="text" id="bluetoothobdmqttethonolpercent" name="bluetoothobdmqttethonolpercent" value="obd-ethonol-percent">
+                            <br>
+                            <label for="bluetoothobdmqttabsevapsysvappressure">ABS Evap Sys Vap Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsevapsysvappressure" name="bluetoothobdmqttabsevapsysvappressure" value="obd-abs-evap-sys-vap-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttevapsysvappressure2">Evap Sys Vap Pressure 2 MQTT</label>
+                            <input type="text" id="bluetoothobdmqttevapsysvappressure2" name="bluetoothobdmqttevapsysvappressure2" value="obd-evap-sys-vap-pressure-2">
+                            <br>
+                            <label for="bluetoothobdmqttabsfuelrailpressure">ABS Fuel Rail Pressure MQTT</label>
+                            <input type="text" id="bluetoothobdmqttabsfuelrailpressure" name="bluetoothobdmqttabsfuelrailpressure" value="obd-abs-fuel-rail-pressure">
+                            <br>
+                            <label for="bluetoothobdmqttrelativepedalpos">Eelative Pedal Pos MQTT</label>
+                            <input type="text" id="bluetoothobdmqttrelativepedalpos" name="bluetoothobdmqttrelativepedalpos" value="obd-relative-pedal-pos">
+                            <br>
+                            <label for="bluetoothobdmqtthybridbatlife">Hybrid Bat Life MQTT</label>
+                            <input type="text" id="bluetoothobdmqtthybridbatlife" name="bluetoothobdmqtthybridbatlife" value="obd-hybrid-bat-life">
+                            <br>
+                            <label for="bluetoothobdmqttoiltemp">Oil Temp MQTT</label>
+                            <input type="text" id="bluetoothobdmqttoiltemp" name="bluetoothobdmqttoiltemp" value="obd-oil-temp">
+                            <br>
+                            <label for="bluetoothobdmqttfuelinjecttiming">Fuel Inject Timing MQTT</label>
+                            <input type="text" id="bluetoothobdmqttfuelinjecttiming" name="bluetoothobdmqttfuelinjecttiming" value="obd-fuel-inject-timing">
+                            <br>
+                            <label for="bluetoothobdmqttfuelrate">Fuel Rate MQTT</label>
+                            <input type="text" id="bluetoothobdmqttfuelrate" name="bluetoothobdmqttfuelrate" value="obd-fuel-rate">
+                            <br>
+                            <label for="bluetoothobdmqttdemandedtorque">Demanded Torque MQTT</label>
+                            <input type="text" id="bluetoothobdmqttdemandedtorque" name="bluetoothobdmqttdemandedtorque" value="obd-demanded-torque">
+                            <br>
+                            <label for="bluetoothobdmqtttorque">Torque MQTT</label>
+                            <input type="text" id="bluetoothobdmqtttorque" name="bluetoothobdmqtttorque" value="obd-torque">
+                            <br>
+                            <label for="bluetoothobdmqttreferencetorque">Reference Torque MQTT</label>
+                            <input type="text" id="bluetoothobdmqttreferencetorque" name="bluetoothobdmqttreferencetorque" value="obd-reference-torque">
+                            <br>
+                            <label for="bluetoothobdmqttbatteryvoltage">Battery Voltage MQTT</label>
+                            <input type="text" id="bluetoothobdmqttbatteryvoltage" name="bluetoothobdmqttbatteryvoltage" value="obd-battery-voltage">
+                            <br>
+                            <label for="bluetoothobdmqttvin">Vin MQTT</label>
+                            <input type="text" id="bluetoothobdmqttvin" name="bluetoothobdmqttvin" value="obd-vin">
+                        </p>
                         <p> Misc MQTT topics </br>
                             <label for="mqttuptime">Uptime</label>
                             <input type="text" id="mqttuptime" name="mqttuptime" value="uptime">
