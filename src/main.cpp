@@ -308,20 +308,20 @@ void setup() {
 }
 
 void initMQTT() {
-      if (initialized) {
-        if (!mqtt.connected()) {
-            #if DEBUG
-            SerialMon.println("MQTT no connected");
-            #endif
+    if (initialized) {
+      if (!mqtt.connected()) {
+          #if DEBUG
+          SerialMon.println("MQTT not connected");
+          #endif
 
-            mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
-        }
-        #if DEBUG
-        else {
-            SerialMon.println("MQTT connected");
-        }
-        #endif
+          mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
       }
+      #if DEBUG
+      else {
+          SerialMon.println("MQTT connected");
+      }
+      #endif
+    }
 }
 
 // Package up the provided data and send it to the MQTT broker
