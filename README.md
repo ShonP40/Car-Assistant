@@ -31,6 +31,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the free RAM amount
 - SD card support through an FTP server (set your connection mode to `Active (PORT)`)
 - Bluetooth OBD2 adapters support
+- Report the ESP32's hall sensor value
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
@@ -90,6 +91,12 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 ### CPU Frequency
 - `Enable` - Enable or disable reporting the CPU frequency value
 - `MQTT` - The MQTT topic to publish the CPU frequency to
+### Free RAM
+- `Enable` - Enable or disable reporting the free RAM value
+- `MQTT` - The MQTT topic to publish the free RAM value to
+### Hall
+- `Enable` - Enable or disable reporting the hall sensor value
+- `MQTT` - The MQTT topic to publish the hall sensor value to
 ### Modem MQTT topics
 - `Info` - The MQTT topic to publish the modem info to
 - `CCID` - The MQTT topic to publish the modem CCID to

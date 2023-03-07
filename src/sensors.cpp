@@ -159,4 +159,16 @@ void readSensors() {
 
     packageAndSendMQTT(String(freeRam), mqttsensorsfreeram);
   }
+
+  // Hall sensor
+  if (sensorsenablehall == "true") {
+    int hallSensor = hallRead();
+    
+    #if DEBUG
+    SerialMon.print("Hall sensor = ");
+    SerialMon.println(hallSensor);
+    #endif
+
+    packageAndSendMQTT(String(hallSensor), mqttsensorshall);
+  }
 }

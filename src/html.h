@@ -271,6 +271,13 @@ const char* index_html = R"literal(
                             <label for="mqttsensorsfreeram">MQTT</label>
                             <input type="text" id="mqttsensorsfreeram" name="mqttsensorsfreeram" value="free-ram">
                         </p>
+                        <p> Hall </br>
+                            <label for="sensorsenablehall">Enable?</label>
+                            <input type="text" id="sensorsenablehall" name="sensorsenablehall" value="true">
+                            <br>
+                            <label for="mqttsensorshall">MQTT</label>
+                            <input type="text" id="mqttsensorshall" name="mqttsensorshall" value="hall">
+                        </p>
                         <p> Modem MQTT topics </br>
                             <label for="mqttmodeminfo">Info</label>
                             <input type="text" id="mqttmodeminfo" name="mqttmodeminfo" value="modem-info">
