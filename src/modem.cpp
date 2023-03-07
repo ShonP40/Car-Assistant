@@ -171,7 +171,7 @@ void batteryInfo() {
             digitalWrite(LED_PIN, HIGH);
 
             // Increase the CPU frequency to 240MHz
-            if (cpuFrequency != 240) {
+            if (cpuFrequency != 240 && dynamicfrequency == "true") {
                 setCpuFrequencyMhz(240);
             }
         } else if (analogRead(USB_INDICATOR) == 0) { // USB connectors
@@ -179,16 +179,24 @@ void batteryInfo() {
             digitalWrite(LED_PIN, HIGH);
 
             // Increase the CPU frequency to 240MHz
-            if (cpuFrequency != 240) {
+            if (cpuFrequency != 240 && dynamicfrequency == "true") {
                 setCpuFrequencyMhz(240);
             }
         } else {
             packageAndSendMQTT("Discharging", mqttbatterystatus);
             digitalWrite(LED_PIN, LOW);
 
-            // Decrease the CPU frequency to 80MHz to save power
-            if (cpuFrequency != 80) {
-                setCpuFrequencyMhz(80);
+            // Decrease the CPU frequency to 160MHz/80MHz to save power
+            if (dynamicfrequency == "true") {
+                if (lowpowermodeonbattery == "true") {
+                    if (cpuFrequency != 80) {
+                        setCpuFrequencyMhz(80);
+                    }
+                } else {
+                    if (cpuFrequency != 160) {
+                        setCpuFrequencyMhz(160);
+                    }
+                }
             }
         }
     }

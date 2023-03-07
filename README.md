@@ -188,6 +188,9 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 ### Misc MQTT topics
 - `Uptime` - The MQTT topic to publish the uptime to
 - `Version` - The MQTT topic to publish the version number to
+### Power Saving
+- `Dynamic Frequency` - Lower the CPU frequency to 160MHz when running on battery
+- `Low Power mode on battery` - Lower the CPU frequency to 80MHz instead of 160MHz when running on battery (only works if dynamic frequency scaling is enabled)
 
 ## Advanced Build Configuration (`platformio.ini`)
 ### Debug

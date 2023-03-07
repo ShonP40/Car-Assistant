@@ -538,6 +538,13 @@ const char* index_html = R"literal(
                             <br>
                             <label for="mqttversion">Version</label>
                             <input type="text" id="mqttversion" name="mqttversion" value="version">
+                        </p>
+                        <p> Power Saving </br>
+                            <label for="dynamicfrequency">Dynamic Frequency?</label>
+                            <input type="text" id="dynamicfrequency" name="dynamicfrequency" value="false">
+                            <br>
+                            <label for="lowpowermodeonbattery">Low Power mode on battery?</label>
+                            <input type="text" id="lowpowermodeonbattery" name="lowpowermodeonbattery" value="false">
                             <br>
                             <input type="submit" value="Submit">
                         </p>
