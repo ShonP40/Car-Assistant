@@ -342,7 +342,7 @@ mqtt:
       json_attributes_topic: "car-assistant/json-location"
       json_attributes_template: "{{ value_json | tojson }}"
 ################################################################################# Example Home Assistant automation for updating the device tracker
-id: "1678567135296"
+id: "car_assistant_update_location"
 alias: "Car Assistant: Update location"
 description: ""
 trigger:
