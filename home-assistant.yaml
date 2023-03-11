@@ -341,3 +341,31 @@ mqtt:
       state_topic: "car-assistant/location"
       json_attributes_topic: "car-assistant/json-location"
       json_attributes_template: "{{ value_json | tojson }}"
+################################################################################# Example Home Assistant automation for updating the device tracker
+id: "1678567135296"
+alias: "Car Assistant: Update location"
+description: ""
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.car_latitude
+  - platform: state
+    entity_id:
+      - sensor.car_longitude
+  - platform: state
+    entity_id:
+      - sensor.car_location_accuracy
+  - platform: state
+    entity_id:
+      - sensor.car_battery_percentage
+  - platform: state
+    entity_id:
+      - sensor.car_speed
+condition: []
+action:
+  - service: mqtt.publish
+    data:
+      retain: true
+      topic: car-assistant/json-location
+      payload_template: '{"longitude": "{{ states(''sensor.car_longitude'') | float }}", "latitude": "{{ states(''sensor.car_latitude'') | float }}", "gps_accuracy": "{{ states(''sensor.car_location_accuracy'') | int }}", "battery_level": "{{ states(''sensor.car_battery_percentage'') | int }}", "speed": "{{ states(''sensor.car_speed'') | int }}"}'
+mode: single
