@@ -137,7 +137,7 @@ void loadConfig() {
   ftpenable = doc["ftpenable"] | "false";
   ftpuser = doc["ftpuser"] | "carassistant";
   ftppass = doc["ftppass"] | "12345678";
-  bluetoothenable = doc["bluetoothenable"] | "true";
+  bluetoothenable = doc["bluetoothenable"] | "false";
   bluetoothname = doc["bluetoothname"] | "Car Assistant";
   bluetoothobdidentifier = doc["bluetoothobdidentifier"] | "Android-Vlink";
   bluetoothobdmqttobdpayload = doc["bluetoothobdmqttobdpayload"] | "obd-payload";

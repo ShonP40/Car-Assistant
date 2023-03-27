@@ -338,7 +338,7 @@ const char* index_html = R"literal(
                         </p>
                         <p> Bluetooth </br>
                             <label for="bluetoothenable">Enable?</label>
-                            <input type="text" id="bluetoothenable" name="bluetoothenable" value="true">
+                            <input type="text" id="bluetoothenable" name="bluetoothenable" value="false">
                             <br>
                             <label for="bluetoothname">Name</label>
                             <input type="text" id="bluetoothname" name="bluetoothname" value="Car Assistant">
