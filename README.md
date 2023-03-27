@@ -30,8 +30,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Dynamic CPU frequency scaling
 - Report the free RAM amount
 - SD card support through an FTP server (set your connection mode to `Active (PORT)`)
-- Bluetooth OBD2 adapters support
 - Report the ESP32's hall sensor value
+- Bluetooth OBD2 adapters support
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
@@ -48,7 +48,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - BME280 sensor (optional)
 - TSL2561 sensor (optional)
 - PIR sensor (like the AM312) thats pulled low by default (optional)
-- Micro SD Card (optional)
+- Micro SD Card formatted as FAT32 (optional)
 - Bluetooth (not BLE) OBD2 adapter (like the Vgate iCar Pro) (optional)
 
 ## Configuration (Web UI)
@@ -57,6 +57,9 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `Username` - The APN username of your cellular provider
 - `Password` - The APN password of your cellular provider
 - `SIM PIN` - The PIN of your SIM card (leave blank if you don't have one)
+### Clock
+- `Timezone` - The UTC offset of your timezone (in seconds, e.g. UTC+2 = 7200)
+- `Daylight Saving Time` - Enable or disable daylight saving time (will add 1 hour to the UTC offset)
 ### WiFi AP
 - `SSID` - The SSID of the WiFi AP that the ESP will create
 - `Password` - The password of the WiFi AP that the ESP will create
@@ -191,7 +194,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - `Version` - The MQTT topic to publish the version number to
 ### Power Saving
 - `Dynamic Frequency` - Lower the CPU frequency to 160MHz when running on battery
-- `Low Power mode on battery` - Lower the CPU frequency to 80MHz instead of 160MHz when running on battery (only works if dynamic frequency scaling is enabled)
+- `Low Power mode on battery` - Lower the CPU frequency to 80MHz instead of 160MHz when running on battery (only works if Dynamic Frequency is enabled)
 
 ## Advanced Build Configuration (`platformio.ini`)
 ### Debug

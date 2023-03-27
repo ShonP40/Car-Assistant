@@ -114,20 +114,28 @@ void getNetworkTime() {
         int nethour = 0;
         int netmin = 0;
         int netsec = 0;
-        float timezone = 0;
+        float offset = 0;
+        int dstOffset = 0;
+
+        if (dst == "true") {
+            offset = stringToInt(timezone) + 3600;
+            dstOffset = 3600;
+        } else {
+            offset = stringToInt(timezone);
+        }
 
         for (int8_t i = 5; i; i--) {
             #if DEBUG
             SerialMon.println("Requesting current network time");
             #endif
 
-            if (modem.getNetworkTime(&netyear, &netmonth, &netday, &nethour, &netmin, &netsec, &timezone)) {
+            if (modem.getNetworkTime(&netyear, &netmonth, &netday, &nethour, &netmin, &netsec, &offset)) {
                 #if DEBUG
                 SerialMon.println((String)"Year: " + netyear + "\tMonth: " + netmonth + "\tDay: " + netday);
                 SerialMon.println((String)"Hour: " + nethour + "\tMinute: " + netmin + "\tSecond: " + netsec);
-                SerialMon.println((String)"Timezone: " + timezone);
+                SerialMon.println((String)"Timezone: " + offset);
                 #endif
-                configTime(timezone, 0, "pool.ntp.org", "time.apple.com", "time.google.com");
+                configTime(stringToInt(timezone), dstOffset, "pool.ntp.org", "time.apple.com", "time.google.com");
             } else {
                 #if DEBUG
                 SerialMon.println("Couldn't get network time, retrying in 15s.");

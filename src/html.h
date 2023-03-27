@@ -177,6 +177,13 @@ const char* index_html = R"literal(
                             <label for="simpin">SIM PIN</label>
                             <input type="text" id="simpin" name="simpin">
                         </p>
+                        <p> Clock </br>
+                            <label for="timezone">Timezone</label>
+                            <input type="text" id="timezone" name="timezone" value="7200">
+                            <br>
+                            <label for="dst">Daylight Saving Time</label>
+                            <input type="text" id="dst" name="dst" value="true">
+                        </p>
                         <p> WiFi AP </br>
                             <label for="apssid">SSID</label>
                             <input type="text" id="apssid" name="apssid" value="Car Assistant">
