@@ -13,10 +13,14 @@ This project has been sponsored by [PCBWay](https://www.pcbway.com/)!
 You can order this project from PCBWay at a $5 discount by using my [referal link](https://www.pcbway.com/setinvite.aspx?inviteid=590728)
 
 ## Features
-- Detailed user configuration (accessible by connecting to the ESP's hotspot and going to http://192.168.4.1)
+- Detailed user [configuration](https://github.com/ShonP40/Car-Assistant/edit/master/README.md#configuration-web-ui) (accessible by connecting to the ESP's hotspot and going to http://192.168.4.1)
+- Advanced build [configuration](https://github.com/ShonP40/Car-Assistant/edit/master/README.md#advanced-build-configuration-platformioini) with verbose support (`platformio.ini`)
+- OTA updates through a secure hotspot
 - Cellular connectivity
 - Automatically update the ESP's clock
 - MQTT connection
+- SD card support through an FTP server (set your connection mode to `Active (PORT)`)
+- Dynamic CPU frequency scaling
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details
 - Report location status (latitude, longitude, speed, altitude, visible satellites, accuracy) with cellular fallback
@@ -24,12 +28,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor
-- OTA updates through a secure hotspot
-- Advanced build configuration with verbose support (`platformio.ini`)
 - Report the CPU temperature and frequency
-- Dynamic CPU frequency scaling
 - Report the free RAM amount
-- SD card support through an FTP server (set your connection mode to `Active (PORT)`)
 - Report the ESP32's hall sensor value
 - Bluetooth OBD2 adapters support (incomplete)
 
