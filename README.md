@@ -13,8 +13,8 @@ This project has been sponsored by [PCBWay](https://www.pcbway.com/)!
 You can order this project from PCBWay at a $5 discount by using my [referal link](https://www.pcbway.com/setinvite.aspx?inviteid=590728)
 
 ## Features
-- Detailed user [configuration](https://github.com/ShonP40/Car-Assistant/edit/master/README.md#configuration-web-ui) (accessible by connecting to the ESP's hotspot and going to http://192.168.4.1)
-- Advanced build [configuration](https://github.com/ShonP40/Car-Assistant/edit/master/README.md#advanced-build-configuration-platformioini) with verbose support (`platformio.ini`)
+- Detailed user [configuration](https://github.com/ShonP40/Car-Assistant#configuration-web-ui) (accessible by connecting to the ESP's hotspot and going to http://192.168.4.1)
+- Advanced build [configuration](https://github.com/ShonP40/Car-Assistant#advanced-build-configuration-platformioini) with verbose support (`platformio.ini`)
 - OTA updates through a secure hotspot
 - Cellular connectivity
 - Automatically update the ESP's clock
