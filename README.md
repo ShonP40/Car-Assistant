@@ -31,7 +31,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the free RAM amount
 - SD card support through an FTP server (set your connection mode to `Active (PORT)`)
 - Report the ESP32's hall sensor value
-- Bluetooth OBD2 adapters support
+- Bluetooth OBD2 adapters support (incomplete)
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
