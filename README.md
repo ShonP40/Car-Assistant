@@ -51,6 +51,11 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Micro SD Card formatted as FAT32 (optional)
 - Bluetooth (not BLE) OBD2 adapter (like the Vgate iCar Pro) (optional)
 
+## Connectors
+- I2C1 - GPIO 21 & 22
+- I2C2 - GPIO 21 & 22
+- GPIO - GPIO 19 & 23
+
 ## Boards preview
 ![Assembled](./PCB/Photos/13%20-%20Assembled%20(All).jpeg)
 More pictures can be found [here](./PCB/Photos)
