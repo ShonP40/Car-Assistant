@@ -536,7 +536,7 @@ const char* index_html = R"literal(
                             <label for="bluetoothobdmqttbatteryvoltage">Battery Voltage MQTT</label>
                             <input type="text" id="bluetoothobdmqttbatteryvoltage" name="bluetoothobdmqttbatteryvoltage" value="obd-battery-voltage">
                             <br>
-                            <label for="bluetoothobdmqttvin">Vin MQTT</label>
+                            <label for="bluetoothobdmqttvin">VIN MQTT</label>
                             <input type="text" id="bluetoothobdmqttvin" name="bluetoothobdmqttvin" value="obd-vin">
                         </p>
                         <p> Misc MQTT topics </br>
