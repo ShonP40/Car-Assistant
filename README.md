@@ -197,7 +197,7 @@ More pictures can be found [here](./PCB/Photos)
 - `Torque MQTT` - The MQTT topic to publish the torque to
 - `Reference Torque MQTT` - The MQTT topic to publish the reference torque to
 - `Battery Voltage MQTT` - The MQTT topic to publish the battery voltage to
-- `Vin MQTT` - The MQTT topic to publish the lead acid battery voltage to
+- `VIN MQTT` - The MQTT topic to publish the VIN of your car to
 ### Misc MQTT topics
 - `Uptime` - The MQTT topic to publish the uptime to
 - `Version` - The MQTT topic to publish the version number to
