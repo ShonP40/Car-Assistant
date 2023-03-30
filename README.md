@@ -51,6 +51,10 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Micro SD Card formatted as FAT32 (optional)
 - Bluetooth (not BLE) OBD2 adapter (like the Vgate iCar Pro) (optional)
 
+## Boards preview
+![Assembled](./PCB/Photos/13%20-%20Assembled%20(All).jpeg)
+More pictures can be found [here](./PCB/Photos)
+
 ## Configuration (Web UI)
 ### Cellular
 - `APN` - The APN URL of your cellular provider
