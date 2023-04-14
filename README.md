@@ -57,7 +57,11 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - GPIO - GPIO 19 & 23
 
 ## Boards preview
-![Assembled](./PCB/Photos/13%20-%20Assembled%20(All).jpeg)
+![Assembled PCB](./PCB/Photos/PCB/13%20-%20Assembled%20(All).jpeg)
+
+## Enclosure preview
+![Assembled Enclosure](./PCB/Photos/Enclosure/12%20-%20Assembled%20(All).jpeg)
+
 More pictures can be found [here](./PCB/Photos)
 
 ## Configuration (Web UI)
