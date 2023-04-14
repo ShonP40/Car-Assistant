@@ -17,9 +17,6 @@ mqtt:
       state_topic: "car-assistant/lux"
       unit_of_measurement: "lux"
       icon: mdi:weather-sunny
-    - name: "Car Motion Sensor"
-      state_topic: "car-assistant/pir"
-      icon: mdi:run
     - name: "Car ESP CPU Temperature"
       state_topic: "car-assistant/cpu-temperature"
       unit_of_measurement: "°C"
@@ -335,6 +332,12 @@ mqtt:
     - name: "Car Assistant Version"
       state_topic: "car-assistant/version"
       icon: mdi:list-status
+  binary_sensor:
+    - name: "Car Motion Sensor"
+      state_topic: "car-assistant/pir"
+      icon: mdi:run
+      payload_on: "1"
+      payload_off: "0"
   device_tracker:
     - name: "Car"
       icon: mdi:car
