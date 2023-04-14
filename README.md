@@ -59,8 +59,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 ## Boards preview
 ![Assembled PCB](./PCB/Photos/PCB/13%20-%20Assembled%20(All).jpeg)
 
-## Enclosure preview
-![Assembled Enclosure](./PCB/Photos/Enclosure/12%20-%20Assembled%20(All).jpeg)
+## Enclosures preview
+![Assembled Enclosures](./PCB/Photos/Enclosure/12%20-%20Assembled%20(All).jpeg)
 
 More pictures can be found [here](./PCB/Photos)
 
