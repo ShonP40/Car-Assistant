@@ -487,6 +487,16 @@ void getUptime() {
     packageAndSendMQTT(String(esp_timer_get_time() / 1000000), mqttuptime);
 }
 
+// Change the CPU frequency
+void setCPUFrequency(int frequency) {
+    WiFi.enableAP(false);
+    delay(100);
+    
+    setCpuFrequencyMhz(frequency);
+
+    WiFi.enableAP(true);
+}
+
 // Version
 void getVersion() {
     String version = ESP.getSketchMD5();

@@ -154,10 +154,12 @@ void batteryInfo() {
         float voltage = 0.0;            // Calculated voltage
         float output = 0.0;             // Output value
         const float battery_max = 4.20; // Maximum battery voltage
-        const float battery_min = 3.0;  // Minimum battery voltage
+        const float battery_min = 2.4;  // Minimum battery voltage
+        int batteryLevel = analogRead(BATTERY_INDICATOR); // Raw analog battery level
 
         // Calculate the voltage
-        voltage = modem.getBattVoltage() / 1000.0;
+        int mappedBatteryLevel = map(batteryLevel, 0, 2430, 0, 4200);
+        voltage = mappedBatteryLevel / 1000.0;
 
         // Send the voltage to the MQTT broker
         packageAndSendMQTT(String(voltage), mqttbatteryvoltage);
@@ -180,15 +182,15 @@ void batteryInfo() {
 
             // Increase the CPU frequency to 240MHz
             if (cpuFrequency != 240 && dynamicfrequency == "true") {
-                setCpuFrequencyMhz(240);
+                setCPUFrequency(240);
             }
-        } else if (analogRead(USB_INDICATOR) == 0) { // USB connectors
+        } else if (batteryLevel == 0) { // USB connectors
             packageAndSendMQTT("USB Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
 
             // Increase the CPU frequency to 240MHz
             if (cpuFrequency != 240 && dynamicfrequency == "true") {
-                setCpuFrequencyMhz(240);
+                setCPUFrequency(240);
             }
         } else {
             packageAndSendMQTT("Discharging", mqttbatterystatus);
@@ -198,11 +200,11 @@ void batteryInfo() {
             if (dynamicfrequency == "true") {
                 if (lowpowermodeonbattery == "true") {
                     if (cpuFrequency != 80) {
-                        setCpuFrequencyMhz(80);
+                        setCPUFrequency(80);
                     }
                 } else {
                     if (cpuFrequency != 160) {
-                        setCpuFrequencyMhz(160);
+                        setCPUFrequency(160);
                     }
                 }
             }
