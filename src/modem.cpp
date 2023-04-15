@@ -165,7 +165,11 @@ void batteryInfo() {
         packageAndSendMQTT(String(voltage), mqttbatteryvoltage);
 
         // Calculate percentage
-        output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
+        if (voltage < 1) {
+            output = 0;
+        } else {
+            output = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
+        }
 
         // Send the percentage to the MQTT broker
         if (output < 100) {
