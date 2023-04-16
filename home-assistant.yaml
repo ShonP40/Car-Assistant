@@ -383,6 +383,7 @@ action:
         {% set device_latitude = states('sensor.car_latitude') | float %}
         {% set locations = states.zone | selectattr('attributes.radius', 'defined') | map(attribute='entity_id') | list %}
         {% set regex = '^.+\\.(.+)$' %} {# regular expression to match the second part of the entity_id #}
+        {% set result = namespace(results = none) %}
         {% for location in locations %}
           {% set zone_entity_id = location.lower().replace(' ', '_') %}
           {% set zone_latitude = state_attr(zone_entity_id, 'latitude') %}
@@ -394,13 +395,16 @@ action:
           {% set match = location | regex_findall_index(regex) %} {# find the match with the regular expression #}
           {% if distance <= zone_radius %}
             {% set zone_friendly_name = state_attr(zone_entity_id, 'friendly_name') %}
-            {% set result = zone_friendly_name %}
-            {% if result == 'House' %}
+            {% set result.results = zone_friendly_name %}
+            {% if result.results == 'House' %}
               {{ 'Home' }}
             {% else %}
-              {{ result }}
+              {{ result.results }}
             {% endif %}
           {% endif %}
         {% endfor %}
+        {% if result.results is none %}
+          {{ 'not_home' }}
+        {% endif %}
 
 mode: single
