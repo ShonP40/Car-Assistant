@@ -391,7 +391,7 @@ action:
           {% set zone_radius = state_attr(zone_entity_id, 'radius') %}
           {% set lat_diff = device_latitude - zone_latitude %}
           {% set lon_diff = device_longitude - zone_longitude %}
-          {% set distance = ((lat_diff**2 + lon_diff**2)**0.5) * 111139 %} {# distance in meters #}
+          {% set distance = ((lat_diff ** 2 + lon_diff ** 2) ** 0.5) * 111139 %} {# distance in meters #}
           {% set match = location | regex_findall_index(regex) %} {# find the match with the regular expression #}
           {% if distance <= zone_radius %}
             {% set zone_friendly_name = state_attr(zone_entity_id, 'friendly_name') %}
