@@ -158,7 +158,7 @@ void batteryInfo() {
         int batteryLevel = analogRead(BATTERY_INDICATOR); // Raw analog battery level
 
         // Calculate the voltage
-        int mappedBatteryLevel = map(batteryLevel, 0, 2430, 0, 4200);
+        int mappedBatteryLevel = map(batteryLevel, 0, 2500, 0, 4200);
         voltage = mappedBatteryLevel / 1000.0;
 
         // Send the voltage to the MQTT broker
