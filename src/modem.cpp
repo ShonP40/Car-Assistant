@@ -153,8 +153,8 @@ void batteryInfo() {
     if (initialized && mqtt.connected()) {
         float voltage = 0.0;            // Calculated voltage
         float output = 0.0;             // Output value
-        const float battery_max = 4.20; // Maximum battery voltage
-        const float battery_min = 2.4;  // Minimum battery voltage
+        const float battery_max = 4.2;  // Maximum battery voltage
+        const float battery_min = 2.5;  // Minimum battery voltage
         int batteryLevel = analogRead(BATTERY_INDICATOR); // Raw analog battery level
 
         // Calculate the voltage
