@@ -6,6 +6,8 @@ bool timeSet = false;
 
 String publicIP;
 
+bool charging = false;
+
 // Initialize the modem
 void initModem() {
     if (!initialized) {
@@ -181,6 +183,7 @@ void batteryInfo() {
         uint32_t cpuFrequency = getCpuFrequencyMhz();
         // Check if the battery is charging
         if (analogRead(SOLAR_INDICATOR) != 0) { // Solar panel connector
+            charging = true;
             packageAndSendMQTT("Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
 
@@ -189,6 +192,7 @@ void batteryInfo() {
                 setCPUFrequency(240);
             }
         } else if (batteryLevel == 0) { // USB connectors
+            charging = true;
             packageAndSendMQTT("USB Charging", mqttbatterystatus);
             digitalWrite(LED_PIN, HIGH);
 
@@ -197,6 +201,7 @@ void batteryInfo() {
                 setCPUFrequency(240);
             }
         } else {
+            charging = false;
             packageAndSendMQTT("Discharging", mqttbatterystatus);
             digitalWrite(LED_PIN, LOW);
 
@@ -234,65 +239,69 @@ void getNetInfo() {
 
 void getLocationInfo() {
     if (initialized && mqtt.connected()) {
-        modem.setGNSSMode(stringToInt(locationgnssmode), stringToInt(locationdpo));
-        delay(1000);
-
-        modem.enableGPS();
-        delay(2000);
-
-        float lat2      = 0;
-        float lon2      = 0;
-        float speed2    = 0;
-        float alt2      = 0;
-        int   vsat2     = 0;
-        int   usat2     = 0;
-        float accuracy2 = 0;
-        int   year2     = 0;
-        int   month2    = 0;
-        int   day2      = 0;
-        int   hour2     = 0;
-        int   min2      = 0;
-        int   sec2      = 0;
-
-        #if DEBUG
-        SerialMon.println("Requesting your current GNSS location");
-        #endif
-
-        if (modem.getGPS(&lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
-            #if DEBUG
-            SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
-            SerialMon.println("Speed: " + String(speed2) + "\tAltitude: " + String(alt2));
-            SerialMon.println("Visible Satellites: " + String(vsat2) + "\tUsed Satellites: " + String(usat2));
-            SerialMon.println("Accuracy: " + String(accuracy2));
-            SerialMon.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
-            SerialMon.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
-            #endif
-
-            packageAndSendMQTT("GNSS", mqttlocationtype);
-            packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
-            packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
-            packageAndSendMQTT(String(speed2), mqttlocationspeed);
-            packageAndSendMQTT(String(alt2), mqttlocationaltitude);
-            packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
-        } else if (modem.getGsmLocation(&lat2, &lon2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
-            #if DEBUG
-            SerialMon.println("Falling back to a cellular location");
-            SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
-            SerialMon.println("Accuracy: " + String(accuracy2));
-            SerialMon.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
-            SerialMon.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
-            #endif
-
-            packageAndSendMQTT("Cellular", mqttlocationtype);
-            packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
-            packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
-            packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
+        if ((dynamicfrequency == "true") && (lowpowermodeonbattery == "true") && (!charging)) {
+            modem.disableGPS();
         } else {
+            modem.setGNSSMode(stringToInt(locationgnssmode), stringToInt(locationdpo));
+            delay(1000);
+
+            modem.enableGPS();
+            delay(2000);
+
+            float lat2      = 0;
+            float lon2      = 0;
+            float speed2    = 0;
+            float alt2      = 0;
+            int   vsat2     = 0;
+            int   usat2     = 0;
+            float accuracy2 = 0;
+            int   year2     = 0;
+            int   month2    = 0;
+            int   day2      = 0;
+            int   hour2     = 0;
+            int   min2      = 0;
+            int   sec2      = 0;
+
             #if DEBUG
-            SerialMon.println("Couldn't get your location");
+            SerialMon.println("Requesting your current GNSS location");
             #endif
 
-            packageAndSendMQTT("None", mqttlocationtype);
+            if (modem.getGPS(&lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
+                #if DEBUG
+                SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
+                SerialMon.println("Speed: " + String(speed2) + "\tAltitude: " + String(alt2));
+                SerialMon.println("Visible Satellites: " + String(vsat2) + "\tUsed Satellites: " + String(usat2));
+                SerialMon.println("Accuracy: " + String(accuracy2));
+                SerialMon.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
+                SerialMon.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
+                #endif
+
+                packageAndSendMQTT("GNSS", mqttlocationtype);
+                packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
+                packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
+                packageAndSendMQTT(String(speed2), mqttlocationspeed);
+                packageAndSendMQTT(String(alt2), mqttlocationaltitude);
+                packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
+            } else if (modem.getGsmLocation(&lat2, &lon2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
+                #if DEBUG
+                SerialMon.println("Falling back to a cellular location");
+                SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
+                SerialMon.println("Accuracy: " + String(accuracy2));
+                SerialMon.println("Year: " + String(year2) + "\tMonth: " + String(month2) + "\tDay: " + String(day2));
+                SerialMon.println("Hour: " + String(hour2) + "\tMinute: " + String(min2) + "\tSecond: " + String(sec2));
+                #endif
+
+                packageAndSendMQTT("Cellular", mqttlocationtype);
+                packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
+                packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
+                packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
+            } else {
+                #if DEBUG
+                SerialMon.println("Couldn't get your location");
+                #endif
+
+                packageAndSendMQTT("None", mqttlocationtype);
+            }
         }
     }
 }
