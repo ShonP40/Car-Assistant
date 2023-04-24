@@ -538,6 +538,13 @@ void loop() {
     // Get battery info
     batteryInfo();
 
+    // WiFi Hotspot
+    if ((dynamicfrequency == "true") && (lowpowermodeonbattery == "true") && (!charging)) {
+      WiFi.enableAP(false);
+    } else {
+      WiFi.enableAP(true);
+    }
+
     // Get network info
     getNetInfo();
 

@@ -207,7 +207,7 @@ More pictures can be found [here](./PCB/Photos)
 - `Version` - The MQTT topic to publish the version number to
 ### Power Saving
 - `Dynamic Frequency` - Lower the CPU frequency to 160MHz when running on battery
-- `Low Power mode on battery` - Lower the CPU frequency to 80MHz (instead of 160MHz) and turn GPS off when running on battery (only works if Dynamic Frequency is enabled)
+- `Low Power mode on battery` - Lower the CPU frequency to 80MHz (instead of 160MHz) and turn GPS & WiFi off when running on battery (only works if Dynamic Frequency is enabled)
 
 ## Advanced Build Configuration (`platformio.ini`)
 ### Debug
