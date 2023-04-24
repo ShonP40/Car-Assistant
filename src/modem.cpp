@@ -267,6 +267,10 @@ void getLocationInfo() {
             #endif
 
             if (modem.getGPS(&lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
+                if (speed2 < 0) {
+                    speed2 = 0;
+                }
+                
                 #if DEBUG
                 SerialMon.println("Latitude: " + String(lat2, 8) + "\tLongitude: " + String(lon2, 8));
                 SerialMon.println("Speed: " + String(speed2) + "\tAltitude: " + String(alt2));
