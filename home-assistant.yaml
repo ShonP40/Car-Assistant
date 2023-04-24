@@ -32,6 +32,7 @@ mqtt:
     - name: "Car Hall Sensor"
       state_topic: "car-assistant/hall"
       icon: mdi:magnet
+      unit_of_measurement: "μT"
     - name: "Car Modem Info"
       state_topic: "car-assistant/modem-info"
       icon: mdi:cellphone
