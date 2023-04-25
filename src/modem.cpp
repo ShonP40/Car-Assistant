@@ -156,11 +156,11 @@ void batteryInfo() {
         float voltage = 0.0;            // Calculated voltage
         float output = 0.0;             // Output value
         const float battery_max = 4.2;  // Maximum battery voltage
-        const float battery_min = 2.5;  // Minimum battery voltage
+        const float battery_min = 2.7;  // Minimum battery voltage
         int batteryLevel = analogRead(BATTERY_INDICATOR); // Raw analog battery level
 
         // Calculate the voltage
-        int mappedBatteryLevel = map(batteryLevel, 0, 2500, 0, 4200);
+        int mappedBatteryLevel = map(batteryLevel, 0, 2700, 0, 4200);
         voltage = mappedBatteryLevel / 1000.0;
 
         // Send the voltage to the MQTT broker
