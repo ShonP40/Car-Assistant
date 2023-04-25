@@ -56,6 +56,9 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - I2C2 - GPIO 21 & 22
 - GPIO - GPIO 19 & 23
 
+## Estimated Battery Life
+- With the hardware listed above & low power mode, I've been able to get 20 hours of battery life
+
 ## Boards preview
 ![Assembled PCB](./PCB/Photos/PCB/13%20-%20Assembled%20(All).jpeg)
 
