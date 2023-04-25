@@ -241,6 +241,7 @@ void getLocationInfo() {
     if (initialized && mqtt.connected()) {
         if ((dynamicfrequency == "true") && (lowpowermodeonbattery == "true") && (!charging)) {
             modem.disableGPS();
+            packageAndSendMQTT("None", mqttlocationtype);
         } else {
             modem.setGNSSMode(stringToInt(locationgnssmode), stringToInt(locationdpo));
             delay(1000);
