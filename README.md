@@ -79,7 +79,7 @@ More pictures can be found [here](./PCB/Photos)
 ### WiFi AP
 - `SSID` - The SSID of the WiFi AP that the ESP will create
 - `Password` - The password of the WiFi AP that the ESP will create
-- `Disable when on battery or stationary?` - Will disable the AP when running on battery or when stationary for about ~15 minutes
+- `Disable when on battery or stationary` - Will disable the AP when running on battery or when stationary for about ~15 minutes
 ### MQTT Broker
 - `Address` - The IP address / domain name of your MQTT broker
 - `Port` - The port of your MQTT broker
