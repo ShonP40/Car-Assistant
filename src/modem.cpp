@@ -8,6 +8,10 @@ String publicIP;
 
 bool charging = false;
 
+int stationaryCounter = 0;
+
+bool stationary = false;
+
 // Initialize the modem
 void initModem() {
     if (!initialized) {
@@ -307,6 +311,18 @@ void getLocationInfo() {
                 #endif
 
                 packageAndSendMQTT("None", mqttlocationtype);
+            }
+
+            if (speed2 < 1) {
+                stationaryCounter++;
+            } else {
+                stationaryCounter = 0;
+            }
+
+            if (stationaryCounter >= 100) {
+                stationary = true;
+            } else {
+                stationary = false;
             }
         }
     }

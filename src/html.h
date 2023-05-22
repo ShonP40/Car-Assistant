@@ -190,6 +190,9 @@ const char* index_html = R"literal(
                             <br>
                             <label for="appassword">Password</label>
                             <input type="text" id="appassword" name="appassword" value="12345678">
+                            <br>
+                            <label for="appowersaving">Disable when on battery or stationary?</label>
+                            <input type="text" id="appowersaving" name="appowersaving" value="true">
                         </p>
                         <p> MQTT Broker </br>
                             <label for="mqttaddress">Address</label>

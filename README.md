@@ -79,6 +79,7 @@ More pictures can be found [here](./PCB/Photos)
 ### WiFi AP
 - `SSID` - The SSID of the WiFi AP that the ESP will create
 - `Password` - The password of the WiFi AP that the ESP will create
+- `Disable when on battery or stationary?` - Will disable the AP when running on battery or when stationary for about ~15 minutes
 ### MQTT Broker
 - `Address` - The IP address / domain name of your MQTT broker
 - `Port` - The port of your MQTT broker
@@ -210,7 +211,7 @@ More pictures can be found [here](./PCB/Photos)
 - `Version` - The MQTT topic to publish the version number to
 ### Power Saving
 - `Dynamic Frequency` - Lower the CPU frequency to 160MHz when running on battery
-- `Low Power mode on battery` - Lower the CPU frequency to 80MHz (instead of 160MHz) and turn GPS & WiFi off when running on battery (only works if Dynamic Frequency is enabled)
+- `Low Power mode on battery` - Lower the CPU frequency to 80MHz (instead of 160MHz) and turn GPS off when running on battery (only works if Dynamic Frequency is enabled)
 
 ## Advanced Build Configuration (`platformio.ini`)
 ### Debug

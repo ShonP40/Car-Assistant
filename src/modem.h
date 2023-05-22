@@ -13,3 +13,4 @@ void getLocationInfo();
 // Extern variables
 extern bool initialized;
 extern bool charging;
+extern bool stationary;
