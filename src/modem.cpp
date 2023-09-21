@@ -267,6 +267,7 @@ void getLocationInfo() {
             int   hour2     = 0;
             int   min2      = 0;
             int   sec2      = 0;
+            int locationErr = 0;
 
             #if DEBUG
             SerialMon.println("Requesting your current GNSS location");
@@ -311,6 +312,13 @@ void getLocationInfo() {
                 #endif
 
                 packageAndSendMQTT("None", mqttlocationtype);
+                
+                locationErr++;
+                
+                if (locationErr > 10) {
+                    modem.disableGPS();
+                    locationErr = 0;
+                }
             }
 
             if (speed2 < 1) {
