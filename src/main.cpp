@@ -355,6 +355,22 @@ TinyGsmClient client(modem, 0);
 // Prepare MQTT
 PubSubClient mqtt(client);
 
+// Receive MQTT commands
+void callback(char* topic, byte* payload, unsigned int length) {
+  String newTopic = topic;
+  payload[length] = '\0';
+  String newPayload = String((char *)payload);
+  if (newTopic == mqttclientname + (String)"/commands") {
+    if (newPayload == "restart") {
+      #if DEBUG
+      SerialMon.println("MQTT: Restarting device...");
+      #endif
+      modem.restart();
+      ESP.restart();
+    }
+  }
+}
+
 void setup() {
   // Increase the CPU frequency to 240MHz
   setCpuFrequencyMhz(240);
@@ -409,6 +425,7 @@ void setup() {
 
   // Configure MQTT
   mqtt.setServer(mqttaddress.c_str(), stringToInt(mqttport));
+  mqtt.setCallback(callback);
 
   // OTA
   AsyncElegantOTA.begin(&server);
@@ -467,11 +484,12 @@ void initMQTT() {
 
           mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
       }
-      #if DEBUG
       else {
+          #if DEBUG
           SerialMon.println("MQTT connected");
+          #endif
+          mqtt.subscribe(stringToChar(mqttclientname + (String)"/commands"));
       }
-      #endif
     }
 }
 
@@ -530,6 +548,7 @@ void loop() {
 
     // Connect to an MQTT broker
     initMQTT();
+    mqtt.loop();
 
     // Uptime
     getUptime();

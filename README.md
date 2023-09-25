@@ -31,6 +31,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the CPU temperature and frequency
 - Report the free RAM amount
 - Report the ESP32's hall sensor value
+- Recover from GPS failures automatically
+- Reboot the ESP32 & Modem remotely over MQTT
 - Bluetooth OBD2 adapters support (incomplete)
 
 ## Software Requirements
