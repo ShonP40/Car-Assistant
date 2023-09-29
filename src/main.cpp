@@ -519,7 +519,13 @@ void setCPUFrequency(int frequency) {
 
 // Version
 void getVersion() {
-    String version = ESP.getSketchMD5();
+    String version;
+
+    #ifdef VERSION
+    version = VERSION;
+    #else
+    version = ESP.getSketchMD5();
+    #endif
 
     // Send the version to the MQTT broker
     packageAndSendMQTT(version, mqttversion);
