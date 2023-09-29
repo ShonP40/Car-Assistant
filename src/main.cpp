@@ -14,6 +14,7 @@ AsyncWebServer server(80);
 
 // Configuration variables
 String apn, apnusername, apnpassword, simpin, timezone, dst, apssid, appassword, appowersaving, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, sensorsenablehall, mqttsensorshall, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, ftpenable, ftpuser, ftppass, bluetoothenable, bluetoothname, bluetoothobdidentifier, bluetoothobdmqttobdpayload, bluetoothobdmqttobddebug, bluetoothobdmqttengineload, bluetoothobdmqttenginecoolanttemp, bluetoothobdmqttshorttermfueltrimbank1, bluetoothobdmqttlongtermfueltrimbank1, bluetoothobdmqttshorttermfueltrimbank2, bluetoothobdmqttlongtermfueltrimbank2, bluetoothobdmqttfuelpressure, bluetoothobdmqttmanifoldpressure, bluetoothobdmqttrpm, bluetoothobdmqttkph, bluetoothobdmqttmph, bluetoothobdmqtttimingadvance, bluetoothobdmqttintakeairtemp, bluetoothobdmqttmafrate, bluetoothobdmqttthrottle, bluetoothobdmqttauxinputstatus, bluetoothobdmqttruntime, bluetoothobdmqttdisttravelwithmil, bluetoothobdmqttfuelrailpressure, bluetoothobdmqttfuelrailguagepressure, bluetoothobdmqttcommandedegr, bluetoothobdmqttegrerror, bluetoothobdmqttcommandedevappurge, bluetoothobdmqttfuellevel, bluetoothobdmqttwarmupssincecodescleared, bluetoothobdmqttdistsincecodescleared, bluetoothobdmqttevapsysvappressure, bluetoothobdmqttabsbaropressure, bluetoothobdmqttcattempb1s1, bluetoothobdmqttcattempb2s1, bluetoothobdmqttcattempb1s2, bluetoothobdmqttcattempb2s2, bluetoothobdmqttctrlmodvoltage, bluetoothobdmqttabsload, bluetoothobdmqttcommandedairfuelratio, bluetoothobdmqttrelativethrottle, bluetoothobdmqttambientairtemp, bluetoothobdmqttabsthrottleposb, bluetoothobdmqttabsthrottleposc, bluetoothobdmqttabsthrottleposd, bluetoothobdmqttabsthrottlepose, bluetoothobdmqttabsthrottleposf, bluetoothobdmqttcommandedthrottleactuator, bluetoothobdmqtttimerunwithmil, bluetoothobdmqtttimesincecodescleared, bluetoothobdmqttmaxmafrate, bluetoothobdmqttethanolPercent, bluetoothobdmqttabsevapsysvappressure, bluetoothobdmqttevapsysvappressure2, bluetoothobdmqttabsfuelrailpressure, bluetoothobdmqttrelativepedalpos, bluetoothobdmqtthybridbatlife, bluetoothobdmqttoiltemp, bluetoothobdmqttfuelinjecttiming, bluetoothobdmqttfuelrate, bluetoothobdmqttdemandedtorque, bluetoothobdmqtttorque, bluetoothobdmqttreferencetorque, bluetoothobdmqttbatteryvoltage, bluetoothobdmqttvin, mqttuptime, mqttversion, dynamicfrequency, lowpowermodeonbattery;
+int connectionRetries = 0;
 
 // Search for parameter in HTTP POST request
 const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "timezone", "dst", "apssid", "appassword", "appowersaving", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "sensorsenablehall", "mqttsensorshall", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "ftpenable", "ftpuser", "ftppass", "bluetoothenable", "bluetoothname", "bluetoothobdidentifier", "bluetoothobdmqttobdpayload", "bluetoothobdmqttobddebug", "bluetoothobdmqttengineload", "bluetoothobdmqttenginecoolanttemp", "bluetoothobdmqttshorttermfueltrimbank1", "bluetoothobdmqttlongtermfueltrimbank1", "bluetoothobdmqttshorttermfueltrimbank2", "bluetoothobdmqttlongtermfueltrimbank2", "bluetoothobdmqttfuelpressure", "bluetoothobdmqttmanifoldpressure", "bluetoothobdmqttrpm", "bluetoothobdmqttkph", "bluetoothobdmqttmph", "bluetoothobdmqtttimingadvance", "bluetoothobdmqttintakeairtemp", "bluetoothobdmqttmafrate", "bluetoothobdmqttthrottle", "bluetoothobdmqttauxinputstatus", "bluetoothobdmqttruntime", "bluetoothobdmqttdisttravelwithmil", "bluetoothobdmqttfuelrailpressure", "bluetoothobdmqttfuelrailguagepressure", "bluetoothobdmqttcommandedegr", "bluetoothobdmqttegrerror", "bluetoothobdmqttcommandedevappurge", "bluetoothobdmqttfuellevel", "bluetoothobdmqttwarmupssincecodescleared", "bluetoothobdmqttdistsincecodescleared", "bluetoothobdmqttevapsysvappressure", "bluetoothobdmqttabsbaropressure", "bluetoothobdmqttcattempb1s1", "bluetoothobdmqttcattempb2s1", "bluetoothobdmqttcattempb1s2", "bluetoothobdmqttcattempb2s2", "bluetoothobdmqttctrlmodvoltage", "bluetoothobdmqttabsload", "bluetoothobdmqttcommandedairfuelratio", "bluetoothobdmqttrelativethrottle", "bluetoothobdmqttambientairtemp", "bluetoothobdmqttabsthrottleposb", "bluetoothobdmqttabsthrottleposc", "bluetoothobdmqttabsthrottleposd", "bluetoothobdmqttabsthrottlepose", "bluetoothobdmqttabsthrottleposf", "bluetoothobdmqttcommandedthrottleactuator", "bluetoothobdmqtttimerunwithmil", "bluetoothobdmqtttimesincecodescleared", "bluetoothobdmqttmaxmafrate", "bluetoothobdmqttethanolPercent", "bluetoothobdmqttabsevapsysvappressure", "bluetoothobdmqttevapsysvappressure2", "bluetoothobdmqttabsfuelrailpressure", "bluetoothobdmqttrelativepedalpos", "bluetoothobdmqtthybridbatlife", "bluetoothobdmqttoiltemp", "bluetoothobdmqttfuelinjecttiming", "bluetoothobdmqttfuelrate", "bluetoothobdmqttdemandedtorque", "bluetoothobdmqtttorque", "bluetoothobdmqttreferencetorque", "bluetoothobdmqttbatteryvoltage", "bluetoothobdmqttvin", "mqttuptime", "mqttversion", "dynamicfrequency", "lowpowermodeonbattery"};
@@ -352,6 +353,20 @@ TinyGsm modem(SerialAT);
 
 TinyGsmClient client(modem, 0);
 
+void rebootDevice() {
+  #if DEBUG
+  SerialMon.println("Rebooting device...");
+  #endif
+
+  digitalWrite(MODEM_PWRKEY, HIGH);
+  delay(300); // Needed delay
+  digitalWrite(MODEM_PWRKEY, LOW);
+  delay(300);
+
+  modem.restart();
+  ESP.restart();
+}
+
 // Prepare MQTT
 PubSubClient mqtt(client);
 
@@ -362,11 +377,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   String newPayload = String((char *)payload);
   if (newTopic == mqttclientname + (String)"/commands") {
     if (newPayload == "restart") {
-      #if DEBUG
-      SerialMon.println("MQTT: Restarting device...");
-      #endif
-      modem.restart();
-      ESP.restart();
+      rebootDevice();
     }
   }
 }
@@ -478,17 +489,23 @@ void setup() {
 void initMQTT() {
     if (initialized) {
       if (!mqtt.connected()) {
-          #if DEBUG
-          SerialMon.println("MQTT not connected");
-          #endif
+        #if DEBUG
+        SerialMon.println("MQTT not connected");
+        #endif
 
-          mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
-      }
-      else {
-          #if DEBUG
-          SerialMon.println("MQTT connected");
-          #endif
-          mqtt.subscribe(stringToChar(mqttclientname + (String)"/commands"));
+        connectionRetries++;
+        if (connectionRetries > 100) {
+            rebootDevice();
+        }
+
+        mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
+      } else {
+        #if DEBUG
+        SerialMon.println("MQTT connected");
+        #endif
+        connectionRetries = 0;
+
+        mqtt.subscribe(stringToChar(mqttclientname + (String)"/commands"));
       }
     }
 }

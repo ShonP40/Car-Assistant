@@ -2,8 +2,6 @@
 
 bool initialized = false;
 
-int connectionRetries = 0;
-
 bool timeSet = false;
 
 String publicIP;
@@ -28,11 +26,7 @@ void initModem() {
             connectionRetries++;
 
             if (connectionRetries > 100) {
-                #if DEBUG
-                SerialMon.println("Connection Error: Restarting device...");
-                #endif
-                modem.restart();
-                ESP.restart();
+                rebootDevice();
             }
             return;
         } else {
@@ -126,11 +120,7 @@ void initNetwork() {
             connectionRetries++;
 
             if (connectionRetries > 100) {
-                #if DEBUG
-                SerialMon.println("Connection Error: Restarting device...");
-                #endif
-                modem.restart();
-                ESP.restart();
+                rebootDevice();
             }
         }
     }
