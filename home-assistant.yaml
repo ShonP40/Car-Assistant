@@ -422,7 +422,7 @@ description: "Automatically reboots the ESP32 & modem every 6 hours"
 mode: single
 trigger:
   - platform: time_pattern
-    hours: /6
+    hours: /1
 condition: []
 action:
   - service: button.press

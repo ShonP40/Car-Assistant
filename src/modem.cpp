@@ -2,6 +2,8 @@
 
 bool initialized = false;
 
+int connectionRetries = 0;
+
 bool timeSet = false;
 
 String publicIP;
@@ -23,9 +25,19 @@ void initModem() {
             SerialMon.println("Failed to initiate the modem, retrying...");
             #endif
             initialized = false;
+            connectionRetries++;
+
+            if (connectionRetries > 100) {
+                #if DEBUG
+                SerialMon.println("Connection Error: Restarting device...");
+                #endif
+                modem.restart();
+                ESP.restart();
+            }
             return;
         } else {
             initialized = true;
+            connectionRetries = 0;
         }
 
         /*  Preferred mode selection : AT+CNMP
@@ -99,15 +111,28 @@ void initNetwork() {
             return;
         }
 
-        #if DEBUG
         if (modem.isGprsConnected()) {
+            #if DEBUG
             SerialMon.println("Connected to the cellular network");
-        } else {
-            SerialMon.println("Failed to connect to the cellular network");
-        }
-        #endif
+            #endif
 
-        getPublicIP();
+            connectionRetries = 0;
+            getPublicIP();
+        } else {
+            #if DEBUG
+            SerialMon.println("Failed to connect to the cellular network");
+            #endif
+
+            connectionRetries++;
+
+            if (connectionRetries > 100) {
+                #if DEBUG
+                SerialMon.println("Connection Error: Restarting device...");
+                #endif
+                modem.restart();
+                ESP.restart();
+            }
+        }
     }
 }
 
