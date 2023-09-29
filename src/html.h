@@ -500,8 +500,8 @@ const char* index_html = R"literal(
                             <label for="bluetoothobdmqttmaxmafrate">Max MAF Rate MQTT</label>
                             <input type="text" id="bluetoothobdmqttmaxmafrate" name="bluetoothobdmqttmaxmafrate" value="obd-max-maf-rate">
                             <br>
-                            <label for="bluetoothobdmqttethonolpercent">Ethonol Percent MQTT</label>
-                            <input type="text" id="bluetoothobdmqttethonolpercent" name="bluetoothobdmqttethonolpercent" value="obd-ethonol-percent">
+                            <label for="bluetoothobdmqttethanolPercent">Ethanol Percent MQTT</label>
+                            <input type="text" id="bluetoothobdmqttethanolPercent" name="bluetoothobdmqttethanolPercent" value="obd-ethanol-percent">
                             <br>
                             <label for="bluetoothobdmqttabsevapsysvappressure">ABS Evap Sys Vap Pressure MQTT</label>
                             <input type="text" id="bluetoothobdmqttabsevapsysvappressure" name="bluetoothobdmqttabsevapsysvappressure" value="obd-abs-evap-sys-vap-pressure">

@@ -198,7 +198,7 @@ void readOBD() {
     delay(100);
     float maxMafRate = myELM327.maxMafRate();
     delay(100);
-    float ethonolPercent = myELM327.ethonolPercent();
+    float ethanolPercent = myELM327.ethanolPercent();
     delay(100);
     float absEvapSysVapPressure = myELM327.absEvapSysVapPressure();
     delay(100);
@@ -284,7 +284,7 @@ void readOBD() {
         SerialMon.print("OBD Time Run with MIL: " + (String)timeRunWithMIL);
         SerialMon.print("OBD Time Since Codes Cleared: " + (String)timeSinceCodesCleared);
         SerialMon.print("OBD Max MAF Rate: " + (String)maxMafRate);
-        SerialMon.print("OBD Ethanol Percent: " + (String)ethonolPercent);
+        SerialMon.print("OBD Ethanol Percent: " + (String)ethanolPercent);
         SerialMon.print("OBD Absolute Evap System Vapor Pressure: " + (String)absEvapSysVapPressure);
         SerialMon.print("OBD Evap System Vapor Pressure: " + (String)evapSysVapPressure2);
         SerialMon.print("OBD Absolute Fuel Rail Pressure: " + (String)absFuelRailPressure);
@@ -356,7 +356,7 @@ void readOBD() {
         packageAndSendMQTT((String)timeRunWithMIL, bluetoothobdmqtttimerunwithmil);
         packageAndSendMQTT((String)timeSinceCodesCleared, bluetoothobdmqtttimesincecodescleared);
         packageAndSendMQTT((String)maxMafRate, bluetoothobdmqttmaxmafrate);
-        packageAndSendMQTT((String)ethonolPercent, bluetoothobdmqttethonolpercent);
+        packageAndSendMQTT((String)ethanolPercent, bluetoothobdmqttethanolPercent);
         packageAndSendMQTT((String)absEvapSysVapPressure, bluetoothobdmqttabsevapsysvappressure);
         packageAndSendMQTT((String)evapSysVapPressure2, bluetoothobdmqttevapsysvappressure2);
         packageAndSendMQTT((String)absFuelRailPressure, bluetoothobdmqttabsfuelrailpressure);
