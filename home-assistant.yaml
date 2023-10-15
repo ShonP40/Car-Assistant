@@ -1,6 +1,6 @@
 ################################################################################# Example Home Assistant config
 mqtt:
-  buttons:
+  button:
     - name: "Car Restart"
       command_topic: "car-assistant/commands"
       payload_press: "restart"
