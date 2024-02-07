@@ -368,7 +368,7 @@ void rebootDevice() {
 }
 
 // Prepare MQTT
-PubSubClient mqtt(client);
+MQTTPubSubClient mqtt(client);
 
 // Receive MQTT commands
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -497,7 +497,18 @@ void initMQTT() {
         if (connectionRetries > 100) {
             rebootDevice();
         }
+        
+        #if MQTT_WS
+        // Configure a Websocket connection
+        ws.disconnect();
+        ws.beginSSL(mqttaddress.c_str(), stringToInt(mqttport));
+        ws.setReconnectInterval(2000);
 
+        mqtt.begin(ws);
+        #else
+        mqtt.begin(client);
+        #endif
+        
         mqtt.connect(stringToChar(mqttclientname), stringToChar(mqttusername), stringToChar(mqttpassword));
       } else {
         #if DEBUG

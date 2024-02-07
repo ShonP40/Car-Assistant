@@ -1,7 +1,12 @@
 #pragma once
 
 #include <TinyGsmClient.h>
-#include <PubSubClient.h>
+
+#if MQTT_WS
+#include <WebSocketsClient.h>
+#endif
+
+#include <MQTTPubSubClient.h>
 
 #include <ArduinoJson.h>
 #include <SPIFFS.h>
@@ -19,7 +24,10 @@
 // Extern TinyGsm and PubSubClient
 extern TinyGsm modem;
 extern TinyGsmClient client;
-extern PubSubClient mqtt;
+#if MQTT_WS
+extern WebSocketsClient ws;
+#endif
+extern MQTTPubSubClient mqtt;
 
 // Export functions
 void rebootDevice();
