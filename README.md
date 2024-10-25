@@ -34,7 +34,6 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Recover from GPS failures automatically
 - Recover from cellular failures automatically
 - Reboot the ESP32 & Modem remotely over MQTT
-- Bluetooth OBD2 adapters support (incomplete)
 
 ## Software Requirements
 - IDE of choise with PlatformIO (VSCode is recommended)
@@ -52,7 +51,6 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - TSL2561 sensor (optional)
 - PIR sensor (like the AM312) thats pulled low by default (optional)
 - Micro SD Card formatted as FAT32 (optional)
-- Bluetooth (not BLE) OBD2 adapter (like the Vgate iCar Pro) (optional)
 
 ## Connectors
 - I2C1 - GPIO 21 & 22
@@ -143,72 +141,6 @@ More pictures can be found [here](./PCB/Photos)
 - `Enable` - Enable or disable the FTP server
 - `Username` - The username of the FTP server
 - `Password` - The password of the FTP server
-### Bluetooth
-- `Enable` - Enable or disable Bluetooth
-- `Name` - The Bluetooth name the ESP will advertise
-- `OBD Identifier` - The name or MAC address of the OBD2 adapter
-- `OBD Payload MQTT` - The MQTT topic to publish the OBD2 error payload to
-- `OBD Debug MQTT` - The MQTT topic to publish the OBD2 debug errors to
-- `Engine Load MQTT` - The MQTT topic to publish the engine load to
-- `Engine Coolant Temp MQTT` - The MQTT topic to publish the engine coolant temperature to
-- `Short Term Fuel Trim Bank 1 MQTT` - The MQTT topic to publish the short term fuel trim bank 1 to
-- `Long Term Fuel Trim Bank 1 MQTT` - The MQTT topic to publish the long term fuel trim bank 1 to
-- `Short Term Fuel Trim Bank 2 MQTT` - The MQTT topic to publish the short term fuel trim bank 2 to
-- `Long Term Fuel Trim Bank 2 MQTT` - The MQTT topic to publish the long term fuel trim bank 2 to
-- `Fuel Pressure MQTT` - The MQTT topic to publish the fuel pressure to
-- `Manifold Pressure MQTT` - The MQTT topic to publish the manifold pressure to
-- `RPM MQTT` - The MQTT topic to publish the engine RPM to
-- `KPH MQTT` - The MQTT topic to publish the speed in KPH to
-- `MPH MQTT` - The MQTT topic to publish the speed in MPH to
-- `Timing Advance MQTT` - The MQTT topic to publish the timing advance to
-- `Intake Air Temp MQTT` - The MQTT topic to publish the intake air temperature to
-- `MAF Rate MQTT` - The MQTT topic to publish the MAF rate to
-- `Throttle MQTT` - The MQTT topic to publish the throttle position to
-- `Aux Input Status MQTT` - The MQTT topic to publish the aux input status to
-- `Run Time MQTT` - The MQTT topic to publish the run time to
-- `Dist Travel With Mil MQTT` - The MQTT topic to publish the distance traveled with MIL to
-- `Fuel Rail Pressure MQTT` - The MQTT topic to publish the fuel rail pressure to
-- `Fuel Rail Guage Pressure MQTT` - The MQTT topic to publish the fuel rail gauge pressure to
-- `Commanded EGR MQTT` - The MQTT topic to publish the commanded EGR to
-- `EGR Error MQTT` - The MQTT topic to publish the EGR error to
-- `Commanded Evap Purge MQTT` - The MQTT topic to publish the commanded evap purge to
-- `Fuel Level MQTT` - The MQTT topic to publish the fuel level to
-- `Warm Ups Since Codes Cleared MQTT` - The MQTT topic to publish the warm ups since codes cleared to
-- `Dist Since Codes Cleared MQTT` - The MQTT topic to publish the distance since codes cleared to
-- `Evap Sys Vap Pressure MQTT` - The MQTT topic to publish the evap system vapor pressure to
-- `ABS Baro Pressure MQTT` - The MQTT topic to publish the ABS barometric pressure to
-- `Cat Temp B1 S1 MQTT` - The MQTT topic to publish the catalyst temperature bank 1 sensor 1 to
-- `Cat Temp B2 S1 MQTT` - The MQTT topic to publish the catalyst temperature bank 2 sensor 1 to
-- `Cat Temp B1 S2 MQTT` - The MQTT topic to publish the catalyst temperature bank 1 sensor 2 to
-- `Cat Temp B2 S2 MQTT` - The MQTT topic to publish the catalyst temperature bank 2 sensor 2 to
-- `Ctrl Mod Voltage MQTT` - The MQTT topic to publish the control module voltage to
-- `ABS Load MQTT` - The MQTT topic to publish the ABS load to
-- `Commanded Air Fuel Ratio MQTT` - The MQTT topic to publish the commanded air fuel ratio to
-- `Relative Throttle MQTT` - The MQTT topic to publish the relative throttle position to
-- `Ambient Air Temp MQTT` - The MQTT topic to publish the ambient air temperature to
-- `ABS Throttle Pos B MQTT` - The MQTT topic to publish the ABS throttle position B to
-- `ABS Throttle Pos C MQTT` - The MQTT topic to publish the ABS throttle position C to
-- `Accel Pedal Pos D MQTT` - The MQTT topic to publish the accelerator pedal position D to
-- `Accel Pedal Pos E MQTT` - The MQTT topic to publish the accelerator pedal position E to
-- `Accel Pedal Pos F MQTT` - The MQTT topic to publish the accelerator pedal position F to
-- `Commanded Throttle Actuator MQTT` - The MQTT topic to publish the commanded throttle actuator to
-- `Time Run With MIL MQTT` - The MQTT topic to publish the time run with MIL to
-- `Time Since Codes Cleared MQTT` - The MQTT topic to publish the time since codes cleared to
-- `Max MAF Rate MQTT` - The MQTT topic to publish the max MAF rate to
-- `Ethonol Percent MQTT` - The MQTT topic to publish the ethonol percent to
-- `ABS Evap Sys Vap Pressure MQTT` - The MQTT topic to publish the ABS evap system vapor pressure to
-- `Evap Sys Vap Pressure 2 MQTT ` - The MQTT topic to publish the evap system vapor pressure 2 to
-- `ABS Fuel Rail Pressure MQTT` - The MQTT topic to publish the ABS fuel rail pressure to
-- `Eelative Pedal Pos MQTT` - The MQTT topic to publish the relative pedal position to
-- `Hybrid Bat Life MQTT` - The MQTT topic to publish the hybrid battery life to
-- `Oil Temp MQTT` - The MQTT topic to publish the oil temperature to
-- `Fuel Inject Timing MQTT` - The MQTT topic to publish the fuel injection timing to
-- `Fuel Rate MQTT` - The MQTT topic to publish the fuel rate to
-- `Demanded Torque MQTT` - The MQTT topic to publish the demanded torque to
-- `Torque MQTT` - The MQTT topic to publish the torque to
-- `Reference Torque MQTT` - The MQTT topic to publish the reference torque to
-- `Battery Voltage MQTT` - The MQTT topic to publish the battery voltage to
-- `VIN MQTT` - The MQTT topic to publish the VIN of your car to
 ### Misc MQTT topics
 - `Uptime` - The MQTT topic to publish the uptime to
 - `Version` - The MQTT topic to publish the version number to
@@ -233,8 +165,6 @@ More pictures can be found [here](./PCB/Photos)
 ### Indicator pins
 - `USB_INDICATOR` - Detect if the board is being powered by USB
 - `SOLAR_INDICATOR` - Detect if the board is being powered by solar
-### Bluetooth
-- `PAIR_MAX_DEVICES` - The maximum number of devices the ESP will store before resetting
 ### Modem model
 - `TINY_GSM_MODEM_<MODEL>` - The model of the modem (only SIM7600 has been tested)
 
