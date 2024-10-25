@@ -8,7 +8,7 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include <AsyncElegantOTA.h>
+#include <ElegantOTA.h>
 AsyncWebServer server(80);
 
 // Configuration variables
@@ -308,7 +308,7 @@ void setup() {
   mqtt.setCallback(callback);
 
   // OTA
-  AsyncElegantOTA.begin(&server);
+  ElegantOTA.begin(&server);
 
   // Web Server Root URL
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
@@ -323,7 +323,7 @@ void setup() {
 
     DynamicJsonDocument doc(8192);
     for (int i = 0; i < params; i++) {
-      AsyncWebParameter* p = request->getParam(i);
+      const AsyncWebParameter* p = request->getParam(i);
       if (p->isPost()) {
         for (int i = 0; i < (sizeof(configIDs) / sizeof(configIDs[0])); i++) {
           if (p->name() == configIDs[i]) {
@@ -464,6 +464,9 @@ void loop() {
       initSensors();
       readSensors();
     }
+
+    // OTA
+    ElegantOTA.loop();
   }
 
   // FTP
