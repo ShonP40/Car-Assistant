@@ -174,8 +174,7 @@ More pictures can be found [here](./PCB/Photos)
 - [vshymanskyy](https://github.com/vshymanskyy) - [TinyGSM](https://github.com/vshymanskyy/TinyGSM) & [StreamDebugger](https://github.com/vshymanskyy/StreamDebugger) libraries
 - [knolleary](https://github.com/knolleary) - [PubSubClient](https://github.com/knolleary/pubsubclient) library
 - [adafruit](https://github.com/adafruit) - [Unified Sensor](https://github.com/adafruit/Adafruit_Sensor), [BME280](https://github.com/adafruit/Adafruit_BME280_Library) & [TSL2561](https://github.com/adafruit/Adafruit_TSL2561) libraries
-- [ayushsharma82](https://github.com/ayushsharma82) - [AsyncElegantOTA](https://github.com/ayushsharma82/AsyncElegantOTA) library
-- [me-no-dev](https://github.com/me-no-dev) - [AsyncTCP](https://github.com/me-no-dev/AsyncTCP) & [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer) libraries
+- [ayushsharma82](https://github.com/ayushsharma82) - [ElegantOTA](https://github.com/ayushsharma82/ElegantOTA) library
+- [mathieucarbou](https://github.com/mathieucarbou) - [AsyncTCP](https://github.com/mathieucarbou/AsyncTCP) & [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer) libraries
 - [bblanchon](https://github.com/bblanchon) - [ArduinoJson](https://github.com/bblanchon/ArduinoJson) library
 - [peterus](https://github.com/peterus) - [ESP-FTP-Server](https://github.com/peterus/ESP-FTP-Server-Lib) library
-- [PowerBroker2](https://github.com/PowerBroker2) - [ELMduino](https://github.com/PowerBroker2/ELMduino) library
