@@ -28,7 +28,7 @@ jobs:
           pip install -U platformio
       - name: Get the current branch name
         id: branch-name
-        uses: tj-actions/branch-names@v6
+        uses: tj-actions/branch-names@v8
       - name: Get the current commit ID
         id: commit
         uses: pr-mpt/actions-commit-hash@v2
