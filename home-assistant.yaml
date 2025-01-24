@@ -138,7 +138,7 @@ action:
     data:
       retain: true
       topic: car-assistant/json-location
-      payload_template: >-
+      payload: >-
         {"longitude": "{{ states('sensor.car_longitude') | float }}", "latitude": "{{ states('sensor.car_latitude') | float }}", "gps_accuracy": "{{states('sensor.car_location_accuracy') | int }}", "altitude": "{{states('sensor.car_altitude') | int }}", "battery_level": "{{states('sensor.car_battery_percentage') | int }}", "speed": "{{states('sensor.car_speed') | int }}"}
   - service: mqtt.publish
     data:
