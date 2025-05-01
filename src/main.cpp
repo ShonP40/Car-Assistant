@@ -359,7 +359,6 @@ void setup() {
     advData.setManufacturerData(mfgData);
   
     pAdvertising->setAdvertisementData(advData);
-    pAdvertising->setScanResponse(false);
     pAdvertising->start();
   }
 
