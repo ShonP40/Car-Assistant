@@ -346,6 +346,14 @@ const char* index_html = R"literal(
                             <label for="ftppass">Password</label>
                             <input type="text" id="ftppass" name="ftppass" value="12345678">
                         </p>
+                        <p> Bluetooth </br>
+                            <label for="bluetoothibeaconenable">Enable iBeacon?</label>
+                            <input type="text" id="bluetoothibeaconenable" name="bluetoothibeaconenable" value="false">
+                            <br>
+                            <label for="bluetoothibeaconuuid">iBeacon UUID</label>
+                            <input type="text" id="bluetoothibeaconuuid" name="bluetoothibeaconuuid" value="12345678-1234-1234-1234-123456789abc">
+                            <br>
+                        </p>
                         <p> Misc MQTT topics </br>
                             <label for="mqttuptime">Uptime</label>
                             <input type="text" id="mqttuptime" name="mqttuptime" value="uptime">
