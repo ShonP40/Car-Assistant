@@ -334,9 +334,13 @@ void setup() {
     mfgData.push_back(0x02); // Type
     mfgData.push_back(0x15); // Length
   
-    // UUID
+    // UUID as string
     NimBLEUUID uuid(stringToChar(bluetoothibeaconuuid));
-    const uint8_t* uuidBytes = uuid.get128();
+
+    // Convert to 128-bit representation if necessary
+    uuid.to128();
+
+    const uint8_t* uuidBytes = uuid.getValue();
     mfgData.insert(mfgData.end(), uuidBytes, uuidBytes + 16);
   
     // Major: 100 (0x0064)
