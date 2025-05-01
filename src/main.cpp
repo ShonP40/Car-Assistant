@@ -335,7 +335,7 @@ void setup() {
     mfgData.push_back(0x15); // Length
   
     // UUID as string
-    NimBLEUUID uuid(stringToChar(bluetoothibeaconuuid));
+    NimBLEUUID uuid(bluetoothibeaconuuid.c_str());
 
     // Convert to 128-bit representation if necessary
     uuid.to128();
