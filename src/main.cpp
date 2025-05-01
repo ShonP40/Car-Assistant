@@ -334,7 +334,7 @@ void setup() {
     mfgData.push_back(0x02); // Type
     mfgData.push_back(0x15); // Length
   
-    // UUID as string
+    // UUID string to bytes
     const char* uuidStr = stringToChar(bluetoothibeaconuuid);
 
     uint8_t uuidBytes[16];
