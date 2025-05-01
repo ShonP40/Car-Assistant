@@ -320,48 +320,46 @@ void setup() {
   // BLE
   if (bluetoothibeaconenable == "true") {
     NimBLEDevice::init("");
-
-    // Define the iBeacon UUID
-    NimBLEUUID uuid(stringToChar(bluetoothibeaconuuid));
-    const uint8_t* uuidBytes = uuid.getValue();
-
-    // Construct the iBeacon payload
-    std::vector<uint8_t> beaconData;
-
-    // iBeacon prefix: 0x02 0x15
-    beaconData.push_back(0x02);
-    beaconData.push_back(0x15);
-
-    // Append UUID
-    beaconData.insert(beaconData.end(), uuidBytes, uuidBytes + 16);
-
+  
+    NimBLEAdvertising *pAdvertising = NimBLEDevice::getAdvertising();
+    NimBLEAdvertisementData advData;
+  
+    std::vector<uint8_t> mfgData;
+  
+    // Apple Manufacturer ID (0x004C little-endian)
+    mfgData.push_back(0x4C);
+    mfgData.push_back(0x00);
+  
+    // iBeacon Type and Length
+    mfgData.push_back(0x02); // Type
+    mfgData.push_back(0x15); // Length
+  
+    // UUID: 12345678-1234-1234-1234-123456789abc
+    uint8_t uuid[16] = {
+      0x12, 0x34, 0x56, 0x78,
+      0x12, 0x34,
+      0x12, 0x34,
+      0x12, 0x34,
+      0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC
+    };
+    mfgData.insert(mfgData.end(), uuid, uuid + 16);
+  
     // Major: 100 (0x0064)
-    beaconData.push_back(0x00);
-    beaconData.push_back(0x64);
-
+    mfgData.push_back(0x00);
+    mfgData.push_back(0x64);
+  
     // Minor: 1 (0x0001)
-    beaconData.push_back(0x00);
-    beaconData.push_back(0x01);
-
-    // Measured Power: -59
-    beaconData.push_back(0xC5);
-
-    // Set up advertisement data
-    NimBLEAdvertisementData advertisementData;
-    advertisementData.setFlags(0x04); // BR_EDR_NOT_SUPPORTED
-
-    // Manufacturer data: Apple ID (0x004C) followed by beacon data
-    std::vector<uint8_t> manufacturerData;
-    manufacturerData.push_back(0x4C); // Apple ID LSB
-    manufacturerData.push_back(0x00); // Apple ID MSB
-    manufacturerData.insert(manufacturerData.end(), beaconData.begin(), beaconData.end());
-
-    advertisementData.setManufacturerData(manufacturerData);
-
-    // Configure advertising
-    NimBLEAdvertising* pAdvertising = NimBLEDevice::getAdvertising();
-    pAdvertising->setAdvertisementData(advertisementData);
-    pAdvertising->setConnectableMode(0); // Non-connectable mode
+    mfgData.push_back(0x00);
+    mfgData.push_back(0x01);
+  
+    // Tx Power
+    mfgData.push_back(0xC5); // -59 dBm
+  
+    advData.setFlags(0x04); // BR/EDR Not Supported
+    advData.setManufacturerData(mfgData);
+  
+    pAdvertising->setAdvertisementData(advData);
+    pAdvertising->setScanResponse(false);
     pAdvertising->start();
   }
 
