@@ -11,12 +11,15 @@
 #include <ElegantOTA.h>
 AsyncWebServer server(80);
 
+// BLE
+#include <NimBLEDevice.h>
+
 // Configuration variables
-String apn, apnusername, apnpassword, simpin, timezone, dst, apssid, appassword, appowersaving, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, sensorsenablehall, mqttsensorshall, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, ftpenable, ftpuser, ftppass, mqttuptime, mqttversion, dynamicfrequency, lowpowermodeonbattery;
+String apn, apnusername, apnpassword, simpin, timezone, dst, apssid, appassword, appowersaving, mqttaddress, mqttport, mqttclientname, mqttusername, mqttpassword, locationgnssmode, locationdpo, sensorsenable, sensorsenablebme280, sensorbme280i2caddress, mqttsensorsbme280temperature, mqttsensorsbme280pressure, mqttsensorsbme280humidity, sensorsenabletsl2561, sensortsl2561i2caddress, sensortsl2561gain, mqttsensorstsl2561lux, sensorsenablepir, sensorpirpin, mqttsensorspir, sensorsenablecputemp, mqttsensorscputemp, sensorsenablecpufreq, mqttsensorscpufreq, sensorsenablefreeram, mqttsensorsfreeram, sensorsenablehall, mqttsensorshall, mqttmodeminfo, mqttmodemccid, mqttmodemimsi, mqttmodemoperator, mqttmodemsignalquality, mqttmodempublicip, mqttbatterypercentage, mqttbatteryvoltage, mqttbatterystatus, mqttlocationtype, mqttlocationlatitude, mqttlocationlongitude, mqttlocationspeed, mqttlocationaltitude, mqttlocationaccuracy, ftpenable, ftpuser, ftppass, bluetoothibeaconenable, bluetoothibeaconuuid, mqttuptime, mqttversion, dynamicfrequency, lowpowermodeonbattery;
 int connectionRetries = 0;
 
 // Search for parameter in HTTP POST request
-const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "timezone", "dst", "apssid", "appassword", "appowersaving", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "sensorsenablehall", "mqttsensorshall", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "ftpenable", "ftpuser", "ftppass", "mqttuptime", "mqttversion", "dynamicfrequency", "lowpowermodeonbattery"};
+const String configIDs[] = {"apn", "apnusername", "apnpassword", "simpin", "timezone", "dst", "apssid", "appassword", "appowersaving", "mqttaddress", "mqttport", "mqttclientname", "mqttusername", "mqttpassword", "locationgnssmode", "locationdpo", "sensorsenable", "sensorsenablebme280", "sensorbme280i2caddress", "mqttsensorsbme280temperature", "mqttsensorsbme280pressure", "mqttsensorsbme280humidity", "sensorsenabletsl2561", "sensortsl2561i2caddress", "sensortsl2561gain", "mqttsensorstsl2561lux", "sensorsenablepir", "sensorpirpin", "mqttsensorspir", "sensorsenablecputemp", "mqttsensorscputemp", "sensorsenablecpufreq", "mqttsensorscpufreq", "sensorsenablefreeram", "mqttsensorsfreeram", "sensorsenablehall", "mqttsensorshall", "mqttmodeminfo", "mqttmodemccid", "mqttmodemimsi", "mqttmodemoperator", "mqttmodemsignalquality", "mqttmodempublicip", "mqttbatterypercentage", "mqttbatteryvoltage", "mqttbatterystatus", "mqttlocationtype", "mqttlocationlatitude", "mqttlocationlongitude", "mqttlocationspeed", "mqttlocationaltitude", "mqttlocationaccuracy", "ftpenable", "ftpuser", "ftppass", "bluetoothibeaconenable", "bluetoothibeaconuuid", "mqttuptime", "mqttversion", "dynamicfrequency", "lowpowermodeonbattery"};
 
 // Read File from SPIFFS
 String readFile(fs::FS &fs, const char * path) {
@@ -140,6 +143,8 @@ void loadConfig() {
   ftpenable = doc["ftpenable"] | "false";
   ftpuser = doc["ftpuser"] | "carassistant";
   ftppass = doc["ftppass"] | "12345678";
+  bluetoothibeaconenable = doc["bluetoothibeaconenable"] | "false";
+  bluetoothibeaconuuid = doc["bluetoothibeaconuuid"] | "12345678-1234-1234-1234-123456789abc";
   mqttuptime = doc["mqttuptime"] | "uptime";
   mqttversion = doc["mqttversion"] | "version";
   dynamicfrequency = doc["dynamicfrequency"] | "false";
@@ -205,6 +210,8 @@ void loadConfig() {
   SerialMon.println("  ftpenable: " + ftpenable);
   SerialMon.println("  ftpuser: " + ftpuser);
   SerialMon.println("  ftppass: " + ftppass);
+  SerialMon.println("  bluetoothibeaconenable: " + bluetoothibeaconenable);
+  SerialMon.println("  bluetoothibeaconuuid: " + bluetoothibeaconuuid);
   SerialMon.println("  mqttuptime: " + mqttuptime);
   SerialMon.println("  mqttversion: " + mqttversion);
   SerialMon.println("  dynamicfrequency: " + dynamicfrequency);
@@ -309,6 +316,54 @@ void setup() {
 
   // OTA
   ElegantOTA.begin(&server);
+
+  // BLE
+  if (bluetoothibeaconenable == "true") {
+    NimBLEDevice::init("");
+
+    // Define the iBeacon UUID
+    NimBLEUUID uuid(stringToChar(bluetoothibeaconuuid));
+    const uint8_t* uuidBytes = uuid.getValue();
+
+    // Construct the iBeacon payload
+    std::vector<uint8_t> beaconData;
+
+    // iBeacon prefix: 0x02 0x15
+    beaconData.push_back(0x02);
+    beaconData.push_back(0x15);
+
+    // Append UUID
+    beaconData.insert(beaconData.end(), uuidBytes, uuidBytes + 16);
+
+    // Major: 100 (0x0064)
+    beaconData.push_back(0x00);
+    beaconData.push_back(0x64);
+
+    // Minor: 1 (0x0001)
+    beaconData.push_back(0x00);
+    beaconData.push_back(0x01);
+
+    // Measured Power: -59
+    beaconData.push_back(0xC5);
+
+    // Set up advertisement data
+    NimBLEAdvertisementData advertisementData;
+    advertisementData.setFlags(0x04); // BR_EDR_NOT_SUPPORTED
+
+    // Manufacturer data: Apple ID (0x004C) followed by beacon data
+    std::vector<uint8_t> manufacturerData;
+    manufacturerData.push_back(0x4C); // Apple ID LSB
+    manufacturerData.push_back(0x00); // Apple ID MSB
+    manufacturerData.insert(manufacturerData.end(), beaconData.begin(), beaconData.end());
+
+    advertisementData.setManufacturerData(manufacturerData);
+
+    // Configure advertising
+    NimBLEAdvertising* pAdvertising = NimBLEDevice::getAdvertising();
+    pAdvertising->setAdvertisementData(advertisementData);
+    pAdvertising->setConnectableMode(0); // Non-connectable mode
+    pAdvertising->start();
+  }
 
   // Web Server Root URL
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {

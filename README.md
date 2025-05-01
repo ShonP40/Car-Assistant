@@ -20,6 +20,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Automatically update the ESP's clock
 - MQTT connection
 - SD card support through an FTP server (set your connection mode to `Active (PORT)`)
+- Broadcast a Bluetooth iBeacon (to detect which phones are in the car, by using the `iBeacon Scanner` sensor in the Home Assistant app)
 - Dynamic CPU frequency scaling
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details
@@ -141,6 +142,9 @@ More pictures can be found [here](./PCB/Photos)
 - `Enable` - Enable or disable the FTP server
 - `Username` - The username of the FTP server
 - `Password` - The password of the FTP server
+### Bluetooth
+- `Enable iBeacon` - Enable or disable the iBeacon
+- `iBeacon UUID` - The UUID of the iBeacon
 ### Misc MQTT topics
 - `Uptime` - The MQTT topic to publish the uptime to
 - `Version` - The MQTT topic to publish the version number to
@@ -178,3 +182,4 @@ More pictures can be found [here](./PCB/Photos)
 - [mathieucarbou](https://github.com/mathieucarbou) - [AsyncTCP](https://github.com/mathieucarbou/AsyncTCP) & [ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer) libraries
 - [bblanchon](https://github.com/bblanchon) - [ArduinoJson](https://github.com/bblanchon/ArduinoJson) library
 - [peterus](https://github.com/peterus) - [ESP-FTP-Server](https://github.com/peterus/ESP-FTP-Server-Lib) library
+- [h2zero](https://github.com/h2zero) - [NimBLE-Arduino](https://github.com/h2zero/NimBLE-Arduino) library
