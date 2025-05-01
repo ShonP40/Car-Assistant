@@ -335,13 +335,21 @@ void setup() {
     mfgData.push_back(0x15); // Length
   
     // UUID as string
-    //NimBLEUUID uuid(bluetoothibeaconuuid.c_str());
-    NimBLEUUID uuid("96fb66c9-29b6-36cb-f7ff-8abe69db9f96");
+    const char* uuidStr = stringToChar(bluetoothibeaconuuid);
 
-    // Convert to 128-bit representation if necessary
-    uuid.to128();
-
-    const uint8_t* uuidBytes = uuid.getValue();
+    uint8_t uuidBytes[16];
+    int uuidIndex = 0;
+    
+    for (int i = 0; i < 36 && uuidIndex < 16; ) {
+      if (uuidStr[i] == '-') {
+        i++;
+        continue;
+      }
+    
+      char hexPair[3] = { uuidStr[i], uuidStr[i+1], '\0' };
+      uuidBytes[uuidIndex++] = strtoul(hexPair, nullptr, 16);
+      i += 2;
+    }
     mfgData.insert(mfgData.end(), uuidBytes, uuidBytes + 16);
   
     // Major: 100 (0x0064)
