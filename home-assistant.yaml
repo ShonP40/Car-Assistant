@@ -133,13 +133,20 @@ trigger:
     entity_id:
       - sensor.car_speed
 condition: []
-action:
-  - service: mqtt.publish
-    data:
+actions:
+  - data:
       retain: true
       topic: car-assistant/json-location
-      payload: >-
-        {"longitude": "{{ states('sensor.car_longitude') | float }}", "latitude": "{{ states('sensor.car_latitude') | float }}", "gps_accuracy": "{{states('sensor.car_location_accuracy') | int }}", "altitude": "{{states('sensor.car_altitude') | int }}", "battery_level": "{{states('sensor.car_battery_percentage') | int }}", "speed": "{{states('sensor.car_speed') | int }}"}
+      payload: |-
+        {
+          "longitude": {{ states('sensor.car_longitude') | float }},
+          "latitude": {{ states('sensor.car_latitude') | float }},
+          "gps_accuracy": {{ states('sensor.car_location_accuracy') | int }},
+          "altitude": {{ states('sensor.car_altitude') | int }},
+          "battery_level": {{ states('sensor.car_battery_percentage') | int }},
+          "speed": {{ states('sensor.car_speed') | int }}
+        }
+    action: mqtt.publish
   - service: mqtt.publish
     data:
       retain: true
