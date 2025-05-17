@@ -306,7 +306,9 @@ void getLocationInfo() {
                 packageAndSendMQTT(String(lat2, 8), mqttlocationlatitude);
                 packageAndSendMQTT(String(lon2, 8), mqttlocationlongitude);
                 packageAndSendMQTT(String(speed2), mqttlocationspeed);
-                packageAndSendMQTT(String(alt2), mqttlocationaltitude);
+                if (alt2 != -9999) {
+                    packageAndSendMQTT(String(alt2), mqttlocationaltitude);
+                }
                 packageAndSendMQTT(String(accuracy2), mqttlocationaccuracy);
             } else if (modem.getGsmLocation(&lat2, &lon2, &accuracy2, &year2, &month2, &day2, &hour2, &min2, &sec2)) {
                 #if DEBUG
