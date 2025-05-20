@@ -134,51 +134,53 @@ trigger:
       - sensor.car_speed
 condition: []
 actions:
-  - data:
-      retain: true
-      topic: car-assistant/json-location
-      payload: |-
-        {
-          "longitude": {{ states('sensor.car_longitude') | float }},
-          "latitude": {{ states('sensor.car_latitude') | float }},
-          "gps_accuracy": {{ states('sensor.car_location_accuracy') | int }},
-          "altitude": {{ states('sensor.car_altitude') | int }},
-          "battery_level": {{ states('sensor.car_battery_percentage') | int }},
-          "speed": {{ states('sensor.car_speed') | int }}
-        }
-    action: mqtt.publish
-  - service: mqtt.publish
-    data:
-      retain: true
-      topic: car-assistant/location
-      payload: >
-        {% set device_longitude = states('sensor.car_longitude') | float %}
-        {% set device_latitude = states('sensor.car_latitude') | float %}
-        {% set locations = states.zone | selectattr('attributes.radius', 'defined') | map(attribute='entity_id') | list %}
-        {% set regex = '^.+\\.(.+)$' %} {# regular expression to match the second part of the entity_id #}
-        {% set result = namespace(results = none) %}
-        {% for location in locations %}
-          {% set zone_entity_id = location.lower().replace(' ', '_') %}
-          {% set zone_latitude = state_attr(zone_entity_id, 'latitude') %}
-          {% set zone_longitude = state_attr(zone_entity_id, 'longitude') %}
-          {% set zone_radius = state_attr(zone_entity_id, 'radius') %}
-          {% set lat_diff = device_latitude - zone_latitude %}
-          {% set lon_diff = device_longitude - zone_longitude %}
-          {% set distance = ((lat_diff ** 2 + lon_diff ** 2) ** 0.5) * 111139 %} {# distance in meters #}
-          {% set match = location | regex_findall_index(regex) %} {# find the match with the regular expression #}
-          {% if distance <= zone_radius %}
-            {% set zone_friendly_name = state_attr(zone_entity_id, 'friendly_name') %}
-            {% set result.results = zone_friendly_name %}
-            {% if result.results == 'House' %}
-              {{ 'Home' }}
-            {% else %}
-              {{ result.results }}
+  - parallel:
+      - data:
+          retain: true
+          topic: car-assistant/json-location
+          payload: |-
+            {
+              "longitude": {{ states('sensor.car_longitude') | float }},
+              "latitude": {{ states('sensor.car_latitude') | float }},
+              "gps_accuracy": {{ states('sensor.car_location_accuracy') | int }},
+              "altitude": {{ states('sensor.car_altitude') | int }},
+              "battery_level": {{ states('sensor.car_battery_percentage') | int }},
+              "speed": {{ states('sensor.car_speed') | int }}
+            }
+        action: mqtt.publish
+      - data:
+          qos: 0
+          retain: true
+          topic: car-assistant/location
+          payload: >
+            {% set device_longitude = states('sensor.car_longitude') | float %}
+            {% set device_latitude = states('sensor.car_latitude') | float %}
+            {% set locations = states.zone | selectattr('attributes.radius', 'defined') | map(attribute='entity_id') | list %}
+            {% set regex = '^.+\\.(.+)$' %}
+            {# regular expression to match the second part of the entity_id #}
+            {% set result = namespace(results = none) %}
+            {% for location in locations %}
+              {% set zone_entity_id = location.lower().replace(' ', '_') %}
+              {% set zone_latitude = state_attr(zone_entity_id, 'latitude') %}
+              {% set zone_longitude = state_attr(zone_entity_id, 'longitude') %}
+              {% set zone_radius = state_attr(zone_entity_id, 'radius') %}
+              {% set lat_diff = device_latitude - zone_latitude %}
+              {% set lon_diff = device_longitude - zone_longitude %}
+              {% set distance = ((lat_diff**2 + lon_diff**2)**0.5) * 111139 %} {# distance in meters #}
+              {% set match = location | regex_findall_index(regex) %} {# find the match with the regular expression #}
+              {% if distance <= zone_radius %}
+                {% set zone_friendly_name = state_attr(zone_entity_id, 'friendly_name') %}
+                {% set result.results = zone_friendly_name %}
+                {% if result.results == 'House' %}
+                  {{ 'home' }}
+                {% else %}
+                  {{ result.results }}
+                {% endif %}
+              {% endif %}
+            {% endfor %} {% if result.results is none %}
+              {{ 'not_home' }}
             {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% if result.results is none %}
-          {{ 'not_home' }}
-        {% endif %}
+        action: mqtt.publish
 ################################################################################# Example Home Assistant automation for restarting Car Assistant
 id: "car_assistant_auto_reboot"
 alias: "Car Assistant: Auto Reboot"
