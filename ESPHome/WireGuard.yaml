@@ -27,11 +27,13 @@ text_sensor:
   - platform: wireguard
     address:
       name: "${friendly_name} WireGuard Address"
+      entity_category: "diagnostic"
 
 sensor:
   - platform: wireguard
     latest_handshake:
       name: "${friendly_name} WireGuard Latest Handshake"
+      entity_category: "diagnostic"
 
 # Enable Home Assistant API
 api:

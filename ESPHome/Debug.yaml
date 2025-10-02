@@ -15,25 +15,34 @@ text_sensor:
   - platform: debug
     device:
       name: "${friendly_name} Device Info"
+      entity_category: "diagnostic"
     reset_reason:
       name: "${friendly_name} Reset Reason"
+      entity_category: "diagnostic"
 
 sensor:
   - platform: uptime
     name: "${friendly_name} Uptime Sensor"
+    entity_category: "diagnostic"
   - platform: internal_temperature
     name: "Internal Temperature"
+    entity_category: "diagnostic"
   - platform: debug
     free:
       name: "${friendly_name} Heap Free"
+      entity_category: "diagnostic"
     block:
       name: "${friendly_name} Heap Max Block"
+      entity_category: "diagnostic"
     loop_time:
       name: "${friendly_name} Loop Time"
+      entity_category: "diagnostic"
     psram:
       name: "${friendly_name} Free PSRAM"
+      entity_category: "diagnostic"
     cpu_frequency:
       name: "${friendly_name} CPU Frequency"
+      entity_category: "diagnostic"
 
 button:
   - platform: restart
@@ -43,6 +52,7 @@ button:
 binary_sensor:
   - platform: status
     name: "${friendly_name} Status"
+    entity_category: "diagnostic"
 
 status_led:
   pin:
