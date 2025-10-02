@@ -79,7 +79,7 @@ Follow these steps to get your Car Assistant device up and running with ESPHome.
 1. In the ESPHome dashboard, click `+ New Device`
 2. Name your device (e.g., "Car Assistant")
 3. Select `ESP32` as your device type
-4. Copy the basic configuration to your new device from [here](./car-assistant.yaml)
+4. Copy the default configuration to your new device from [here](./car-assistant.yaml)
 5. Modify the configuration in the user config section
 6. Click `Save` and then `Install`
 
