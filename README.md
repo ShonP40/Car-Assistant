@@ -13,29 +13,29 @@ This project has been sponsored by [PCBWay](https://www.pcbway.com/)!
 You can order this project from PCBWay at a $5 discount by using my [referal link](https://www.pcbway.com/setinvite.aspx?inviteid=590728)
 
 ## Features
-- OTA updates
+- OTA updates (Remotely when using WireGuard VPN, or locally through the WiFi hotspot)
 - Cellular connectivity
 - Automatically update the ESP's clock
-- VPN connection
+- WireGuard VPN connection
 - SD card support through a web server
 - Broadcast a Bluetooth iBeacon (to detect which phones are in the car, by using the `iBeacon Scanner` sensor in the Home Assistant app)
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details
-- Report location status (latitude, longitude, speed, altitude, visible satellites, accuracy) with cellular fallback
+- Report location status (latitude, longitude, speed, altitude, visible satellites, Horizontal Dilution Of Precision)
 - Report the uptime of the ESP in seconds
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor
 - Report the CPU temperature and frequency
-- Report the free RAM amount
+- Report the free RAM & PSRAM amounts
 - Reboot the ESP32 & Modem remotely
-- Broadcast a WiFi hotspot with internet access & ESPHome Web UI
+- Broadcast a WiFi hotspot with internet access
 
 ## Software Requirements
-- ESPHome (2025.7.0 or later)
+- ESPHome (2025.9.0 or later)
 - USB <-> Serial driver ([`macOS`](https://github.com/Xinyuan-LilyGO/CH9102_Mac_Driver) | [`Linux`](https://github.com/gorgiaxx/CH34x-Driver-Linux) | [`Windows`](https://github.com/Xinyuan-LilyGO/CH9102_Driver))
 - Home Assistant server (An example config can be found [here](home-assistant.yaml))
-- WireGuard VPN server
+- WireGuard VPN server or an MQTT broker
 
 ## Hardware Requirements
 - LilyGO® TTGO T-SIM7600E-L1C ESP32 (Other ESP32 TTGO models could also work)
@@ -49,8 +49,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Micro SD Card formatted as FAT32 (optional)
 
 ## Connectors
-- I2C1 - GPIO 21 & 22
-- I2C2 - GPIO 21 & 22
+- I2C1 - GPIO 21 (SDA) & 22 (SCL)
+- I2C2 - GPIO 21 (SDA) & 22 (SCL)
 - GPIO - GPIO 19 & 23
 
 ## Boards preview
@@ -60,3 +60,8 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 ![Assembled Enclosures](./PCB/Photos/Enclosure/12%20-%20Assembled%20(All).jpeg)
 
 More pictures can be found [here](./PCB/Photos)
+
+## Credits
+- [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
+- [oarcher](https://github.com/esphome/esphome/pull/6721#issuecomment-3362380809) - ESPHome SIM7600 implementation
+- [n-serrette](https://github.com/n-serrette/esphome_sd_card) - ESPHome SDCard implementation
