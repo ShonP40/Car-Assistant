@@ -113,4 +113,3 @@ switch:
     gnss:
       name: "${friendly_name} GNSS"
       restore_mode: ALWAYS_ON
-    entity_category: "diagnostic"
