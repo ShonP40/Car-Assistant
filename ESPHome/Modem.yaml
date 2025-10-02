@@ -55,6 +55,7 @@ gps:
     name: "${friendly_name} Satellites"
   hdop:
     name: "${friendly_name} Horizontal Dilution Of Precision"
+    id: ${id}_hdop
 
 text_sensor:
   - platform: modem
@@ -69,6 +70,11 @@ sensor:
       name: "${friendly_name} RSSI"
     ber:
       name: "${friendly_name} Bit Error Rate"
+  - platform: template
+    name: "${friendly_name} GPS Accuracy"
+    unit_of_measurement: "m"
+    accuracy_decimals: 1
+    lambda: return id(${id}_hdop).state * 5.0;
 
 binary_sensor:
   - platform: gpio
