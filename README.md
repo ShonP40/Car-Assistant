@@ -61,6 +61,43 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 
 More pictures can be found [here](./PCB/Photos)
 
+## Installation
+
+Follow these steps to get your Car Assistant device up and running with ESPHome.
+
+### ESPHome Integration Setup
+
+1. Install the ESPHome add-on in Home Assistant if not already installed:
+   - Go to `Settings` → `Add-ons` → `Add-on Store`
+   - Search for `ESPHome`
+   - Click `Install`
+2. Start the ESPHome add-on and verify that it's running
+3. Access the ESPHome dashboard through Home Assistant
+
+### Setup Device
+
+1. In the ESPHome dashboard, click `+ New Device`
+2. Name your device (e.g., "Car Assistant")
+3. Select `ESP32` as your device type
+4. Copy the basic configuration to your new device from [here](./car-assistant.yaml)
+5. Modify the configuration in the user config section
+6. Click `Save` and then `Install`
+
+### Device Flashing
+
+Initial flashing must be done via serial connection.
+
+[ESPHome Web](https://web.esphome.io) is recommended for the simplest experience.
+
+#### Required Hardware
+- USB-C to USB-A cable
+
+#### Flashing Process
+1. Connect the T-SIM7600E-L1C to a computer using a USB-C cable
+2. Visit [ESPHome Web](https://web.esphome.io)
+3. Connect to your device and flash the firmware you compiled earlier
+4. After a successful flash, the device will restart and be ready for OTA updates
+
 ## Credits
 - [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
 - [oarcher](https://github.com/esphome/esphome/pull/6721#issuecomment-3362380809) - ESPHome SIM7600 implementation
