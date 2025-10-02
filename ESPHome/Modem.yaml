@@ -14,6 +14,8 @@ external_components:
     components: [ network, modem, watchdog ]
     refresh: 10min
 
+http_request:
+
 modem:
   id: atmodem
   rx_pin: ${modem_rx_pin}
@@ -64,8 +66,6 @@ gps:
   hdop:
     name: "${friendly_name} Horizontal Dilution Of Precision"
     id: ${id}_hdop
-
-http_request:
 
 text_sensor:
   - platform: modem

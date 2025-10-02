@@ -21,7 +21,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Broadcast a Bluetooth iBeacon (to detect which phones are in the car, by using the `iBeacon Scanner` sensor in the Home Assistant app)
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details
-- Report location status (latitude, longitude, speed, altitude, visible satellites, Horizontal Dilution Of Precision)
+- Report location status (latitude, longitude, speed, altitude, visible satellites, horizontal dilution of precision, accuracy)
 - Report the uptime of the ESP in seconds
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
