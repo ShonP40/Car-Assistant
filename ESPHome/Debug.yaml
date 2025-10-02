@@ -40,7 +40,7 @@ button:
     id: restart_button
     name: "${friendly_name} Restart"
 
-inary_sensor:
+binary_sensor:
   - platform: status
     name: "${friendly_name} Status"
 
