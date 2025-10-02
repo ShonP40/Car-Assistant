@@ -1,0 +1,29 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: SDCard & web file server config                                                 #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+external_components:
+  - source: github://n-serrette/esphome_sd_card
+    components: [sd_mmc_card, sd_file_server]
+    refresh: 10min
+
+sd_mmc_card:
+  mode_1bit: true
+  clk_pin: ${sdcard_clk_pin}
+  cmd_pin: ${sdcard_cmd_pin}
+  data0_pin: ${sdcard_data0_pin}
+  data3_pin: ${sdcard_data3_pin}
+
+sd_file_server:
+  url_prefix: file
+  root_path: "/"
+  enable_deletion: true
+  enable_download: true
+  enable_upload: true

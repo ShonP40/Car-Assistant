@@ -1,0 +1,16 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: PIR config                                                                      #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+binary_sensor:
+  - platform: gpio
+    pin: ${sensors_pir_pin}
+    name: "${friendly_name} Motion Sensor"
+    device_class: motion

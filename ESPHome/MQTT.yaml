@@ -1,0 +1,16 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: MQTT config                                                                     #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+mqtt:
+  broker: ${mqtt_broker}
+  port: ${mqtt_port}
+  username: ${mqtt_username}
+  password: ${mqtt_password}

@@ -1,0 +1,53 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: Battery & charging sensors                                                      #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+sensor:
+  - platform: adc
+    pin: ${battery_pin}
+    name: "${friendly_name} Battery Voltage"
+    id: ${id}_battery_voltage
+    attenuation: 11db
+    filters:
+      - lambda: |-
+          float mapped = (x / 2700.0) * 4200.0;
+          return mapped / 1000.0;
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+  - platform: template
+    name: "${friendly_name} Battery Percentage"
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    lambda: |-
+      const float battery_min = 2.7;
+      const float battery_max = 4.2;
+      float voltage = id(${id}_battery_voltage).state;
+      if (voltage < battery_min) {
+        return 0;
+      } else {
+        float percentage = ((voltage - battery_min) / (battery_max - battery_min)) * 100;
+        return (percentage > 100) ? 100 : percentage;
+      }
+  - platform: adc
+    pin: ${battery_solar_indicator_pin}
+    id: ${id}_solar_indicator
+    internal: true
+
+text_sensor:
+  - platform: template
+    name: "${friendly_name} Charging Status"
+    lambda: |-
+      if (id(${id}_solar_indicator).state != 0) {
+        return {"GPIO/Solar Charging"};
+      } else if (id(${id}_battery_voltage).state == 0) {
+        return {"USB Charging"};
+      } else {
+        return {"Discharging"};
+      }

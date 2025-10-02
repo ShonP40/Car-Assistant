@@ -1,0 +1,25 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: BME280 config                                                                   #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+sensor:
+  - platform: bme280_i2c
+    temperature:
+      name: "${friendly_name} Temperature Sensor"
+      id: "${id}_temperature_sensor"
+      oversampling: 1x
+    pressure:
+      name: "${friendly_name} Pressure Sensor"
+      oversampling: 1x
+    humidity:
+      name: "${friendly_name} Humidity Sensor"
+      oversampling: 1x
+    address: ${sensors_bme280_address}
+    update_interval: 60s

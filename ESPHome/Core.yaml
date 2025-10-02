@@ -1,0 +1,60 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: Core ESPHome configuration                                                      #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+substitutions:
+  project_name: "ShonP40.Car-Assistant"
+  project_version: "1.0"
+
+esphome:
+  name: "${name}"
+  friendly_name: ${friendly_name}
+  project:
+    name: "${project_name}"
+    version: "${project_version}"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      # To gain more speed, or if big transferts fails
+      # not done by default because it conflicts with the uart component (crash)
+      CONFIG_UART_ISR_IN_IRAM: y
+      # Some command may block for a long delay if the modem is not reachable, and cause a watchdog timeout
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "60"
+      # With CMUX, do not reconstruct the entire payload in the DTE buffer.
+      # Try it if you get "CMUX: Failed to defragment longer payload" warnings message
+      # You can also this a bigger "buffer_size_dte"
+      CONFIG_ESP_MODEM_CMUX_DEFRAGMENT_PAYLOAD: n
+      CONFIG_ESP_MODEM_USE_INFLATABLE_BUFFER_IF_NEEDED: y
+      CONFIG_ESP_MODEM_CMUX_USE_SHORT_PAYLOADS_ONLY: n
+      # Enable support for long file names
+      CONFIG_FATFS_LFN_STACK: y
+  cpu_frequency: 240MHz
+
+psram:
+  mode: quad
+  speed: 120MHz
+
+ota:
+  - platform: esphome
+    password: ${core_ota_password}
+
+# Enable logging
+logger:
+
+time:
+  - platform: sntp
+    timezone: ${core_timezone}
+    servers:
+     - 0.pool.ntp.org
+     - 1.pool.ntp.org
+     - 2.pool.ntp.org

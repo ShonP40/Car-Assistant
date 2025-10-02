@@ -1,0 +1,18 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: TSL2561 config                                                                  #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+sensor:
+  - platform: tsl2561
+    name: "${friendly_name} Light Level"
+    address: ${sensors_tsl2561_address}
+    update_interval: 15s
+    gain: 16x
+    is_cs_package: true

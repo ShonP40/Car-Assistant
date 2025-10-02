@@ -1,0 +1,39 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: WireGuard & native API config                                                   #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+wifi:
+  use_address: ${wireguard_client_address}
+
+wireguard:
+  address: ${wireguard_client_address}
+  private_key: ${wireguard_private_key}
+  peer_endpoint: ${wireguard_peer_address}
+  peer_public_key: ${wireguard_public_key}
+  netmask: ${wireguard_netmask}
+  peer_port: ${wireguard_peer_port}
+  peer_allowed_ips:
+    - 0.0.0.0/0
+  peer_persistent_keepalive: ${wireguard_peer_persistent_keepalive}
+
+text_sensor:
+  - platform: wireguard
+    address:
+      name: "${friendly_name} WireGuard Address"
+
+sensor:
+  - platform: wireguard
+    latest_handshake:
+      name: "${friendly_name} WireGuard Latest Handshake"
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ${home_assistant_api_encryption_key}

@@ -1,0 +1,89 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: Modem and GPS config & sensors                                                  #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+external_components:
+  - source: github://pr#6721 # Docs: https://deploy-preview-4056--esphome.netlify.app/components/modem.html
+    components: [ network, modem, watchdog ]
+    refresh: 10min
+
+modem:
+  id: atmodem
+  rx_pin: ${modem_rx_pin}
+  tx_pin: ${modem_tx_pin}
+  baud_rate: 115200
+  power_pin:
+    number: ${modem_power_pin}
+    inverted: ${modem_power_pin_inverted}
+  model: ${modem_model}
+  apn: ${modem_apn}
+  pin_code: ${modem_pin_code}
+  enable_on_boot: true
+  enable_cmux: true
+  reboot_timeout: 5min
+  init_at:
+    - AT+CGMM  # model
+  on_not_responding:
+    logger.log: "modem not responding"
+  on_connect:
+    logger.log: "modem connected"
+  on_disconnect:
+    logger.log: "modem disconnected"
+  nmea:
+    id: nmea_data
+
+gps:
+  uart_id: nmea_data
+  latitude:
+    name: "${friendly_name} Latitude"
+  longitude:
+    name: "${friendly_name} Longitude"
+  altitude:
+    name: "${friendly_name} Altitude"
+  speed:
+    name: "${friendly_name} Speed"
+  course:
+    name: "${friendly_name} Course"
+  satellites:
+    name: "${friendly_name} Satellites"
+  hdop:
+    name: "${friendly_name} Horizontal Dilution Of Precision"
+
+text_sensor:
+  - platform: modem
+    network_type:
+      name: "${friendly_name} Network Type"
+    signal_strength:
+      name: "${friendly_name} Signal Strength"
+
+sensor:
+  - platform: modem
+    rssi:
+      name: "${friendly_name} RSSI"
+    ber:
+      name: "${friendly_name} Bit Error Rate"
+
+binary_sensor:
+  - platform: gpio
+    name: "${friendly_name} Modem Status"
+    pin: GPIO34
+
+switch:
+  - platform: gpio
+    id: flight_mode
+    name: "${friendly_name} Flight Mode"
+    restore_mode: ALWAYS_ON
+    pin:
+      number: GPIO25
+      inverted: true
+  - platform: modem
+    gnss:
+      name: "${friendly_name} GNSS"
+      restore_mode: ALWAYS_ON
