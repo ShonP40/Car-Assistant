@@ -81,5 +81,5 @@ packages:
       - ESPHome/BLE.yaml             # BLE iBeacon
 
       # Use either WireGuard (native API) or MQTT, not both
-      - ESPHome/WireGuard.yaml       # WireGuard & native API
+      - ESPHome/WireGuard.yaml       # WireGuard & native API (requires WiFi.yaml)
       # - ESPHome/MQTT.yaml          # MQTT config
