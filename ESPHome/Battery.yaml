@@ -47,10 +47,10 @@ text_sensor:
     name: "${friendly_name} Charging Status"
     icon: mdi:battery-charging
     lambda: |-
-      if (id(${id}_solar_indicator).state != 0) {
-        return {"GPIO/Solar Charging"};
-      } else if (id(${id}_battery_voltage).state == 0) {
-        return {"USB Charging"};
+      if (id(${id}_solar_indicator).state > 0.5) {
+        return {"Solar Charging"};
+      } else if (id(${id}_battery_voltage).state < 1) {
+        return {"USB/GPIO Charging"};
       } else {
         return {"Discharging"};
       }
