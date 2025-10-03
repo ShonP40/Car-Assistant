@@ -47,6 +47,7 @@ psram:
 ota:
   - platform: esphome
     password: ${core_ota_password}
+  - platform: web_server
 
 # Enable logging
 logger:
