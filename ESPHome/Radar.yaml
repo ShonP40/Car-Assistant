@@ -1,0 +1,92 @@
+####################################################################################################
+#####                                    Car Assistant                                         #####
+#####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
+####################################################################################################
+##### Purpose: UART mmWave Radar config                                                        #####
+####################################################################################################
+##### NOTE:                                                                                    #####
+##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
+##### - For normal system use, modifications to this file are NOT required.                    #####
+####################################################################################################
+
+external_components:
+  - source: github://NovakIrs/esphome@ld2410s
+    components:
+      - ld2410s
+
+uart:
+  id: radar_uart
+  tx_pin: ${sensors_radar_tx_pin}
+  rx_pin: ${sensors_radar_rx_pin}
+  baud_rate: 115200
+  parity: NONE
+  stop_bits: 1
+
+ld2410s:
+  uart_id: radar_uart
+
+sensor:
+  - platform: ld2410s
+    target_distance:
+      name: "${friendly_name} Radar Target Distance"
+    calibration_progress:
+      name: "${friendly_name} Radar Calibration Progress"
+
+binary_sensor:
+  - platform: ld2410s
+    has_target:
+      name: "${friendly_name} Radar Presence"
+    has_calibration_running:
+      name: "${friendly_name} Radar Calibration running"
+
+text_sensor:
+  - platform: ld2410s
+    fw_version:
+      name: "${friendly_name} Radar Firmware version"
+    threshold_triggers:
+      name: "${friendly_name} Radar Threshold Triggers"
+    threshold_holds:
+      name: "${friendly_name} Radar Threshold Holds"
+    threshold_snrs:
+      name: "${friendly_name} Radar Threshold SNRs"
+    energy_values:
+      name: "${friendly_name} Radar Energy Values"
+
+number:
+  - platform: ld2410s
+    max_distance:
+      name: "${friendly_name} Radar Max detect distance"
+    min_distance:
+      name: "${friendly_name} Radar Min detect distance"
+    no_delay:
+      name: "${friendly_name} Radar No detect report delay"
+    status_reporting_frequency:
+      name: "${friendly_name} Radar Status reporting frequency"
+    distance_reporting_frequency:
+      name: "${friendly_name} Radar Distance reporting frequency"
+
+    threshold_trigger:
+      name: "${friendly_name} Radar Threshold Trigger"
+    threshold_hold:
+      name: "${friendly_name} Radar Threshold Hold"
+    threshold_snr:
+      name: "${friendly_name} Radar Threshold SNR"
+    threshold_selected_gate:
+      name: "${friendly_name} Radar Threshold Selected Gate"
+
+button:
+  - platform: ld2410s
+    calibration:
+      name: "${friendly_name} Radar Start auto calibration"
+    factory_reset:
+      name: "${friendly_name} Radar Factory reset"
+
+select:
+  - platform: ld2410s
+    response_speed:
+      name: "${friendly_name} Radar Response speed"
+
+switch:
+  - platform: ld2410s
+    minimal_output:
+      name: "${friendly_name} Radar Minimal output"

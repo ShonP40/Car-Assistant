@@ -54,6 +54,8 @@ substitutions:
   sensors_bme280_address: "0x76"                                    # BME280 I2C address (0x76 or 0x77)
   sensors_tsl2561_address: "0x39"                                   # TSL2561 I2C address (0x29, 0x39, or 0x49)
   sensors_pir_pin: "GPIO19"                                         # PIR motion sensor pin
+  # sensors_radar_tx_pin: "GPIO19"                                  # Radar UART TX pin
+  # sensors_radar_rx_pin: "GPIO23"                                  # Radar UART RX pin
 
   # BLE:
   ble_ibeacon_uuid: "12345678-1234-1234-1234-1234567890ab"          # iBeacon UUID
@@ -82,12 +84,15 @@ packages:
       - ESPHome/WebServer.yaml       # Web Server
       - ESPHome/Modem.yaml           # Modem config
       - ESPHome/Battery.yaml         # Battery monitoring
+      - ESPHome/SDCard.yaml          # SDCard & web file server
+      - ESPHome/WireGuard.yaml       # WireGuard
+      - ESPHome/BLE.yaml             # BLE iBeacon
       - ESPHome/BME280.yaml          # BME280 config
       - ESPHome/TSL2561.yaml         # TSL2561 config
+
+      # Use either PIR or Radar, not both as they share the same connector
       - ESPHome/PIR.yaml             # PIR motion sensor config
-      - ESPHome/SDCard.yaml          # SDCard & web file server
-      - ESPHome/BLE.yaml             # BLE iBeacon
-      - ESPHome/WireGuard.yaml       # WireGuard
+      # - ESPHome/Radar.yaml           # mmWave Radar config
 
       # Use either API (Native Home Assistant API) or MQTT, not both
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
