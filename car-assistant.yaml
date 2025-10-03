@@ -13,9 +13,12 @@ substitutions:
   modem_tx_pin: "GPIO27"                                            # Modem TX pin
   modem_power_pin: "GPIO04"                                         # Modem Power pin
   modem_power_pin_inverted: true                                    # Modem Power pin inverted (true/false)
+  modem_status_pin: "GPIO34"                                        # Modem Status pin
   modem_model: "SIM7600"                                            # Modem model (e.g., SIM7000, SIM7600, etc.)
   modem_apn: "carrier.apn.address"                                  # Cellular APN
   modem_pin_code: "0000"                                            # SIM PIN code (if applicable)
+  modem_flight_mode_pin: "GPIO25"                                   # Modem Flight Mode pin
+  modem_flight_mode_pin_inverted: true                              # Modem Flight Mode pin inverted (true/false)
 
   # Battery:
   battery_pin: "GPIO35"                                             # Battery voltage ADC pin

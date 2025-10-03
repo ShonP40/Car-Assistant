@@ -24,6 +24,7 @@ modem:
   power_pin:
     number: ${modem_power_pin}
     inverted: ${modem_power_pin_inverted}
+  status_pin: ${modem_status_pin}
   model: ${modem_model}
   apn: ${modem_apn}
   pin_code: ${modem_pin_code}
@@ -94,20 +95,14 @@ sensor:
     accuracy_decimals: 1
     lambda: return id(${id}_hdop).state * 5.0;
 
-binary_sensor:
-  - platform: gpio
-    name: "${friendly_name} Modem Status"
-    pin: GPIO34
-    entity_category: "diagnostic"
-
 switch:
   - platform: gpio
     id: flight_mode
     name: "${friendly_name} Flight Mode"
     restore_mode: ALWAYS_ON
     pin:
-      number: GPIO25
-      inverted: true
+      number: ${modem_flight_mode_pin}
+      inverted: ${modem_flight_mode_pin_inverted}
     entity_category: "diagnostic"
   - platform: modem
     gnss:
