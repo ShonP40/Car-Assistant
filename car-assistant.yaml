@@ -92,7 +92,7 @@ packages:
 
       # Use either PIR or Radar, not both as they share the same connector
       - ESPHome/PIR.yaml             # PIR motion sensor config
-      # - ESPHome/Radar.yaml           # mmWave Radar config
+      # - ESPHome/Radar.yaml         # mmWave Radar config
 
       # Use either API (Native Home Assistant API) or MQTT, not both
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
