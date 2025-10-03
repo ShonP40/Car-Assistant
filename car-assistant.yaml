@@ -93,5 +93,5 @@ packages:
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
       # - ESPHome/MQTT.yaml          # MQTT config
 
-# Remove WiFi for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info
+# Removed WiFi for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info
 wifi: !remove
