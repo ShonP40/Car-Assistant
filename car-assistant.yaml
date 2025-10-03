@@ -7,7 +7,6 @@ substitutions:
 
   # Core:
   core_ota_password: !secret ota_password                           # OTA update password
-  core_timezone: "Etc/UTC"                                          # Timezone (e.g., Etc/UTC, Europe/Berlin, etc.)
 
   # Modem:
   modem_rx_pin: "GPIO26"                                            # Modem RX pin
@@ -29,6 +28,7 @@ substitutions:
   wifi_webserver_password: !secret webserver_password               # Web Server password
 
   # WireGuard:
+  wireguard_timezone: "Etc/UTC"                                     # Timezone (e.g., Etc/UTC, Europe/Berlin, etc.)
   wireguard_peer_address: !secret wireguard_address                 # WireGuard server address
   wireguard_peer_port: 51820                                        # WireGuard server port
   wireguard_client_address: 172.16.0.4                              # WireGuard client address

@@ -11,7 +11,7 @@
 
 time:
   - platform: sntp
-    timezone: ${core_timezone}
+    timezone: ${wireguard_timezone}
     servers:
      - 0.pool.ntp.org
      - 1.pool.ntp.org
