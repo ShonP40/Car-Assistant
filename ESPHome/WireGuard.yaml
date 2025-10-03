@@ -9,6 +9,14 @@
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
+time:
+  - platform: sntp
+    timezone: ${core_timezone}
+    servers:
+     - 0.pool.ntp.org
+     - 1.pool.ntp.org
+     - 2.pool.ntp.org
+
 wifi:
   use_address: ${wireguard_client_address}
 
