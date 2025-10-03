@@ -78,7 +78,7 @@ packages:
     files:
       - ESPHome/Core.yaml            # Core ESPHome config
       - ESPHome/Debug.yaml           # Debug sensors
-      - ESPHome/WiFi.yaml            # WiFi hotspot
+      # - ESPHome/WiFi.yaml          # WiFi hotspot
       - ESPHome/WebServer.yaml       # Web Server
       - ESPHome/Modem.yaml           # Modem config
       - ESPHome/Battery.yaml         # Battery monitoring
@@ -92,3 +92,6 @@ packages:
       # Use either API (Native Home Assistant API) or MQTT, not both
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
       # - ESPHome/MQTT.yaml          # MQTT config
+
+# Remove WiFi for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info
+wifi: !remove
