@@ -79,10 +79,6 @@ text_sensor:
     name: "${friendly_name} Public IP"
     id: ${id}_public_ip
     entity_category: "diagnostic"
-  - platform: template
-    name: "${friendly_name} Cellular IP"
-    entity_category: "diagnostic"
-    lambda: return id(atmodem).get_ip_addresses();
 
 sensor:
   - platform: modem
