@@ -16,9 +16,7 @@ sensor:
     id: ${id}_battery_voltage
     attenuation: 11db
     filters:
-      - lambda: |-
-          float mapped = (x / 2700.0) * 4200.0;
-          return mapped / 1000.0;
+      - lambda: return (x / 2700.0) * 4200.0;
     unit_of_measurement: "V"
     accuracy_decimals: 2
   - platform: template
@@ -38,18 +36,21 @@ sensor:
       }
   - platform: adc
     pin: ${battery_solar_indicator_pin}
+    name: "${friendly_name} Solar Indicator"
     id: ${id}_solar_indicator
-    internal: true
+    #internal: true
 
 text_sensor:
   - platform: template
     name: "${friendly_name} Charging Status"
     icon: mdi:battery-charging
     lambda: |-
-      if (id(${id}_solar_indicator).state != 0) {
-        return {"GPIO/Solar Charging"};
-      } else if (id(${id}_battery_voltage).state == 0) {
-        return {"USB Charging"};
+      if (id(${id}_battery_voltage).state == 0) {
+        if (id(${id}_solar_indicator).state != 0) {
+          return {"GPIO/Solar Charging"};
+        } else {
+          return {"USB Charging"};
+        }
       } else {
         return {"Discharging"};
       }
