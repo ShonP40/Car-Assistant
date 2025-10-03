@@ -38,19 +38,19 @@ sensor:
     pin: ${battery_solar_indicator_pin}
     name: "${friendly_name} Solar Indicator"
     id: ${id}_solar_indicator
-    #internal: true
+    attenuation: 11db
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
 
 text_sensor:
   - platform: template
     name: "${friendly_name} Charging Status"
     icon: mdi:battery-charging
     lambda: |-
-      if (id(${id}_battery_voltage).state == 0) {
-        if (id(${id}_solar_indicator).state != 0) {
-          return {"GPIO/Solar Charging"};
-        } else {
-          return {"USB Charging"};
-        }
+      if (id(${id}_solar_indicator).state != 0) {
+        return {"GPIO/Solar Charging"};
+      } else if (id(${id}_battery_voltage).state == 0) {
+        return {"USB Charging"};
       } else {
         return {"Discharging"};
       }
