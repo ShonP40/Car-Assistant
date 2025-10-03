@@ -41,8 +41,27 @@ modem:
         capture_response: true
         on_response:
           then:
-            - lambda: |-
-                  id(${id}_public_ip).publish_state(body);
+            - lambda: id(${id}_public_ip).publish_state(body);
+    - lambda: |-
+        auto res = id(atmodem).send_at("AT+CSPN?");
+        std::string output = res.output;
+
+        auto first_quote = output.find('"');
+        auto second_quote = output.find('"', first_quote + 1);
+
+        std::string carrier = "";
+        if (first_quote != std::string::npos && second_quote != std::string::npos) {
+            carrier = output.substr(first_quote + 1, second_quote - first_quote - 1);
+        }
+
+        id(${id}_network_operator).publish_state(carrier);
+    - lambda: |-
+        auto addrs = id(atmodem).get_ip_addresses();
+        std::string ip_str = "N/A";
+        if (!addrs.empty()) {
+          ip_str = addrs[0].str();
+        }
+        id(${id}_cellular_ip).publish_state(ip_str);
   on_disconnect:
     - logger.log: "Modem disconnected"
   nmea:
@@ -81,6 +100,16 @@ text_sensor:
     id: ${id}_public_ip
     entity_category: "diagnostic"
     icon: mdi:earth
+  - platform: template
+    name: "${friendly_name} Network Operator"
+    id: ${id}_network_operator
+    entity_category: "diagnostic"
+    icon: mdi:sim
+  - platform: template
+    name: "${friendly_name} Cellular IP"
+    id: ${id}_cellular_ip
+    entity_category: "diagnostic"
+    icon: mdi:wan
 
 sensor:
   - platform: modem
