@@ -2,20 +2,14 @@
 #####                                    Car Assistant                                         #####
 #####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
 ####################################################################################################
-##### Purpose: TSL2561 config                                                                  #####
+##### Purpose: Native API config                                                               #####
 ####################################################################################################
 ##### NOTE:                                                                                    #####
 ##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
-packages:
-  i2c: !include I2C.yaml
-
-sensor:
-  - platform: tsl2561
-    name: "${friendly_name} Light Level"
-    address: ${sensors_tsl2561_address}
-    update_interval: 15s
-    gain: 16x
-    is_cs_package: true
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ${home_assistant_api_encryption_key}

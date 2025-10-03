@@ -9,6 +9,9 @@
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
+packages:
+  i2c: !include I2C.yaml
+
 sensor:
   - platform: bme280_i2c
     temperature:

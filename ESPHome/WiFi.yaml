@@ -2,7 +2,7 @@
 #####                                    Car Assistant                                         #####
 #####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
 ####################################################################################################
-##### Purpose: WiFi hotspot & Web Server config                                                #####
+##### Purpose: WiFi hotspot config                                                             #####
 ####################################################################################################
 ##### NOTE:                                                                                    #####
 ##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
@@ -19,10 +19,3 @@ wifi:
   ap:
     ssid: ${wifi_hotspot_ssid}
     password: ${wifi_hotspot_password}
-
-web_server:
-  port: 80
-  version: 3
-  auth:
-    username: ${wifi_webserver_username}
-    password: ${wifi_webserver_password}

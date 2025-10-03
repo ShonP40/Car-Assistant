@@ -2,7 +2,7 @@
 #####                                    Car Assistant                                         #####
 #####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
 ####################################################################################################
-##### Purpose: WireGuard & native API config                                                   #####
+##### Purpose: WireGuard config                                                                #####
 ####################################################################################################
 ##### NOTE:                                                                                    #####
 ##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
@@ -44,8 +44,3 @@ sensor:
       name: "${friendly_name} WireGuard Latest Handshake"
       entity_category: "diagnostic"
       icon: mdi:handshake
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: ${home_assistant_api_encryption_key}

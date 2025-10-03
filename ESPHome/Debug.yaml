@@ -56,5 +56,5 @@ binary_sensor:
 
 status_led:
   pin:
-    number: GPIO12
-    inverted: true
+    number: ${debug_status_led_pin}
+    inverted: ${debug_status_led_inverted}

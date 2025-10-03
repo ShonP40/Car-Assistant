@@ -26,8 +26,10 @@ substitutions:
   # WiFi:
   wifi_hotspot_ssid: "${friendly_name}"                             # WiFi Hotspot SSID
   wifi_hotspot_password: !secret wifi_password                      # WiFi Hotspot password
-  wifi_webserver_username: "root"                                   # Web Server username
-  wifi_webserver_password: !secret webserver_password               # Web Server password
+  
+  # Web Server:
+  webserver_username: "root"                                        # Web Server username
+  webserver_password: !secret webserver_password                    # Web Server password
 
   # WireGuard:
   wireguard_timezone: "Etc/UTC"                                     # Timezone (e.g., Etc/UTC, Europe/Berlin, etc.)
@@ -62,6 +64,10 @@ substitutions:
   sdcard_data0_pin: "GPIO2"                                         # SDCard DATA0 pin
   sdcard_data3_pin: "GPIO13"                                        # SDCard DATA3 pin
 
+  # Debug:
+  debug_status_led_pin: "GPIO12"                                    # Status LED pin
+  debug_status_led_inverted: false                                  # Status LED pin inverted (true/false)
+
   ### End of User Config ###
 
 packages:
@@ -72,16 +78,17 @@ packages:
     files:
       - ESPHome/Core.yaml            # Core ESPHome config
       - ESPHome/Debug.yaml           # Debug sensors
-      - ESPHome/WiFi.yaml            # WiFi hotspot & Web Server
+      - ESPHome/WiFi.yaml            # WiFi hotspot
+      - ESPHome/WebServer.yaml       # Web Server
       - ESPHome/Modem.yaml           # Modem config
       - ESPHome/Battery.yaml         # Battery monitoring
-      - ESPHome/I2C.yaml             # I2C setup
-      - ESPHome/BME280.yaml          # BME280 config (requires I2C.yaml)
-      - ESPHome/TSL2561.yaml         # TSL2561 config (requires I2C.yaml)
+      - ESPHome/BME280.yaml          # BME280 config
+      - ESPHome/TSL2561.yaml         # TSL2561 config
       - ESPHome/PIR.yaml             # PIR motion sensor config
       - ESPHome/SDCard.yaml          # SDCard & web file server
       - ESPHome/BLE.yaml             # BLE iBeacon
+      - ESPHome/WireGuard.yaml       # WireGuard (requires WiFi.yaml)
 
-      # Use either WireGuard (native API) or MQTT, not both
-      - ESPHome/WireGuard.yaml       # WireGuard & native API (requires WiFi.yaml)
+      # Use either API (Native Home Assistant API) or MQTT, not both
+      - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
       # - ESPHome/MQTT.yaml          # MQTT config

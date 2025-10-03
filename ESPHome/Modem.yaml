@@ -31,12 +31,10 @@ modem:
   enable_on_boot: true
   enable_cmux: true
   reboot_timeout: 5min
-  init_at:
-    - AT+CGMM  # model
   on_not_responding:
-    - logger.log: "modem not responding"
+    - logger.log: "Modem not responding"
   on_connect:
-    - logger.log: "modem connected"
+    - logger.log: "Modem connected"
     - http_request.send:
         method: get
         url: "http://api.ipify.org"
@@ -46,7 +44,7 @@ modem:
             - lambda: |-
                   id(${id}_public_ip).publish_state(body);
   on_disconnect:
-    - logger.log: "modem disconnected"
+    - logger.log: "Modem disconnected"
   nmea:
     id: nmea_data
 

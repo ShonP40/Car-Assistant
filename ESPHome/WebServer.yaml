@@ -2,20 +2,16 @@
 #####                                    Car Assistant                                         #####
 #####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
 ####################################################################################################
-##### Purpose: TSL2561 config                                                                  #####
+##### Purpose: Web Server config                                                               #####
 ####################################################################################################
 ##### NOTE:                                                                                    #####
 ##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
-packages:
-  i2c: !include I2C.yaml
-
-sensor:
-  - platform: tsl2561
-    name: "${friendly_name} Light Level"
-    address: ${sensors_tsl2561_address}
-    update_interval: 15s
-    gain: 16x
-    is_cs_package: true
+web_server:
+  port: 80
+  version: 3
+  auth:
+    username: ${webserver_username}
+    password: ${webserver_password}
