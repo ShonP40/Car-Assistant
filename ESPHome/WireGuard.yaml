@@ -36,12 +36,14 @@ text_sensor:
     address:
       name: "${friendly_name} WireGuard Address"
       entity_category: "diagnostic"
+      icon: mdi:vpn
 
 sensor:
   - platform: wireguard
     latest_handshake:
       name: "${friendly_name} WireGuard Latest Handshake"
       entity_category: "diagnostic"
+      icon: mdi:handshake
 
 # Enable Home Assistant API
 api:

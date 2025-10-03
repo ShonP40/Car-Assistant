@@ -23,6 +23,7 @@ sensor:
     accuracy_decimals: 2
   - platform: template
     name: "${friendly_name} Battery Percentage"
+    icon: mdi:battery
     unit_of_measurement: "%"
     accuracy_decimals: 0
     lambda: |-
@@ -43,6 +44,7 @@ sensor:
 text_sensor:
   - platform: template
     name: "${friendly_name} Charging Status"
+    icon: mdi:battery-charging
     lambda: |-
       if (id(${id}_solar_indicator).state != 0) {
         return {"GPIO/Solar Charging"};

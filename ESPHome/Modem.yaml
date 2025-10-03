@@ -59,6 +59,7 @@ gps:
   hdop:
     name: "${friendly_name} Horizontal Dilution Of Precision"
     id: ${id}_hdop
+    icon: mdi:crosshairs-question
 
 interval:
   - interval: 5min
@@ -81,6 +82,7 @@ text_sensor:
     network_type:
       name: "${friendly_name} Network Type"
       entity_category: "diagnostic"
+      icon: mdi:signal
     signal_strength:
       name: "${friendly_name} Signal Strength"
       entity_category: "diagnostic"
@@ -88,6 +90,7 @@ text_sensor:
     name: "${friendly_name} Public IP"
     id: ${id}_public_ip
     entity_category: "diagnostic"
+    icon: mdi:earth
 
 sensor:
   - platform: modem
@@ -101,6 +104,7 @@ sensor:
     name: "${friendly_name} GPS Accuracy"
     unit_of_measurement: "m"
     accuracy_decimals: 1
+    icon: mdi:crosshairs-gps
     lambda: return id(${id}_hdop).state * 5.0;
 
 switch:
