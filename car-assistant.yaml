@@ -18,7 +18,6 @@ substitutions:
   modem_apn: "carrier.apn.address"                                  # Cellular APN
   modem_pin_code: "0000"                                            # SIM PIN code (if applicable)
   modem_flight_mode_pin: "GPIO25"                                   # Modem Flight Mode pin
-  modem_flight_mode_pin_inverted: true                              # Modem Flight Mode pin inverted (true/false)
 
   # Battery:
   battery_pin: "GPIO35"                                             # Battery voltage ADC pin

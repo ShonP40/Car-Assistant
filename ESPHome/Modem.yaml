@@ -102,7 +102,7 @@ switch:
     restore_mode: ALWAYS_ON
     pin:
       number: ${modem_flight_mode_pin}
-      inverted: ${modem_flight_mode_pin_inverted}
+    internal: true
     entity_category: "diagnostic"
   - platform: modem
     gnss:

@@ -38,9 +38,6 @@ esp32:
       CONFIG_ESP_MODEM_CMUX_USE_SHORT_PAYLOADS_ONLY: n
       # Enable support for long file names
       CONFIG_FATFS_LFN_STACK: y
-      # Disable LWIP locking
-      CONFIG_LWIP_TCPIP_CORE_LOCKING: "n"   
-      CONFIG_LWIP_ASSERT_CORE_LOCKED: "y"
   cpu_frequency: 240MHz
 
 psram:
