@@ -87,7 +87,7 @@ packages:
       - ESPHome/PIR.yaml             # PIR motion sensor config
       - ESPHome/SDCard.yaml          # SDCard & web file server
       - ESPHome/BLE.yaml             # BLE iBeacon
-      - ESPHome/WireGuard.yaml       # WireGuard (requires WiFi.yaml)
+      - ESPHome/WireGuard.yaml       # WireGuard
 
       # Use either API (Native Home Assistant API) or MQTT, not both
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
