@@ -27,7 +27,6 @@ sensor:
   - platform: internal_temperature
     name: "Internal Temperature"
     entity_category: "diagnostic"
-    internal: false
   - platform: debug
     free:
       name: "${friendly_name} Heap Free"
