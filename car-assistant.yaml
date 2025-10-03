@@ -14,9 +14,9 @@ substitutions:
   modem_power_pin: "GPIO04"                                         # Modem Power pin
   modem_power_pin_inverted: true                                    # Modem Power pin inverted (true/false)
   modem_status_pin: "GPIO34"                                        # Modem Status pin
-  modem_model: "SIM7600"                                            # Modem model (e.g., SIM7000, SIM7600, etc.)
+  modem_model: "SIM7600"                                            # Modem model (See https://deploy-preview-4056--esphome.netlify.app/components/modem.html for a list of supported modems)
   modem_apn: "carrier.apn.address"                                  # Cellular APN
-  modem_pin_code: "0000"                                            # SIM PIN code (if applicable)
+  modem_pin_code: ""                                                # SIM PIN code (if applicable)
   modem_flight_mode_pin: "GPIO25"                                   # Modem Flight Mode pin
 
   # Battery:
@@ -29,7 +29,7 @@ substitutions:
   
   # Web Server:
   webserver_username: "root"                                        # Web Server username
-  webserver_password: !secret webserver_password                    # Web Server password
+  webserver_password: !secret webserver_password                    # Web Server password (Choose a strong password! The webserver can be accessed on your carrier's NAT!)
 
   # WireGuard:
   wireguard_timezone: "Etc/UTC"                                     # Timezone (e.g., Etc/UTC, Europe/Berlin, etc.)
