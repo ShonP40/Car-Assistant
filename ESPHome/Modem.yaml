@@ -139,3 +139,10 @@ switch:
     gnss:
       name: "${friendly_name} GNSS"
       restore_mode: ALWAYS_ON
+
+button:
+  - platform: template
+    name: "${friendly_name} Restart Modem"
+    entity_category: "diagnostic"
+    on_press:
+      - modem.reset:
