@@ -2,7 +2,7 @@
     <a href="https://shon.codes"><img src="assets/logo/Car%20Assistant.svg" width="86" height="86"></a>
 </p>
 
-<h1 align="center">Car Assistant (Experimental ESPHome version)</h1>
+<h1 align="center">Car Assistant</h1>
 <h3 align="center">Keep track of your car remotely through Home Assistant</h3>
 
 ## Sponsor
@@ -13,29 +13,29 @@ This project has been sponsored by [PCBWay](https://www.pcbway.com/)!
 You can order this project from PCBWay at a $5 discount by using my [referal link](https://www.pcbway.com/setinvite.aspx?inviteid=590728)
 
 ## Features
-- OTA updates (Remotely when using WireGuard VPN, or locally through the WiFi hotspot)
+- OTA updates (Over a WireGuard VPN connection, cellular NAT IP or locally through the WiFi hotspot (coming soon))
 - Cellular connectivity
 - Automatically update the ESP's clock
 - WireGuard VPN connection
 - SD card support through a web server
 - Broadcast a Bluetooth iBeacon (to detect which phones are in the car, by using the `iBeacon Scanner` sensor in the Home Assistant app)
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
-- Report network details
-- Report location status (latitude, longitude, speed, altitude, visible satellites, horizontal dilution of precision, accuracy)
+- Report network details (public IP, Cellular NAT IP, WireGuard IP, Cellular network type, Cellular signal strength and Cellular network type)
+- Report location status (latitude, longitude, speed, altitude, visible satellites, horizontal dilution of precision, accuracy and course)
 - Report the uptime of the ESP in seconds
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
-- Detect motion inside your car's cabin using a PIR sensor
+- Detect motion inside your car's cabin using a PIR sensor or a mmWave radar
 - Report the CPU temperature and frequency
 - Report the free RAM & PSRAM amounts
 - Reboot the ESP32 & Modem remotely
-- Broadcast a WiFi hotspot with internet access
+- Broadcast a WiFi hotspot with internet access (coming soon)
 
 ## Software Requirements
-- ESPHome (2025.9.0 or later)
-- USB <-> Serial driver ([`macOS`](https://github.com/Xinyuan-LilyGO/CH9102_Mac_Driver) | [`Linux`](https://github.com/gorgiaxx/CH34x-Driver-Linux) | [`Windows`](https://github.com/Xinyuan-LilyGO/CH9102_Driver))
-- Home Assistant server (An example config can be found [here](home-assistant.yaml))
+- ESPHome (2025.8.0 or later)
+- Home Assistant server
 - WireGuard VPN server or an MQTT broker
+- USB <-> Serial driver ([`macOS`](https://github.com/Xinyuan-LilyGO/CH9102_Mac_Driver) | [`Linux`](https://github.com/gorgiaxx/CH34x-Driver-Linux) | [`Windows`](https://github.com/Xinyuan-LilyGO/CH9102_Driver))
 
 ## Hardware Requirements
 - LilyGO® TTGO T-SIM7600E-L1C ESP32 (Other ESP32 TTGO models could also work)
@@ -46,6 +46,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - BME280 sensor (optional)
 - TSL2561 sensor (optional)
 - PIR sensor (like the AM312) thats pulled low by default (optional)
+- LD2410S mmWave radar (optional)
 - Micro SD Card formatted as FAT32 (optional)
 
 ## Connectors
@@ -97,6 +98,11 @@ Initial flashing must be done via serial connection.
 2. Visit [ESPHome Web](https://web.esphome.io)
 3. Connect to your device and flash the firmware you compiled earlier
 4. After a successful flash, the device will restart and be ready for OTA updates
+
+### Device Tracker
+Import the device tracker blueprint into Home Assistant to display your car's location on the map
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FShonP40%2FCar-Assistant%2Fgps_device_tracker.yaml)
 
 ## Credits
 - [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
