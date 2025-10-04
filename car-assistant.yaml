@@ -6,7 +6,7 @@ substitutions:
   ### User Config ###
 
   # Core:
-  core_ota_password: !secret ota_password                           # OTA update password
+  core_ota_password: !secret ota_password                           # OTA update password (Choose a strong password! The OTA port can be accessed on your carrier's NAT!)
 
   # Modem:
   modem_rx_pin: "GPIO26"                                            # Modem RX pin
