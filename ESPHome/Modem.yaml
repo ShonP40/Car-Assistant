@@ -143,6 +143,6 @@ switch:
 button:
   - platform: template
     name: "${friendly_name} Restart Modem"
-    entity_category: "diagnostic"
+    entity_category: "config"
     on_press:
       - modem.reset:
