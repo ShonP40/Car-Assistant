@@ -144,5 +144,6 @@ button:
   - platform: template
     name: "${friendly_name} Restart Modem"
     entity_category: "config"
+    icon: mdi:restart-alert
     on_press:
       - modem.reset:
