@@ -1,0 +1,74 @@
+# if "Action device_tracker.see not found", add "device_tracker:" to /config/configuration.yaml
+
+blueprint:
+  name: Generic GPS Tracker
+  description: Create a GPS device tracker from latitude and longitude sensors
+  domain: automation
+  input:
+    dev_id:
+      name: Device ID
+      description: Device ID to create (ie mydevice_tracker)
+      selector:
+        text:
+    latitude_sensor:
+      name: Latitude Sensor
+      description: The sensor providing latitude
+      selector:
+        entity:
+          domain: sensor
+    longitude_sensor:
+      name: Longitude Sensor
+      description: The sensor providing longitude
+      selector:
+        entity:
+          domain: sensor
+    altitude_sensor:
+      name: Altitude Sensor
+      description: The sensor providing altitude (Optionnal)
+      default: ""
+      selector:
+        entity:
+          domain: sensor
+    gps_accuracy_sensor:
+      name: GPS Accuracy Sensor
+      description: The sensor providing GPS accuracy (Optionnal)
+      default: ""
+      selector:
+        entity:
+          domain: sensor
+    battery_level_sensor:
+      name: Battery Level Sensor
+      description: The sensor providing battery level (Optionnal)
+      default: ""
+      selector:
+        entity:
+          domain: sensor
+
+trigger:
+  - platform: state
+    entity_id: !input latitude_sensor
+  - platform: state
+    entity_id: !input longitude_sensor
+
+variables:
+  latitude_sensor: !input latitude_sensor
+  longitude_sensor: !input longitude_sensor
+  altitude_sensor: !input altitude_sensor
+  gps_accuracy_sensor: !input gps_accuracy_sensor
+  battery_level_sensor: !input battery_level_sensor
+
+action:
+  - service: device_tracker.see
+    data:
+      dev_id: !input dev_id
+      gps:
+        - "{{ states(latitude_sensor) }}"
+        - "{{ states(longitude_sensor) }}"
+      attributes:
+        altitude: >-
+          {{ states(altitude_sensor) | float(0) }}
+        gps_accuracy: >-
+          {{ states(gps_accuracy_sensor) | float(0) }}
+        battery_level: >-
+          {{ states(battery_level_sensor) | float("NaN") }}
+        source_type: gps

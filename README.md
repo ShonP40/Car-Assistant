@@ -100,5 +100,5 @@ Initial flashing must be done via serial connection.
 
 ## Credits
 - [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
-- [oarcher](https://github.com/esphome/esphome/pull/6721#issuecomment-3362380809) - ESPHome SIM7600 implementation
+- [oarcher](https://github.com/esphome/esphome/pull/6721#issuecomment-3362380809) - ESPHome SIM7600 implementation & Blueprint device tracker
 - [n-serrette](https://github.com/n-serrette/esphome_sd_card) - ESPHome SDCard implementation
