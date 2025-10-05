@@ -43,6 +43,13 @@ blueprint:
       selector:
         entity:
           domain: sensor
+    speed_sensor:
+      name: Speed Sensor
+      description: The sensor providing GPS speed (Optionnal)
+      default: ""
+      selector:
+        entity:
+          domain: sensor
 
 trigger:
   - platform: state
@@ -56,6 +63,7 @@ variables:
   altitude_sensor: !input altitude_sensor
   gps_accuracy_sensor: !input gps_accuracy_sensor
   battery_level_sensor: !input battery_level_sensor
+  speed_sensor: !input speed_sensor
 
 action:
   - service: device_tracker.see
@@ -71,4 +79,6 @@ action:
           {{ states(gps_accuracy_sensor) | float(0) }}
         battery_level: >-
           {{ states(battery_level_sensor) | float("NaN") }}
+        speed: >-
+          {{ states(speed_sensor) | float(0) }}
         source_type: gps
