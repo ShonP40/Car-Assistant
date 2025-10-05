@@ -66,6 +66,7 @@ modem:
     - logger.log: "Modem disconnected"
   nmea:
     id: nmea_data
+  use_address: ${modem_address}
 
 gps:
   uart_id: nmea_data

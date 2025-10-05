@@ -17,9 +17,6 @@ time:
      - 1.pool.ntp.org
      - 2.pool.ntp.org
 
-wifi:
-  use_address: ${wireguard_client_address}
-
 wireguard:
   address: ${wireguard_client_address}
   private_key: ${wireguard_private_key}

@@ -18,6 +18,7 @@ substitutions:
   modem_apn: "carrier.apn.address"                                  # Cellular APN
   modem_pin_code: ""                                                # SIM PIN code (if applicable)
   modem_flight_mode_pin: "GPIO25"                                   # Modem Flight Mode pin
+  modem_address: ${wireguard_client_address}                        # IP to use for OTA updates & logs
 
   # Battery:
   battery_pin: "GPIO35"                                             # Battery voltage ADC pin
@@ -80,7 +81,7 @@ packages:
     files:
       - ESPHome/Core.yaml            # Core ESPHome config
       - ESPHome/Debug.yaml           # Debug sensors
-      # - ESPHome/WiFi.yaml          # WiFi hotspot
+      # - ESPHome/WiFi.yaml          # WiFi hotspot (Removed WiFi for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info)
       - ESPHome/WebServer.yaml       # Web Server
       - ESPHome/Modem.yaml           # Modem config
       - ESPHome/Battery.yaml         # Battery monitoring
@@ -97,6 +98,3 @@ packages:
       # Use either API (Native Home Assistant API) or MQTT, not both
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
       # - ESPHome/MQTT.yaml          # MQTT config
-
-# Removed WiFi for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info
-wifi: !remove
