@@ -11,11 +11,15 @@
 
 time:
   - platform: sntp
+    id: ${id}_sntp_time
     timezone: ${wireguard_timezone}
     servers:
      - 0.pool.ntp.org
      - 1.pool.ntp.org
      - 2.pool.ntp.org
+  - platform: gps
+    id: ${id}_gps_time
+    timezone: ${wireguard_timezone}
 
 wireguard:
   address: ${wireguard_client_address}
