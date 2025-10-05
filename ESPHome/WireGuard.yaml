@@ -20,6 +20,9 @@ time:
   - platform: gps
     id: ${id}_gps_time
     timezone: ${wireguard_timezone}
+  - platform: homeassistant
+    id: ${id}_homeassistant_time
+    timezone: ${wireguard_timezone}
 
 wireguard:
   address: ${wireguard_client_address}
