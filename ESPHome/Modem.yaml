@@ -148,19 +148,3 @@ button:
     icon: mdi:restart-alert
     on_press:
       - modem.reset:
-
-binary_sensor:
-  - platform: template
-    name: "${friendly_name} GNSS Status"
-    id: ${id}_gnss_status
-    icon: mdi:crosshairs-question
-    entity_category: "diagnostic"
-    device_class: "problem"
-    lambda: |-
-      auto res = id(atmodem).send_at("AT+CGNSSINFO");
-      std::string output = res.output;
-      bool no_fix = output.find(",,,,,,,,,,,,,,,") != std::string::npos;
-      return no_fix;
-    filters:
-      - delayed_on: 30s
-      - delayed_off: 30s
