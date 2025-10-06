@@ -14,7 +14,7 @@ blueprint:
       description: The sensor providing the status of Car Assistant's ESP32
       selector:
         entity:
-          domain: sensor
+          domain: binary_sensor
     restart_button:
       name: ESP32 Restart Button
       description: The button to restart Car Assistant's ESP32
