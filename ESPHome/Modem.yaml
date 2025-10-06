@@ -156,11 +156,14 @@ binary_sensor:
     icon: mdi:crosshairs-question
     entity_category: "diagnostic"
     device_class: "problem"
-    lambda: |-
-      auto res = id(atmodem).send_at("AT+CGNSSINFO");
-      std::string output = res.output;
-      bool no_fix = output.find(",,,,,,,,,,,,,,,") != std::string::npos;
-      return no_fix;
-    filters:
-      - delayed_on: 30s
-      - delayed_off: 30s
+
+interval:
+  - interval: 30s
+    then:
+      - lambda: |-
+          auto res = id(atmodem).send_at("AT+CGNSSINFO");
+          std::string output = res.output;
+
+          bool no_fix = output.find(",,,,,") != std::string::npos || output.size() < 20;
+
+          id(${id}_gnss_status).publish_state(no_fix);
