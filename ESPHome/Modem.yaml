@@ -164,3 +164,4 @@ binary_sensor:
     filters:
       - delayed_on: 30s
       - delayed_off: 30s
+    update_interval: 60s
