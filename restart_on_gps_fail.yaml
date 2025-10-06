@@ -1,0 +1,63 @@
+blueprint:
+  name: Restart on GPS Failure
+  description: Auto restart Car Assistant's modem & ESP32 on GPS failure
+  domain: automation
+  input:
+    satellites_sensor:
+      name: Satellites Sensor
+      description: The sensor providing the number of satellites
+      selector:
+        entity:
+          domain: sensor
+    status_sensor:
+      name: Status Sensor
+      description: The sensor providing the status of Car Assistant's ESP32
+      selector:
+        entity:
+          domain: sensor
+    restart_button:
+      name: ESP32 Restart Button
+      description: The button to restart Car Assistant's ESP32
+      selector:
+        entity:
+          domain: button
+    restart_modem_button:
+      name: ESP32 Restart Modem Button
+      description: The button to restart Car Assistant's modem
+      selector:
+        entity:
+          domain: button
+
+trigger:
+  - platform: state
+    entity_id: !input satellites_sensor
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+
+conditions:
+  - condition: state
+    entity_id: !input status_sensor
+    state: "on"
+
+actions:
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id: !input restart_modem_button
+  - wait_for_trigger:
+      - trigger: state
+        entity_id: !input status_sensor
+        from: "off"
+        to: "on"
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 5
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id: !input restart_button

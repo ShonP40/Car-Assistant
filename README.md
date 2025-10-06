@@ -104,6 +104,11 @@ Import the device tracker blueprint into Home Assistant to display your car's lo
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FShonP40%2FCar-Assistant%2Fblob%2Fmaster%2Fgps_device_tracker.yaml)
 
+### Recover from GPS failures
+Import the restart on GPS failure blueprint into Home Assistant to automatically restart your Car Assistant's modem & ESP32 if GPS fails and does not recover
+
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FShonP40%2FCar-Assistant%2Fblob%2Fmaster%2Frestart_on_gps_fail.yaml)
+
 ## Credits
 - [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
 - [oarcher](https://github.com/esphome/esphome/pull/6721#issuecomment-3362380809) - ESPHome SIM7600 implementation & Blueprint device tracker
