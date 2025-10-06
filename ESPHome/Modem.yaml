@@ -159,5 +159,8 @@ binary_sensor:
     lambda: |-
       auto res = id(atmodem).send_at("AT+CGNSSINFO");
       std::string output = res.output;
-      bool no_fix = output.find(",,,,,,,") != std::string::npos;
+      bool no_fix = output.find(",,,,,,,,,,,,,,,") != std::string::npos;
       return no_fix;
+    filters:
+      - delayed_on: 30s
+      - delayed_off: 30s
