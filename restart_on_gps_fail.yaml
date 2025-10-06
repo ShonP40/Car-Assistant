@@ -22,7 +22,7 @@ blueprint:
         entity:
           domain: button
     restart_modem_button:
-      name: ESP32 Restart Modem Button
+      name: Modem Restart Button
       description: The button to restart Car Assistant's modem
       selector:
         entity:
