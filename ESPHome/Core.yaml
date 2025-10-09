@@ -11,7 +11,7 @@
 
 substitutions:
   project_name: "ShonP40.Car-Assistant"
-  project_version: "2025.10.2"
+  project_version: "2025.10.3"
 
 esphome:
   name: "${name}"
