@@ -1,0 +1,61 @@
+name: Version Bump
+on:
+  workflow_dispatch: {}
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Read current project_version from Core.yaml
+        id: read
+        run: |
+          CORE_FILE="ESPHome/Core.yaml"
+          CURRENT_VERSION=$(grep -E '^[[:space:]]*project_version:[[:space:]]*"[0-9]+\.[0-9]+\.[0-9]+"' -m1 "$CORE_FILE" | sed -E 's/^[[:space:]]*project_version:[[:space:]]*"([^"]+)".*/\1/')
+          echo "current=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Compute new version
+        id: compute
+        run: |
+          CURRENT_VERSION="${{ steps.read.outputs.current }}"
+          YEAR=$(date +%Y)
+          MONTH=$(date +%m)
+          # convert month to number without leading zero
+          MONTH_NOZERO=$((10#$MONTH))
+
+          IFS='.' read -r CUR_YEAR CUR_MONTH CUR_RELEASE <<< "$CURRENT_VERSION"
+          # normalize current month to number (handles leading zeros)
+          CUR_MONTH_NOZERO=$((10#$CUR_MONTH))
+          # ensure release is a number
+          CUR_RELEASE=${CUR_RELEASE:-0}
+
+          if [ "$CUR_YEAR" -eq "$YEAR" ] && [ "$CUR_MONTH_NOZERO" -eq "$MONTH_NOZERO" ]; then
+            NEW_RELEASE=$((CUR_RELEASE + 1))
+          else
+            NEW_RELEASE=0
+          fi
+
+          NEW_VERSION="${YEAR}.${MONTH_NOZERO}.${NEW_RELEASE}"
+          echo "new=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Update project_version in Core.yaml
+        env:
+          NEW_VERSION: ${{ steps.compute.outputs.new }}
+        run: |
+          CORE_FILE="ESPHome/Core.yaml"
+          sed -E -i "s|^([[:space:]]*project_version:[[:space:]]*)\"[^\"]*\"|\1\"${NEW_VERSION}\"|" "$CORE_FILE"
+          git add "$CORE_FILE"
+
+      - name: Commit and push version bump
+        env:
+          NEW_VERSION: ${{ steps.compute.outputs.new }}
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Bump: ${{ env.NEW_VERSION }}"
+          git push
