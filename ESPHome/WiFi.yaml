@@ -9,13 +9,13 @@
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
-external_components:
-  - source: github://pr#7147
-    components: [ wifi ]
-    refresh: 10min
+# external_components: (Disabled for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info)
+#   - source: github://pr#7147
+#     components: [ wifi ]
+#     refresh: 10min
 
 wifi:
-  # WiFi Hotspot with internet access
   ap:
     ssid: ${wifi_hotspot_ssid}
     password: ${wifi_hotspot_password}
+  use_address: ${wifi_address}

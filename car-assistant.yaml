@@ -27,6 +27,7 @@ substitutions:
   # WiFi:
   wifi_hotspot_ssid: "${friendly_name}"                             # WiFi Hotspot SSID
   wifi_hotspot_password: !secret wifi_password                      # WiFi Hotspot password
+  wifi_address: ${wireguard_client_address}                         # IP to use for OTA updates & logs
   
   # Web Server:
   webserver_username: "root"                                        # Web Server username
@@ -82,6 +83,7 @@ packages:
       - ESPHome/Core.yaml            # Core ESPHome config
       - ESPHome/Debug.yaml           # Debug sensors
       # - ESPHome/WiFi.yaml          # WiFi hotspot (Removed WiFi for now. See https://github.com/esphome/esphome/pull/6721#issuecomment-3366216419 for more info)
+      - ESPHome/WiFi.yaml            # WiFi hotspot
       - ESPHome/WebServer.yaml       # Web Server
       - ESPHome/Modem.yaml           # Modem config
       - ESPHome/Battery.yaml         # Battery monitoring
