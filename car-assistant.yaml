@@ -58,6 +58,8 @@ substitutions:
   sensors_pir_pin: "GPIO19"                                         # PIR motion sensor pin
   # sensors_radar_tx_pin: "GPIO19"                                  # Radar UART TX pin
   # sensors_radar_rx_pin: "GPIO23"                                  # Radar UART RX pin
+  sensors_radar_tx_pin: "GPIO19"                                    # Radar UART TX pin
+  sensors_radar_rx_pin: "GPIO23"                                    # Radar UART RX pin
 
   # BLE:
   ble_ibeacon_uuid: "12345678-1234-1234-1234-1234567890ab"          # iBeacon UUID
@@ -96,6 +98,8 @@ packages:
       # Use either PIR or Radar, not both as they share the same connector
       - ESPHome/PIR.yaml             # PIR motion sensor config
       # - ESPHome/Radar.yaml         # mmWave Radar config
+      # - ESPHome/PIR.yaml           # PIR motion sensor config
+      - ESPHome/Radar.yaml           # mmWave Radar config
 
       # Use either API (Native Home Assistant API) or MQTT, not both
       - ESPHome/API.yaml             # Native API (requires WireGuard.yaml)
