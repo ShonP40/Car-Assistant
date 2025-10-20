@@ -2,14 +2,13 @@
 #####                                    Car Assistant                                         #####
 #####                  Repository: https://github.com/ShonP40/Car-Assistant                    #####
 ####################################################################################################
-##### Purpose: BLE Proxy config                                                                #####
+##### Purpose: BLE iBeacon config                                                              #####
 ####################################################################################################
 ##### NOTE:                                                                                    #####
 ##### - Make changes ONLY if absolutely necessary and you have the required knowledge.         #####
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
-esp32_ble_tracker:
-
-bluetooth_proxy:
-  active: true
+esp32_ble_beacon:
+  type: iBeacon
+  uuid: "${ble_ibeacon_uuid}"

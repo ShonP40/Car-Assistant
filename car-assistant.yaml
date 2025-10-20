@@ -88,7 +88,8 @@ packages:
       - ESPHome/Battery.yaml         # Battery monitoring
       # - ESPHome/SDCard.yaml        # SDCard & web file server
       - ESPHome/WireGuard.yaml       # WireGuard
-      - ESPHome/BLE.yaml             # BLE iBeacon
+      - ESPHome/BLE.yaml             # BLE Proxy
+      - ESPHome/iBeacon.yaml         # BLE iBeacon
       - ESPHome/BME280.yaml          # BME280 config
       - ESPHome/TSL2561.yaml         # TSL2561 config
 
