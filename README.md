@@ -13,7 +13,7 @@ This project has been sponsored by [PCBWay](https://www.pcbway.com/)!
 You can order this project from PCBWay at a $5 discount by using my [referal link](https://www.pcbway.com/setinvite.aspx?inviteid=590728)
 
 ## Features
-- OTA updates (Over a WireGuard VPN connection, cellular NAT IP or locally through the WiFi hotspot (coming soon))
+- OTA updates (Over a WireGuard VPN connection, cellular NAT IP or locally through the WiFi hotspot)
 - Cellular connectivity
 - Automatically update the ESP's clock
 - WireGuard VPN connection
@@ -29,7 +29,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Report the CPU temperature and frequency
 - Report the free RAM & PSRAM amounts
 - Reboot the ESP32 & Modem remotely
-- Broadcast a WiFi hotspot with internet access (coming soon)
+- Broadcast a WiFi hotspot with internet access
 
 ## Software Requirements
 - ESPHome (2025.8.0 or later)
