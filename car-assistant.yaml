@@ -83,6 +83,7 @@ packages:
       - ESPHome/Core.yaml            # Core ESPHome config
       - ESPHome/Debug.yaml           # Debug sensors
       - ESPHome/WiFi.yaml            # WiFi hotspot
+      # - ESPHome/Internet.yaml      # WiFi hotspot internet access (Incompatible with WireGuard!)
       - ESPHome/WebServer.yaml       # Web Server
       - ESPHome/Modem.yaml           # Modem config
       - ESPHome/Battery.yaml         # Battery monitoring
