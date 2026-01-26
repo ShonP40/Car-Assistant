@@ -25,7 +25,7 @@ sensor:
     unit_of_measurement: "%"
     accuracy_decimals: 0
     lambda: |-
-      const float battery_min = 2.7;
+      const float battery_min = 2.2;
       const float battery_max = 4.2;
       float voltage = id(${id}_battery_voltage).state;
       if (voltage < battery_min) {
