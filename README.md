@@ -69,7 +69,7 @@ Follow these steps to get your Car Assistant device up and running with ESPHome.
 ### ESPHome Integration Setup
 
 1. Install the ESPHome add-on in Home Assistant if not already installed:
-   - Go to `Settings` → `Add-ons` → `Add-on Store`
+   - Go to `Settings` → `Apps` → `Install app`
    - Search for `ESPHome`
    - Click `Install`
 2. Start the ESPHome add-on and verify that it's running
