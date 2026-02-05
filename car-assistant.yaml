@@ -27,7 +27,6 @@ substitutions:
   # WiFi:
   wifi_hotspot_ssid: "${friendly_name}"                             # WiFi Hotspot SSID
   wifi_hotspot_password: !secret wifi_password                      # WiFi Hotspot password
-  wifi_address: ${wireguard_client_address}                         # IP to use for OTA updates & logs
   
   # Web Server:
   webserver_username: "root"                                        # Web Server username
