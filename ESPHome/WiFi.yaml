@@ -13,3 +13,4 @@ wifi:
   ap:
     ssid: ${wifi_hotspot_ssid}
     password: ${wifi_hotspot_password}
+  use_address: ${wifi_address}
