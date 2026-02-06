@@ -10,7 +10,11 @@
 ####################################################################################################
 
 external_components:
-  - source: github://pr#6721 # Docs: https://deploy-preview-4056--esphome.netlify.app/components/modem.html
+  # Docs: https://deploy-preview-4056--esphome.netlify.app/components/modem.html
+  - source:
+      type: git
+      url: https://github.com/oarcher/esphome.git
+      ref: b5c0fd8ec22f5a0c34a4011a7e6c76f362f651f5
     components: [ network, modem, watchdog ]
     refresh: 10min
 

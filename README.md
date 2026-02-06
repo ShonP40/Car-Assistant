@@ -32,7 +32,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Broadcast a WiFi hotspot with internet access
 
 ## Software Requirements
-- ESPHome (2025.12.0 or later)
+- ESPHome 2025.12.7 (Newer versions will not work at the moment)
 - Home Assistant server
 - WireGuard VPN server or an MQTT broker
 - USB <-> Serial driver ([`macOS`](https://github.com/Xinyuan-LilyGO/CH9102_Mac_Driver) | [`Linux`](https://github.com/gorgiaxx/CH34x-Driver-Linux) | [`Windows`](https://github.com/Xinyuan-LilyGO/CH9102_Driver))
