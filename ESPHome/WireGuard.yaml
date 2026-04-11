@@ -29,6 +29,7 @@ wireguard:
   private_key: ${wireguard_private_key}
   peer_endpoint: ${wireguard_peer_address}
   peer_public_key: ${wireguard_public_key}
+  peer_preshared_key: ${wireguard_preshared_key}
   netmask: ${wireguard_netmask}
   peer_port: ${wireguard_peer_port}
   peer_allowed_ips:

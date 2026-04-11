@@ -40,6 +40,7 @@ substitutions:
   wireguard_client_address: 172.16.0.4                              # WireGuard client address
   wireguard_private_key: !secret wireguard_private_key              # WireGuard private key
   wireguard_public_key: !secret wireguard_public_key                # WireGuard peer public key
+  wireguard_preshared_key: !secret wireguard_preshared_key          # WireGuard peer pre-shared key
   wireguard_netmask: 0.0.0.0                                        # WireGuard netmask
   wireguard_peer_persistent_keepalive: 25s                          # WireGuard persistent keepalive interval
 
