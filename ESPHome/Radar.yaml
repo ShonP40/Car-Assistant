@@ -11,11 +11,11 @@
 
 external_components:
   - source:
-        type: git
-        url: https://github.com/NovakIrs/esphome.git
-        ref: aab436857a319d52ecc6ab6507407c86db921fea
-      components: [ ld2410s ]
-      refresh: 10min
+      type: git
+      url: https://github.com/NovakIrs/esphome.git
+      ref: aab436857a319d52ecc6ab6507407c86db921fea
+    components: [ ld2410s ]
+    refresh: 10min
 
 uart:
   id: radar_uart
