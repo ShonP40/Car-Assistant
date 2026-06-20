@@ -14,8 +14,15 @@ external_components:
   - source:
       type: git
       url: https://github.com/oarcher/esphome.git
-      ref: b5c0fd8ec22f5a0c34a4011a7e6c76f362f651f5
+      ref: b19b09378b5162bdfdc5eb046ef92c269d09f104
     components: [ network, modem, watchdog ]
+    refresh: 10min
+  
+  - source:
+      type: git
+      url: https://github.com/oarcher/esphome.git
+      ref: 5e11d8b4db4963519867a544abb7898bdc113598
+    components: [ modem_info ]
     refresh: 10min
 
 http_request:
@@ -68,12 +75,18 @@ modem:
         id(${id}_cellular_ip).publish_state(ip_str);
   on_disconnect:
     - logger.log: "Modem disconnected"
-  nmea:
-    id: nmea_data
   use_address: ${modem_address}
+
+nmea:
+  platform: modem
+  id: nmea_data
+  update_interval: 10s
+  on_update:
+    - component.update: gps_id
 
 gps:
   uart_id: nmea_data
+  id: gps_id
   latitude:
     name: "${friendly_name} Latitude"
   longitude:
@@ -92,7 +105,7 @@ gps:
     icon: mdi:map-marker-distance
 
 text_sensor:
-  - platform: modem
+  - platform: modem_info
     network_type:
       name: "${friendly_name} Network Type"
       entity_category: "diagnostic"
@@ -117,7 +130,7 @@ text_sensor:
     icon: mdi:wan
 
 sensor:
-  - platform: modem
+  - platform: modem_info
     rssi:
       name: "${friendly_name} RSSI"
       entity_category: "diagnostic"

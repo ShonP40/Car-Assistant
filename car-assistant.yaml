@@ -78,7 +78,7 @@ substitutions:
 packages:
   remote_package:
     url: https://github.com/ShonP40/Car-Assistant
-    ref: master
+    ref: esphome-2026.6
     refresh: 10min
     files:
       - ESPHome/Core.yaml            # Core ESPHome config

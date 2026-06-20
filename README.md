@@ -32,7 +32,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Broadcast a WiFi hotspot with internet access
 
 ## Software Requirements
-- ESPHome 2025.12.7 (Newer versions will not work at the moment)
+- ESPHome 2026.6.1 (Newer versions will not work at the moment)
 - Home Assistant server
 - WireGuard VPN server or an MQTT broker
 - USB <-> Serial driver ([`macOS`](https://github.com/Xinyuan-LilyGO/CH9102_Mac_Driver) | [`Linux`](https://github.com/gorgiaxx/CH34x-Driver-Linux) | [`Windows`](https://github.com/Xinyuan-LilyGO/CH9102_Driver))
@@ -111,5 +111,5 @@ Import the restart on GPS failure blueprint into Home Assistant to automatically
 
 ## Credits
 - [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
-- [oarcher](https://github.com/esphome/esphome/pull/6721#issuecomment-3362380809) - ESPHome SIM7600 implementation & Blueprint device tracker
+- [oarcher](https://github.com/esphome/esphome/pull/6721) - ESPHome SIM7600 implementation & Blueprint device tracker
 - [n-serrette](https://github.com/n-serrette/esphome_sd_card) - ESPHome SDCard implementation

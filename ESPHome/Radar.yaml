@@ -13,7 +13,7 @@ external_components:
   - source:
       type: git
       url: https://github.com/NovakIrs/esphome.git
-      ref: aab436857a319d52ecc6ab6507407c86db921fea
+      ref: f12579615b254b4cd431e05a6b11782869dc1c26
     components: [ ld2410s ]
     refresh: 10min
 

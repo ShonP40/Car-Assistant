@@ -13,3 +13,9 @@ external_components:
   - source: github://pr#7147
     components: [ wifi ]
     refresh: 10min
+
+modem:
+  on_connect:
+    - logger.log: "Restarting WiFi DHCP server to use modem interface"
+    - lambda: |-
+        esphome::wifi::global_wifi_component->wifi_ap_nat(id(atmodem)->modem_handler->ppp_netif);
