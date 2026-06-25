@@ -91,6 +91,9 @@ modem:
   on_sync:
     - modem.send_at: AT+CGPS=1 # poweron GPS
     - modem.send_at: AT+CGPSINFOCFG=10,3 # nmea sentence every 10s GPGGA and GPRMC
+  rx_buffer_size: 8192
+  dte_buffer_size: 8192
+  tx_buffer_size: 8192
 
 # Turn on/off value from https://simcom.ee/documents/SIM7600E/SIM7600%20Series%20Hardware%20Design_V1.03.pdf
 # p 24-25

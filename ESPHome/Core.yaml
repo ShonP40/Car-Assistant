@@ -39,6 +39,9 @@ esp32:
       CONFIG_ESP_MODEM_CMUX_USE_SHORT_PAYLOADS_ONLY: n
       # Enable support for long file names
       CONFIG_FATFS_LFN_STACK: y
+      # Improve WiFi AP performance
+      CONFIG_ESP_MAIN_TASK_STACK_SIZE: "8192"
+      CONFIG_LWIP_TCPIP_CORE_LOCKING: "y"
   cpu_frequency: 240MHz
 
 psram:
