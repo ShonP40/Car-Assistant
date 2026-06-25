@@ -39,18 +39,11 @@ modem:
   rx_pin: ${modem_rx_pin}
   tx_pin: ${modem_tx_pin}
   baud_rate: 115200
-  power_pin:
-    number: ${modem_power_pin}
-    inverted: ${modem_power_pin_inverted}
-  status_pin: ${modem_status_pin}
   model: ${modem_model}
   apn: ${modem_apn}
   pin_code: ${modem_pin_code}
   enable_on_boot: true
-  enable_cmux: true
   reboot_timeout: 5min
-  on_not_responding:
-    - logger.log: "Modem not responding"
   on_connect:
     - logger.log: "Modem connected"
     - http_request.send:
@@ -214,3 +207,10 @@ button:
       - modem.disable:
       - delay: 15s
       - modem.enable:
+
+binary_sensor:
+  - platform: gpio
+    name: "${friendly_name} Modem Status"
+    id: modem_status
+    pin: ${modem_status_pin}
+    internal: true
