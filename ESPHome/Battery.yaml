@@ -14,7 +14,7 @@ sensor:
     pin: ${battery_pin}
     name: "${friendly_name} Battery Voltage"
     id: ${id}_battery_voltage
-    attenuation: 11db
+    attenuation: 12db
     filters:
       - lambda: return (x / 2700.0) * 4200.0;
     unit_of_measurement: "V"
@@ -38,7 +38,7 @@ sensor:
     pin: ${battery_solar_indicator_pin}
     name: "${friendly_name} Solar Indicator"
     id: ${id}_solar_indicator
-    attenuation: 11db
+    attenuation: 12db
     unit_of_measurement: "V"
     accuracy_decimals: 2
 

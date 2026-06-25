@@ -79,13 +79,13 @@ modem:
   urc:
     name: "Modem URCs"
     filters:
+      # forward NMEA sentences to virtual uart, so GPS can read them
       - lambda: |-
-          // forward NMEA sentences to virtual uart, so GPS can read them
           if (x.find("$GPGGA") != std::string::npos || x.find("$GPRMC") != std::string::npos) {
             ESP_LOGI("NMEA", "got NMEA sentence: %s", x.c_str());
-            id(nulluart_id)->write_array((const uint8_t*)x.c_str(), x.length());  // write to uart (for gps)
+            id(nulluart_id)->write_array((const uint8_t*)x.c_str(), x.length());
             id(gps_id)->update();
-            return {}; // Filter out NMEA
+            return {};
           }
           return x;
   on_sync:
