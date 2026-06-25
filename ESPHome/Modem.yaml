@@ -196,10 +196,6 @@ switch:
       number: ${modem_flight_mode_pin}
     internal: true
     entity_category: "diagnostic"
-  - platform: modem
-    gnss:
-      name: "${friendly_name} GNSS"
-      restore_mode: ALWAYS_ON
   - platform: gpio
     id: modem_power
     name: "${friendly_name} Modem Power"
