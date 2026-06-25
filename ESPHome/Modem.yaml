@@ -121,7 +121,7 @@ nulluart:
   - component.update: gps_id
 
 gps:
-  uart_id: atmodem
+  uart_id: nulluart_id
   id: gps_id
   latitude:
     name: "${friendly_name} Latitude"
