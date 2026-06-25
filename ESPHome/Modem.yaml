@@ -15,7 +15,7 @@ external_components:
       type: git
       url: https://github.com/oarcher/esphome.git
       ref: b19b09378b5162bdfdc5eb046ef92c269d09f104
-    components: [ network, modem, watchdog ]
+    components: [ modem ]
     refresh: 10min
   
   - source:
@@ -27,9 +27,9 @@ external_components:
 
   - source:
       type: git
-      url: https://github.com/oarcher/esphome.git
-      ref: bb404bfd11f286e229670a749fa22d760dd54ab7
-    components: [ nmea ]
+      url: https://github.com/oarcher/piotech.git
+      ref: 06f042f36099ad98e1ec9c054902b9a5f77fcb21
+    components: [ nulluart ]
     refresh: 10min
 
 http_request:
@@ -83,16 +83,52 @@ modem:
   on_disconnect:
     - logger.log: "Modem disconnected"
   use_address: ${modem_address}
+  urc:
+    name: "Modem URCs"
+    filters:
+      - lambda: |-
+          // forward NMEA sentences to virtual uart, so GPS can read them
+          if (x.find("$GPGGA") != std::string::npos || x.find("$GPRMC") != std::string::npos) {
+            ESP_LOGI("NMEA", "got NMEA sentence: %s", x.c_str());
+            id(nulluart_id)->write_array((const uint8_t*)x.c_str(), x.length());  // write to uart (for gps)
+            id(gps_id)->update();
+            return {}; // Filter out NMEA
+          }
+          return x;
+  on_sync:
+    - modem.send_at: AT+CGPS=1 # poweron GPS
+    - modem.send_at: AT+CGPSINFOCFG=10,3 # nmea sentence every 10s GPGGA and GPRMC
 
-nmea:
-  platform: modem
-  id: nmea_data
-  update_interval: 10s
-  on_update:
-    - component.update: gps_id
+# Turn on/off value from https://simcom.ee/documents/SIM7600E/SIM7600%20Series%20Hardware%20Design_V1.03.pdf
+# p 24-25
+script:
+  - id: modem_on
+    mode: single
+    then:
+      - logger.log: modem POWERON begin...
+      - switch.turn_on: modem_power
+      - delay: 500ms
+      - switch.turn_off: modem_power
+      - delay: 12s
+      - logger.log: modem POWERON done
+
+  - id: modem_off
+    mode: single
+    then:
+      - logger.log: modem POWEROFF begin...
+      - switch.turn_on: modem_power
+      - delay: 2700ms
+      - switch.turn_off: modem_power
+      - delay: 15s
+      - logger.log: modem POWEROFF done
+
+nulluart:
+ id: nulluart_id
+ on_update: 
+  - component.update: gps_id
 
 gps:
-  uart_id: nmea_data
+  uart_id: atmodem
   id: gps_id
   latitude:
     name: "${friendly_name} Latitude"
@@ -164,6 +200,14 @@ switch:
     gnss:
       name: "${friendly_name} GNSS"
       restore_mode: ALWAYS_ON
+  - platform: gpio
+    id: modem_power
+    name: "${friendly_name} Modem Power"
+    restore_mode: ALWAYS_OFF
+    pin:
+      number: ${modem_power_pin}
+      inverted: ${modem_power_pin_inverted}
+    internal: true
 
 button:
   - platform: template
