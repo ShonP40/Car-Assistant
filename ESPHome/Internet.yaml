@@ -10,7 +10,10 @@
 ####################################################################################################
 
 external_components:
-  - source: github://pr#7147
+  - source:
+      type: git
+      url: https://github.com/oarcher/esphome.git
+      ref: 8ad1bd4a4bb6f96629f2141eafb7360cf4850b70
     components: [ wifi ]
     refresh: 10min
 
