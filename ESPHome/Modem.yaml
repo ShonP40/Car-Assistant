@@ -9,6 +9,11 @@
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
+esphome:
+  on_boot: 
+    then:
+      - script.execute: modem_on
+
 external_components:
   # Docs: https://deploy-preview-4056--esphome.netlify.app/components/modem.html
   - source:
@@ -204,9 +209,8 @@ button:
     entity_category: "config"
     icon: mdi:restart-alert
     on_press:
-      - modem.disable:
-      - delay: 15s
-      - modem.enable:
+      - script.execute: modem_off
+      - script.execute: modem_on
 
 binary_sensor:
   - platform: gpio
