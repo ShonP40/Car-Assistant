@@ -70,7 +70,8 @@ modem:
         auto addrs = id(atmodem).get_ip_addresses();
         std::string ip_str = "N/A";
         if (!addrs.empty()) {
-          ip_str = addrs[0].str();
+          char ip_buf[IP_ADDRESS_BUFFER_SIZE];
+          ip_str = addrs[0].str_to(ip_buf);
         }
         id(${id}_cellular_ip).publish_state(ip_str);
   on_disconnect:
