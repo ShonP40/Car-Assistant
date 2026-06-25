@@ -9,11 +9,6 @@
 ##### - For normal system use, modifications to this file are NOT required.                    #####
 ####################################################################################################
 
-esphome:
-  on_boot: 
-    then:
-      - script.execute: modem_on
-
 external_components:
   # Docs: https://deploy-preview-4056--esphome.netlify.app/components/modem.html
   - source:
