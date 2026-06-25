@@ -25,6 +25,13 @@ external_components:
     components: [ modem_info ]
     refresh: 10min
 
+  - source:
+      type: git
+      url: https://github.com/oarcher/esphome.git
+      ref: bb404bfd11f286e229670a749fa22d760dd54ab7
+    components: [ nmea ]
+    refresh: 10min
+
 http_request:
 
 modem:
