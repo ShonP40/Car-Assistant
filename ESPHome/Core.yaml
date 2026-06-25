@@ -19,7 +19,7 @@ esphome:
   project:
     name: "${project_name}"
     version: "${project_version}"
-  min_version: 2026.6.1
+  min_version: 2026.6.2
 
 esp32:
   board: esp32dev
