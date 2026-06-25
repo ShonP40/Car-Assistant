@@ -211,4 +211,6 @@ button:
     entity_category: "config"
     icon: mdi:restart-alert
     on_press:
-      - modem.reset:
+      - modem.disable:
+      - delay: 15s
+      - modem.enable:
