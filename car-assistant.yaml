@@ -16,7 +16,7 @@ substitutions:
   modem_status_pin: "GPIO34"                                        # Modem Status pin
   modem_model: "SIM7600"                                            # Modem model (See https://deploy-preview-4056--esphome.netlify.app/components/modem.html for a list of supported modems)
   modem_apn: "carrier.apn.address"                                  # Cellular APN
-  modem_pin_code: ""                                                # SIM PIN code (if applicable)
+  modem_pin_code: !remove                                           # SIM PIN code (replace `!remove` with your actual 4-8 digit PIN code if applicable)
   modem_flight_mode_pin: "GPIO25"                                   # Modem Flight Mode pin
   modem_address: ${wireguard_client_address}                        # IP to use for OTA updates & logs
 
