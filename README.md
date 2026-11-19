@@ -21,7 +21,7 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Broadcast a Bluetooth iBeacon (to detect which phones are in the car, by using the `iBeacon Scanner` sensor in the Home Assistant app)
 - Act as a Bluetooth Proxy for Home Assistant (to connect to BLE devices in your car)
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
-- Report network details (public IP, Cellular NAT IP, WireGuard IP, Cellular network type, Cellular signal strength and Cellular network type)
+- Report network details (public IP, Cellular NAT IP, WireGuard IP, Cellular signal strength and Cellular network type)
 - Report location status (latitude, longitude, speed, altitude, visible satellites, horizontal dilution of precision, accuracy and course)
 - Report the uptime of the ESP32
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
