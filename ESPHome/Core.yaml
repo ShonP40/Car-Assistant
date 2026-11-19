@@ -11,7 +11,7 @@
 
 substitutions:
   project_name: "ShonP40.Car-Assistant"
-  project_version: "2026.6.0"
+  project_version: "2026.11.0"
 
 esphome:
   name: "${name}"
@@ -19,7 +19,7 @@ esphome:
   project:
     name: "${project_name}"
     version: "${project_version}"
-  min_version: 2026.6.2
+  min_version: 2026.11.0
 
 esp32:
   board: esp32dev

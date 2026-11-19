@@ -10,25 +10,10 @@
 ####################################################################################################
 
 external_components:
-  # Docs: https://deploy-preview-4056--esphome.netlify.app/components/modem.html
-  - source:
-      type: git
-      url: https://github.com/oarcher/esphome.git
-      ref: b19b09378b5162bdfdc5eb046ef92c269d09f104
-    components: [ network, modem ]
-    refresh: 10min
-  
-  - source:
-      type: git
-      url: https://github.com/oarcher/esphome.git
-      ref: 5e11d8b4db4963519867a544abb7898bdc113598
-    components: [ modem_info ]
-    refresh: 10min
-
   - source:
       type: git
       url: https://github.com/oarcher/piotech.git
-      ref: 06f042f36099ad98e1ec9c054902b9a5f77fcb21
+      ref: a9028ef632b5f2f9b4802adeb96f5efd21526d41
     components: [ nulluart ]
     refresh: 10min
 
@@ -42,8 +27,12 @@ modem:
   model: ${modem_model}
   apn: ${modem_apn}
   pin_code: ${modem_pin_code}
-  enable_on_boot: true
   reboot_timeout: 5min
+  use_address: ${modem_address}
+  update_interval: 20s
+  rx_buffer_size: 8192
+  dte_buffer_size: 8192
+  tx_buffer_size: 8192
   on_connect:
     - logger.log: "Modem connected"
     - http_request.send:
@@ -76,25 +65,9 @@ modem:
         id(${id}_cellular_ip).publish_state(ip_str);
   on_disconnect:
     - logger.log: "Modem disconnected"
-  use_address: ${modem_address}
-  urc:
-    name: "Modem URCs"
-    filters:
-      # forward NMEA sentences to virtual uart, so GPS can read them
-      - lambda: |-
-          if (x.find("$GPGGA") != std::string::npos || x.find("$GPRMC") != std::string::npos) {
-            ESP_LOGI("NMEA", "got NMEA sentence: %s", x.c_str());
-            id(nulluart_id)->write_array((const uint8_t*)x.c_str(), x.length());
-            id(gps_id)->update();
-            return {};
-          }
-          return x;
   on_sync:
     - modem.send_at: AT+CGPS=1 # poweron GPS
     - modem.send_at: AT+CGPSINFOCFG=10,3 # nmea sentence every 10s GPGGA and GPRMC
-  rx_buffer_size: 8192
-  dte_buffer_size: 8192
-  tx_buffer_size: 8192
 
 # Turn on/off value from https://simcom.ee/documents/SIM7600E/SIM7600%20Series%20Hardware%20Design_V1.03.pdf
 # p 24-25
@@ -118,6 +91,41 @@ script:
       - switch.turn_off: modem_power
       - delay: 15s
       - logger.log: modem POWEROFF done
+
+text_sensor:
+  - platform: modem
+    network_type:
+      name: "${friendly_name} Network Type"
+      entity_category: "diagnostic"
+      icon: mdi:signal
+    urc:
+      name: "${friendly_name} Unsolicited Result Code"
+      entity_category: "diagnostic"
+      # forward NMEA sentences to virtual uart, so GPS can read them
+      filters:
+        - lambda: |-
+            if (x.find("$GPGGA") != std::string::npos || x.find("$GPRMC") != std::string::npos) {
+              ESP_LOGI("NMEA", "got NMEA sentence: %s", x.c_str());
+              id(nulluart_id)->write_array((const uint8_t*)x.c_str(), x.length());
+              id(gps_id)->update();
+              return {};
+            }
+            return x;
+  - platform: template
+    name: "${friendly_name} Public IP"
+    id: ${id}_public_ip
+    entity_category: "diagnostic"
+    icon: mdi:earth
+  - platform: template
+    name: "${friendly_name} Network Operator"
+    id: ${id}_network_operator
+    entity_category: "diagnostic"
+    icon: mdi:sim
+  - platform: template
+    name: "${friendly_name} Cellular IP"
+    id: ${id}_cellular_ip
+    entity_category: "diagnostic"
+    icon: mdi:wan
 
 nulluart:
  id: nulluart_id
@@ -144,33 +152,8 @@ gps:
     id: ${id}_hdop
     icon: mdi:map-marker-distance
 
-text_sensor:
-  - platform: modem_info
-    network_type:
-      name: "${friendly_name} Network Type"
-      entity_category: "diagnostic"
-      icon: mdi:signal
-    signal_strength:
-      name: "${friendly_name} Signal Strength"
-      entity_category: "diagnostic"
-  - platform: template
-    name: "${friendly_name} Public IP"
-    id: ${id}_public_ip
-    entity_category: "diagnostic"
-    icon: mdi:earth
-  - platform: template
-    name: "${friendly_name} Network Operator"
-    id: ${id}_network_operator
-    entity_category: "diagnostic"
-    icon: mdi:sim
-  - platform: template
-    name: "${friendly_name} Cellular IP"
-    id: ${id}_cellular_ip
-    entity_category: "diagnostic"
-    icon: mdi:wan
-
 sensor:
-  - platform: modem_info
+  - platform: modem
     rssi:
       name: "${friendly_name} RSSI"
       entity_category: "diagnostic"

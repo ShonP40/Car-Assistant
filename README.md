@@ -15,14 +15,15 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 ## Features
 - OTA updates (Over a WireGuard VPN connection, cellular NAT IP or locally through the WiFi hotspot)
 - Cellular connectivity
-- Automatically update the ESP's clock
+- Automatically update the ESP32's clock
 - WireGuard VPN connection
 - SD card support through a web server
 - Broadcast a Bluetooth iBeacon (to detect which phones are in the car, by using the `iBeacon Scanner` sensor in the Home Assistant app)
+- Act as a Bluetooth Proxy for Home Assistant (to connect to BLE devices in your car)
 - Report battery status (percentage, voltage, USB charging, solar charging & discharging)
 - Report network details (public IP, Cellular NAT IP, WireGuard IP, Cellular network type, Cellular signal strength and Cellular network type)
 - Report location status (latitude, longitude, speed, altitude, visible satellites, horizontal dilution of precision, accuracy and course)
-- Report the uptime of the ESP in seconds
+- Report the uptime of the ESP32
 - Report your car's temperature, humidity and air pressure using a BME280 sensor
 - Report the light level inside your car using a TSL2561 sensor
 - Detect motion inside your car's cabin using a PIR sensor or a mmWave radar
@@ -32,9 +33,9 @@ You can order this project from PCBWay at a $5 discount by using my [referal lin
 - Broadcast a WiFi hotspot with internet access
 
 ## Software Requirements
-- ESPHome 2026.6.2 (Newer versions will not work at the moment)
+- ESPHome 2026.11.0 or later
 - Home Assistant server
-- WireGuard VPN server (currently not working) or an MQTT broker
+- WireGuard VPN server or an MQTT broker
 - USB <-> Serial driver ([`macOS`](https://github.com/Xinyuan-LilyGO/CH9102_Mac_Driver) | [`Linux`](https://github.com/gorgiaxx/CH34x-Driver-Linux) | [`Windows`](https://github.com/Xinyuan-LilyGO/CH9102_Driver))
 
 ## Hardware Requirements
@@ -91,7 +92,7 @@ Initial flashing must be done via serial connection.
 [ESPHome Web](https://web.esphome.io) is recommended for the simplest experience.
 
 #### Required Hardware
-- USB-C to USB-A cable
+- USB-C cable
 
 #### Flashing Process
 1. Connect the T-SIM7600E-L1C to a computer using a USB-C cable
@@ -107,7 +108,6 @@ Import the restart on GPS failure blueprint into Home Assistant to automatically
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FShonP40%2FCar-Assistant%2Fblob%2Fmaster%2Frestart_on_gps_fail.yaml)
 
-## Credits
-- [Xinyuan-LilyGO](https://github.com/Xinyuan-LilyGO/T-SIM7600X) - Basic T-SIM7600X implementation
-- [oarcher](https://github.com/esphome/esphome/pull/6721) - ESPHome SIM7600 implementation & Blueprint device tracker
+## External Components
+- [oarcher](https://github.com/oarcher/piotech) - ESPHome NullUART implementation
 - [n-serrette](https://github.com/n-serrette/esphome_sd_card) - ESPHome SDCard implementation
