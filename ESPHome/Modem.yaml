@@ -12,8 +12,8 @@
 external_components:
   - source:
       type: git
-      url: https://github.com/oarcher/piotech.git
-      ref: a9028ef632b5f2f9b4802adeb96f5efd21526d41
+      url: https://github.com/Zigwik-cloud/piotech.git
+      ref: 45c16921523ffd0a58dc8b2be7af94f405938de9
     components: [ nulluart ]
     refresh: 10min
 

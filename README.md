@@ -109,5 +109,5 @@ Import the restart on GPS failure blueprint into Home Assistant to automatically
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FShonP40%2FCar-Assistant%2Fblob%2Fmaster%2Frestart_on_gps_fail.yaml)
 
 ## External Components
-- [oarcher](https://github.com/oarcher/piotech) - ESPHome NullUART implementation
+- [Zigwik-cloud](https://github.com/Zigwik-cloud/piotech) - ESPHome NullUART implementation
 - [n-serrette](https://github.com/n-serrette/esphome_sd_card) - ESPHome SDCard implementation
