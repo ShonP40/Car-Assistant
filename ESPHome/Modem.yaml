@@ -53,6 +53,7 @@ modem:
   on_disconnect:
     - logger.log: "Modem disconnected"
   on_sync:
+    - modem.send_at: AT+CFUN=1 # Fixes SIM not ready errors
     - modem.send_at: AT+CGPS=1 # poweron GPS
     - modem.send_at: AT+CGPSINFOCFG=10,3 # nmea sentence every 10s GPGGA and GPRMC
 
